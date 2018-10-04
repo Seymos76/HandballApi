@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+	{% for message in app.session.flashbag.get('error') %}
+        {{ message }}
+	{% endfor %}
+	{% for message in app.session.flashbag.get('success') %}
+        {{ message }}
+	{% endfor %}
+    <nav>
+        <a href="{{ path('game_index') }}">Les matchs</a>
+        <a href="{{ path('player_index') }}">Les joueurs</a>
+        <a href="{{ path('image_index') }}">Les images</a>
+        <a href="{{ path('training_index') }}">Les entraînements</a>
+    </nav>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
