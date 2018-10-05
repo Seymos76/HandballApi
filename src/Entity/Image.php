@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +57,16 @@ class Image
      * @ORM\OneToOne(targetEntity="App\Entity\Team", mappedBy="image", cascade={"persist", "remove"})
      */
     private $team;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Galery", mappedBy="images")
+     */
+    private $galeries;
+
+    public function __construct()
+    {
+        $this->galeries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -164,6 +176,34 @@ class Image
         $newImage = $team === null ? null : $this;
         if ($newImage !== $team->getImage()) {
             $team->setImage($newImage);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Galery[]
+     */
+    public function getGaleries(): Collection
+    {
+        return $this->galeries;
+    }
+
+    public function addGalery(Galery $galery): self
+    {
+        if (!$this->galeries->contains($galery)) {
+            $this->galeries[] = $galery;
+            $galery->addImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGalery(Galery $galery): self
+    {
+        if ($this->galeries->contains($galery)) {
+            $this->galeries->removeElement($galery);
+            $galery->removeImage($this);
         }
 
         return $this;

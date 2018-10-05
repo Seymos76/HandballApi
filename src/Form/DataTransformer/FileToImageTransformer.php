@@ -12,6 +12,7 @@ namespace App\Form\DataTransformer;
 use App\Entity\Image;
 use App\Manager\ImageManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -22,12 +23,14 @@ class FileToImageTransformer implements DataTransformerInterface
     private $manager;
     private $imageManager;
     private $session;
+    private $container;
 
-    public function __construct(EntityManagerInterface $manager, ImageManager $imageManager, SessionInterface $session)
+    public function __construct(EntityManagerInterface $manager, ImageManager $imageManager, SessionInterface $session, ContainerInterface $container)
     {
         $this->manager = $manager;
         $this->imageManager = $imageManager;
         $this->session = $session;
+        $this->container = $container;
     }
 
     /**
@@ -53,6 +56,7 @@ class FileToImageTransformer implements DataTransformerInterface
             return;
         }
         $filename = $this->imageManager->createImage($file);
+        $this->imageManager->uploadFile($file, $filename, $this->container->getParameter('hb.player_image'));
         if (!$filename) {
             return;
         }

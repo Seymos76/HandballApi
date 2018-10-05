@@ -41,4 +41,12 @@ class EntityManager
         $this->manager->remove($entity);
         $this->manager->flush();
     }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getManager(): EntityManagerInterface
+    {
+        return $this->manager;
+    }
 }

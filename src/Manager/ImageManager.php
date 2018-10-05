@@ -33,11 +33,14 @@ class ImageManager extends EntityManager
         $image->setFilename(self::getUniqueName());
         $image->setExtension($file->guessExtension());
         $image->setMimeType($file->getMimeType());
-        $image->setPath($this->container->getParameter('hb.player_image'));
         $image->setSize($file->getSize());
-        $this->uploader->upload($file, $image->getFilename(), $image->getPath());
         $this->update($image);
         return $image->getFilename();
+    }
+
+    public function uploadFile(UploadedFile $file, string $filename, string $targetDir)
+    {
+        $this->uploader->upload($file, $filename, $targetDir);
     }
 
     public function getUniqueName(): ?string
