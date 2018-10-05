@@ -1,3 +1,7 @@
 controllers:
     resource: ../../src/Controller/
     type: annotation
+administration:
+    resource: ../../src/Controller/Administration/
+    type: annotation
+    prefix: administration
