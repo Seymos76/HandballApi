@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("email", message="Vous avez déjà un compte sur ce site.")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -32,9 +35,14 @@ class User
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $plain_password;
 
     /**
      * @ORM\Column(type="boolean")
@@ -65,6 +73,19 @@ class User
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $activation_code;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+    public function __construct()
+    {
+        $this->active = false;
+        $this->roles = array("ROLE_USER");
+        $this->date_register = new \DateTime('now');
+        $this->activation_code = md5(uniqid('code_', false));
+    }
 
     public function getId(): ?int
     {
@@ -112,6 +133,10 @@ class User
         return $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return User
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -136,11 +161,24 @@ class User
         return $this->roles;
     }
 
-    public function setRoles(array $roles): self
+    public function addRole(string $role)
     {
-        $this->roles = $roles;
+        if (!in_array($role,$this->roles)) {
+            array_push($this->roles, $role);
+            return $this->roles;
+        } else {
+            return $this->roles;
+        }
+    }
 
-        return $this;
+    public function removeRole(string $role)
+    {
+        if (in_array($role, $this->roles)) {
+            unset($role, $this->roles);
+            return $this->roles;
+        } else {
+            return false;
+        }
     }
 
     public function getDateRegister(): ?\DateTimeInterface
@@ -187,6 +225,66 @@ class User
     public function setActivationCode(?string $activation_code): self
     {
         $this->activation_code = $activation_code;
+
+        return $this;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plain_password;
+    }
+
+    public function setPlainPassword(string $plain_password): self
+    {
+        $this->plain_password = $plain_password;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }

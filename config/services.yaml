@@ -29,5 +29,17 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\EventListener\HashPasswordListener:
+        autowire: true
+        arguments:
+            - '@security.user_password_encoder.generic'
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    App\EventListener\LoginListener:
+        autowire: true
+        tags:
+            - { name: security.interactive_login, event: security.interactive_login }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
