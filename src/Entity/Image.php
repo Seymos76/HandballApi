@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -63,9 +64,21 @@ class Image
      */
     private $galeries;
 
-    public function __construct()
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Slide", mappedBy="image", cascade={"persist", "remove"})
+     */
+    private $slide;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
+     */
+    private $type;
+
+    public function __construct(string $type)
     {
         $this->galeries = new ArrayCollection();
+        $this->type = $type;
     }
 
     public function getId(): ?int
@@ -205,6 +218,35 @@ class Image
             $this->galeries->removeElement($galery);
             $galery->removeImage($this);
         }
+
+        return $this;
+    }
+
+    public function getSlide(): ?Slide
+    {
+        return $this->slide;
+    }
+
+    public function setSlide(Slide $slide): self
+    {
+        $this->slide = $slide;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $slide->getImage()) {
+            $slide->setImage($this);
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

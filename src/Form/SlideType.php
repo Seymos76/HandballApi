@@ -2,15 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Image;
+use App\Entity\Slide;
 use App\Form\DataTransformer\FileToImageTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ImageType extends AbstractType
+class SlideType extends AbstractType
 {
     private $transformer;
 
@@ -23,28 +23,25 @@ class ImageType extends AbstractType
     {
         $builder
             ->add(
-                'filename',
+                'name',
+                TextType::class,
+                array(
+                    'label' => "Nom du slide (facultatif)",
+                    'required' => false
+                )
+            )
+            ->add(
+                'image',
                 FileType::class
             )
-            ->add(
-                'size',
-                HiddenType::class
-            )
-            ->add(
-                'mimeType',
-                HiddenType::class
-            )
-            ->add(
-                'type',
-                HiddenType::class
-            )
+            ->get('image')->addModelTransformer($this->transformer)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Image::class,
+            'data_class' => Slide::class,
         ]);
     }
 }

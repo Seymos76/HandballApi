@@ -11,6 +11,7 @@ namespace App\Manager;
 
 use App\Entity\Galery;
 use App\Entity\Image;
+use App\Entity\Slide;
 use App\Service\Image\Uploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,7 +32,7 @@ class ImageManager extends EntityManager
     public function createImage(UploadedFile $file)
     {
         $image = new Image();
-        $image->setFilename(self::getUniqueName());
+        $image->setFilename(self::getUniqueName().".".$file->guessExtension());
         $image->setExtension($file->guessExtension());
         $image->setMimeType($file->getMimeType());
         $image->setSize($file->getSize());
