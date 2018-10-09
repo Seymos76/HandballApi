@@ -31,4 +31,30 @@ class UserManager extends EntityManager
         $this->update($user);
         return $user;
     }
+
+    public function getUserByEmail(string $email)
+    {
+        $user = $this->getManager()->getRepository(User::class)->findOneBy(
+            array(
+                'email' => $email
+            )
+        );
+        if (!$user) {
+            return;
+        }
+        return $user;
+    }
+
+    public function getUserByToken(string $token)
+    {
+        $user = $this->getManager()->getRepository(User::class)->findOneBy(
+            array(
+                'token' => $token
+            )
+        );
+        if (!$user) {
+            return;
+        }
+        return $user;
+    }
 }

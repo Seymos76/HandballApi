@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email", message="Vous avez déjà un compte sur ce site.")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface, \Serializable
 {
@@ -275,6 +276,10 @@ class User implements UserInterface, \Serializable
         return $this->plain_password;
     }
 
+    /**
+     * @param string $plain_password
+     * @return User
+     */
     public function setPlainPassword(string $plain_password): self
     {
         $this->plain_password = $plain_password;

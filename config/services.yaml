@@ -35,7 +35,7 @@ services:
         arguments:
             - '@security.user_password_encoder.generic'
         tags:
-            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
 
     App\EventListener\LoginListener:
         autowire: true
