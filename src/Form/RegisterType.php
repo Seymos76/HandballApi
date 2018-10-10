@@ -1,6 +1,13 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: seymos
+ * Date: 05/10/18
+ * Time: 23:04
+ */
 
 namespace App\Form;
+
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -11,49 +18,42 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class RegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
                 'firstname',
-                TextType::class,
-                array(
-                    'label' => "Prénom"
-                )
+                TextType::class
             )
             ->add(
                 'lastname',
-                TextType::class,
-                array(
-                    'label' => "NOM"
-                )
+                TextType::class
             )
             ->add(
                 'email',
-                EmailType::class,
-                array(
-                    'label' => "E-mail"
-                )
+                EmailType::class
             )
             ->add(
-                'password',
+                'plainPassword',
                 RepeatedType::class,
                 array(
                     'type' => PasswordType::class,
-                    'first_options' => "Entrez votre mot de passe",
-                    'second_options' => "Confirmez votre mot de passe",
+                    'required' => true,
+                    'first_options' => array('label' => "Entrez votre mot de passe"),
+                    'second_options' => array('label' => "Répétez votre mot de passe"),
                     'invalid_message' => "Les deux mots de passe doivent correspondre"
                 )
-            )
-        ;
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
+        $resolver->setDefaults(
+            array(
+                'data_class' => User::class
+            )
+        );
     }
 }

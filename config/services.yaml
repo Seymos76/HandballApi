@@ -7,6 +7,7 @@ parameters:
     locale: 'fr'
     hb.player_image: '%kernel.project_dir%/public/uploads/players'
     hb.galery_image: '%kernel.project_dir%/public/uploads/gallery'
+    hb.slide_image: '%kernel.project_dir%/public/uploads/slides'
 
 services:
     # default configuration for services in *this* file
@@ -28,6 +29,18 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\EventListener\HashPasswordListener:
+        autowire: true
+        arguments:
+            - '@security.user_password_encoder.generic'
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    App\EventListener\LoginListener:
+        autowire: true
+        tags:
+            - { name: security.interactive_login, event: security.interactive_login }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

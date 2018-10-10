@@ -28,7 +28,7 @@ class ImageController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $image = new Image();
+        $image = new Image("undefined");
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
 
