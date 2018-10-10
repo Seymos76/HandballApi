@@ -280,7 +280,7 @@ class User implements UserInterface, \Serializable
      * @param string $plain_password
      * @return User
      */
-    public function setPlainPassword(string $plain_password): self
+    public function setPlainPassword(string $plain_password = null): self
     {
         $this->plain_password = $plain_password;
 
