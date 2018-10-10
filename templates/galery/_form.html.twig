@@ -1,5 +1,16 @@
 {{ form_start(form) }}
     {{ form_widget(form.name) }}
-    {{ form_widget(form.images) }}
+{{ form_label(form.images) }}
+{{ form_errors(form.images) }}
+<ul id="images-fields-list" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}" data-widget-tags="{{ '<li></li>'|e }}">
+	{% for image_field in form.images %}
+		<li>
+			{{ form_errors(image_field) }}
+			{{ form_widget(image_field) }}
+		</li>
+	{% endfor %}
+</ul>
+<button type="button" class="add_collection_widget" data-list="#images-fields-list">Ajouter une image</button>
 <button type="submit">Valider</button>
+{% do form.images.setRendered %}
 {{ form_end(form) }}

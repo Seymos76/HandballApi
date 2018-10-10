@@ -30,19 +30,24 @@ class GaleryController extends AbstractController
     /**
      * @Route("/new", name="galery_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request ,ImageManager $imageManager): Response
     {
         $galery = new Galery();
         $form = $this->createForm(GaleryType::class, $galery);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             dump($form->getData());
             $slugger = new Slugify();
             $galery->setSlug($slugger->slugify($galery->getName()));
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($galery);
-            $em->flush();
+            dump($this->getParameter('hb.galery_image')."/".$galery->getSlug());
+            $images = $form->getData()->getImages();
+            foreach ($images as $key => $value) {
+                dump($value);
+                $filename = $imageManager->createImage($value);
+                $imageManager->uploadFile($value, $filename, $this->getParameter('hb.galery_image')."/".$galery->getSlug());
+                $imageManager->addImageOnGallery($galery, $filename);
+            }
+            $imageManager->flush();
             $this->addFlash('success',"Galerie créée.");
             return $this->redirectToRoute('galery_index');
         }

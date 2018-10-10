@@ -47,11 +47,6 @@ class Image
     private $size;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $alt;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Player", mappedBy="image", cascade={"persist", "remove"})
      */
     private $player;
@@ -62,26 +57,24 @@ class Image
     private $team;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Galery", mappedBy="images")
-     */
-    private $galeries;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Slide", mappedBy="image", cascade={"persist", "remove"})
      */
     private $slide;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
+     * @ORM\ManyToOne(targetEntity="App\Entity\Galery", inversedBy="images")
      */
-    private $type;
+    private $gallery;
 
-    public function __construct(string $type)
-    {
-        $this->galeries = new ArrayCollection();
-        $this->type = $type;
-    }
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     public function getId(): ?int
     {
@@ -148,18 +141,6 @@ class Image
         return $this;
     }
 
-    public function getAlt(): ?string
-    {
-        return $this->alt;
-    }
-
-    public function setAlt(?string $alt): self
-    {
-        $this->alt = $alt;
-
-        return $this;
-    }
-
     public function getPlayer(): ?Player
     {
         return $this->player;
@@ -196,34 +177,6 @@ class Image
         return $this;
     }
 
-    /**
-     * @return Collection|Galery[]
-     */
-    public function getGaleries(): Collection
-    {
-        return $this->galeries;
-    }
-
-    public function addGalery(Galery $galery): self
-    {
-        if (!$this->galeries->contains($galery)) {
-            $this->galeries[] = $galery;
-            $galery->addImage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGalery(Galery $galery): self
-    {
-        if ($this->galeries->contains($galery)) {
-            $this->galeries->removeElement($galery);
-            $galery->removeImage($this);
-        }
-
-        return $this;
-    }
-
     public function getSlide(): ?Slide
     {
         return $this->slide;
@@ -241,14 +194,38 @@ class Image
         return $this;
     }
 
-    public function getType(): ?string
+    public function getGallery(): ?Galery
     {
-        return $this->type;
+        return $this->gallery;
     }
 
-    public function setType(string $type): self
+    public function setGallery(?Galery $gallery): self
     {
-        $this->type = $type;
+        $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

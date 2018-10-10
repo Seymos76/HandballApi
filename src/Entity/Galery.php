@@ -36,14 +36,14 @@ class Galery
     private $date_creation;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Image", inversedBy="galeries")
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="gallery")
      */
     private $images;
 
     public function __construct()
     {
-        $this->images = new ArrayCollection();
         $this->date_creation = new \DateTime('now');
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,6 +99,7 @@ class Galery
     {
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
+            $image->setGallery($this);
         }
 
         return $this;
@@ -108,6 +109,10 @@ class Galery
     {
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getGallery() === $this) {
+                $image->setGallery(null);
+            }
         }
 
         return $this;

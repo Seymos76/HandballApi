@@ -7,6 +7,8 @@ use App\Form\DataTransformer\FileToImageTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,16 +29,20 @@ class ImageType extends AbstractType
                 FileType::class
             )
             ->add(
-                'size',
-                HiddenType::class
+                'title',
+                TextType::class,
+                array(
+                    'label' => "Titre de l'image (optionnel)",
+                    'required' => false
+                )
             )
             ->add(
-                'mimeType',
-                HiddenType::class
-            )
-            ->add(
-                'type',
-                HiddenType::class
+                'description',
+                TextareaType::class,
+                array(
+                    'label' => "Description de l'image (optionnel)",
+                    'required' => false
+                )
             )
         ;
     }

@@ -15,11 +15,19 @@ class Uploader
 {
     public function upload(UploadedFile $file, string $filename, $targetDirectory)
     {
+        if ($filename === null) {
+            $filename = $this->generateFileName();
+        }
         $file_name = $filename . "." . $file->guessExtension();
         $file->move(
             $targetDirectory,
             $file_name
         );
         return $file_name;
+    }
+
+    public function generateFileName()
+    {
+        return uniqid();
     }
 }

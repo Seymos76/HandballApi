@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Galery;
 use App\Form\DataTransformer\MultipleFilesToImagesTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,31 +31,15 @@ class GaleryType extends AbstractType
             )
             ->add(
                 'images',
-                FileType::class,
+                CollectionType::class,
                 array(
-                    'multiple' => true
+                    'entry_type' => FileType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'label' => "Ajoutez vos images"
                 )
             )
-            ->get('images')->addModelTransformer($this->transformer)
-            ->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'))
-            ->addEventListener(FormEvents::SUBMIT, array($this, 'onSubmit'))
-            ->addEventListener(FormEvents::POST_SUBMIT, array($this, 'onPostSubmit'))
         ;
-    }
-
-    public function onPreSubmit(FormEvent $event)
-    {
-        dump($event->getData());
-    }
-
-    public function onSubmit(FormEvent $event)
-    {
-        dump($event->getData());
-    }
-
-    public function onPostSubmit(FormEvent $event)
-    {
-        dump($event->getData());
     }
 
     public function configureOptions(OptionsResolver $resolver)

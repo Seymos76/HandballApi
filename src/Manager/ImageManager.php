@@ -32,10 +32,12 @@ class ImageManager extends EntityManager
     public function createImage(UploadedFile $file)
     {
         $image = new Image();
-        $image->setFilename(self::getUniqueName().".".$file->guessExtension());
+        $image->setFilename($this->uploader->generateFileName().".".$file->guessExtension());
         $image->setExtension($file->guessExtension());
         $image->setMimeType($file->getMimeType());
         $image->setSize($file->getSize());
+        dump($image);
+        die;
         $this->update($image);
         return $image->getFilename();
     }
@@ -43,11 +45,6 @@ class ImageManager extends EntityManager
     public function uploadFile(UploadedFile $file, string $filename, string $targetDir)
     {
         $this->uploader->upload($file, $filename, $targetDir);
-    }
-
-    public function getUniqueName(): ?string
-    {
-        return $unique = md5(uniqid());
     }
 
     public function addImageOnGallery(Galery $galery, string $filename)
@@ -61,7 +58,7 @@ class ImageManager extends EntityManager
             return;
         }
         $galery->addImage($image);
-        $this->update($galery);
+        $this->persist($galery);
         return $galery;
     }
 
