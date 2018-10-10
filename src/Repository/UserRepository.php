@@ -13,18 +13,20 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository implements UserLoaderInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, User::class);
     }
 
-    public function loadUserByUsernameOrEmail($username)
+    public function loadUserByUsername($username)
     {
         return $this->createQueryBuilder('u')
             ->where('u.email = :email')
+            ->andWhere('u.active = :active')
             ->setParameter('email', $username)
+            ->setParameter('active', true)
             ->getQuery()
             ->getOneOrNullResult();
     }

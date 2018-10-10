@@ -57,4 +57,28 @@ class UserManager extends EntityManager
         }
         return $user;
     }
+
+    public function getUserByActivationCode(string $code)
+    {
+        $user = $this->getManager()->getRepository(User::class)->findOneBy(
+            array(
+                'activation_code' => (string)$code
+            )
+        );
+        if (!$user || !$user instanceof User) {
+            return;
+        }
+        return $user;
+    }
+
+    public function activateUser(User $user)
+    {
+        if (!$user instanceof User || $user->getActivationCode() === null) {
+            return;
+        }
+        $user->setActive(true);
+        $user->setActivationCode(null);
+        $this->update($user);
+        return true;
+    }
 }

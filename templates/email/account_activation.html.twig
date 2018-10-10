@@ -1,0 +1,10 @@
+<div class="row center">
+	<h2>Votre inscripion a bien été prise en compte, veuillez activer votre compte à l'aide du code présent dans cet
+		e-mail.</h2>
+	<p class="dark">Attention, celui-ci est unique et n'est valable qu'une seule fois.</p>
+	<p class="header col s12 light">Code d'activation de votre compte</p>
+</div>
+<div class="row center">
+	<a href="http://localhost:8000/activation-compte/{{ user.activationCode }}">Activez votre compte ici !</a>
+	<p class="s12 light">{{ user.activationCode }}</p>
+</div>

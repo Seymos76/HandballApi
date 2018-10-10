@@ -4,6 +4,10 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,16 +16,37 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname')
-            ->add('lastname')
-            ->add('email')
-            ->add('password')
-            ->add('active')
-            ->add('roles')
-            ->add('date_register')
-            ->add('last_connexion')
-            ->add('token')
-            ->add('activation_code')
+            ->add(
+                'firstname',
+                TextType::class,
+                array(
+                    'label' => "Prénom"
+                )
+            )
+            ->add(
+                'lastname',
+                TextType::class,
+                array(
+                    'label' => "NOM"
+                )
+            )
+            ->add(
+                'email',
+                EmailType::class,
+                array(
+                    'label' => "E-mail"
+                )
+            )
+            ->add(
+                'password',
+                RepeatedType::class,
+                array(
+                    'type' => PasswordType::class,
+                    'first_options' => "Entrez votre mot de passe",
+                    'second_options' => "Confirmez votre mot de passe",
+                    'invalid_message' => "Les deux mots de passe doivent correspondre"
+                )
+            )
         ;
     }
 
