@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
 use App\Entity\Slide;
 use App\Form\SlideType;
 use App\Repository\SlideRepository;
+use App\Service\Image\Uploader;
+use Cocur\Slugify\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,17 +29,19 @@ class SlideController extends AbstractController
     /**
      * @Route("/new", name="slide_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Uploader $uploader): Response
     {
         $slide = new Slide();
-        $form = $this->createForm(SlideType::class, $slide);
-        $images = $this->getDoctrine()->getRepository(Image::class)->findAll();
+        $form = $this->createForm(SlideType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slugger = new Slugify();
+            $slide->setName($form->getData()['name']);
+            $slide->setSlug($slugger->slugify($form->getData()['name']));
+            $filename = $uploader->upload($form->getData()['image'], $slide->getSlug(), $this->getParameter('hb.slide_image'));
+            $slide->setImage($filename);
             $em = $this->getDoctrine()->getManager();
-            dump($slide);
-            die;
             $em->persist($slide);
             $em->flush();
 
@@ -46,7 +50,6 @@ class SlideController extends AbstractController
 
         return $this->render('slide/new.html.twig', [
             'slide' => $slide,
-            'images' => $images,
             'form' => $form->createView(),
         ]);
     }

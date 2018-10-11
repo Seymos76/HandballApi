@@ -31,20 +31,19 @@ class ImageManager extends EntityManager
 
     public function createImage(UploadedFile $file)
     {
+        /** @var Image $image */
         $image = new Image();
         $image->setFilename($this->uploader->generateFileName().".".$file->guessExtension());
         $image->setExtension($file->guessExtension());
         $image->setMimeType($file->getMimeType());
         $image->setSize($file->getSize());
-        dump($image);
-        die;
-        $this->update($image);
-        return $image->getFilename();
+        return $image;
     }
 
     public function uploadFile(UploadedFile $file, string $filename, string $targetDir)
     {
         $this->uploader->upload($file, $filename, $targetDir);
+        return $filename;
     }
 
     public function addImageOnGallery(Galery $galery, string $filename)

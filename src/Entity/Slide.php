@@ -3,15 +3,13 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SlideRepository")
  * @ApiResource()
+ * @ORM\Entity(repositoryClass="App\Repository\SlideRepository")
  */
-class Slide
+class Slide implements \ArrayAccess
 {
     /**
      * @ORM\Id()
@@ -21,29 +19,31 @@ class Slide
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $date_creation;
+    private $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Image", inversedBy="slide", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $image;
-
-    public function __construct()
-    {
-        $this->date_creation = new \DateTime('now');
-    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     public function getName(): ?string
@@ -51,34 +51,54 @@ class Slide
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getSlug(): ?string
     {
-        return $this->date_creation;
+        return $this->slug;
     }
 
-    public function setDateCreation(\DateTimeInterface $date_creation): self
+    public function setSlug(?string $slug): self
     {
-        $this->date_creation = $date_creation;
+        $this->slug = $slug;
 
         return $this;
     }
 
-    public function getImage(): ?Image
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(Image $image): self
+    public function setImage(string $image): self
     {
         $this->image = $image;
 
         return $this;
+    }
+
+    public function offsetUnset($offset)
+    {
+        // TODO: Implement offsetUnset() method.
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        // TODO: Implement offsetSet() method.
+    }
+
+    public function offsetGet($offset)
+    {
+        // TODO: Implement offsetGet() method.
+    }
+
+    public function offsetExists($offset)
+    {
+        // TODO: Implement offsetExists() method.
     }
 }
