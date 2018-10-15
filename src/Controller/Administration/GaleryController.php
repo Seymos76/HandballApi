@@ -42,14 +42,11 @@ class GaleryController extends AbstractController
             dump($this->getParameter('hb.galery_image')."/".$galery->getSlug());
             $images = $form->getData()->getImages();
             foreach ($images as $key => $value) {
-                dump($value);
                 $image = $imageManager->createImage($value);
                 $imageManager->uploadFile($value, $image->getFilename(), $this->getParameter('hb.galery_image')."/".$galery->getSlug());
-                $imageManager->update($image);
                 $imageManager->addImageOnGallery($galery, $image->getFilename());
-                $imageManager->update($galery);
             }
-            $imageManager->flush();
+            $imageManager->update($galery);
             $this->addFlash('success',"Galerie créée.");
             return $this->redirectToRoute('galery_index');
         }

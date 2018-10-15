@@ -37,6 +37,7 @@ class ImageManager extends EntityManager
         $image->setExtension($file->guessExtension());
         $image->setMimeType($file->getMimeType());
         $image->setSize($file->getSize());
+        $this->update($image);
         return $image;
     }
 
