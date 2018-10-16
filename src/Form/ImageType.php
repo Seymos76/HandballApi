@@ -44,13 +44,22 @@ class ImageType extends AbstractType
                     'required' => false
                 )
             )
+            ->add(
+                'size',
+                HiddenType::class
+            )
+            ->add(
+                'mimeType',
+                HiddenType::class
+            )
+            //->get('filename')->addModelTransformer($this->transformer)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Image::class,
+            'data_class' => null
         ]);
     }
 }

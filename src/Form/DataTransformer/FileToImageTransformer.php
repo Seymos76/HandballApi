@@ -54,19 +54,11 @@ class FileToImageTransformer implements DataTransformerInterface
     public function reverseTransform($file)
     {
         if (!$file) {
-            return;
+            throw new TransformationFailedException(sprintf('File was not found...', $file));
         }
-        $filename = $this->imageManager->createImage($file);
-        $this->imageManager->uploadFile($file, $filename, $this->container->getParameter('hb.player_image'));
-        if (!$filename) {
-            return;
-        }
-        $image = $this->manager->getRepository(Image::class)->findOneBy(
-            array(
-                'filename' => $filename
-            )
-        );
-        if (null === $image) {
+        $image = $this->imageManager->createImage($file);
+        dump($image);
+        if (null === $image || !$image instanceof Image) {
             throw new TransformationFailedException(sprintf('Image with "%s" does not exist...', $image));
         }
         return $image;

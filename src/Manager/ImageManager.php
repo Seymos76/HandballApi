@@ -29,7 +29,7 @@ class ImageManager extends EntityManager
         $this->uploader = $uploader;
     }
 
-    public function createImage(UploadedFile $file)
+    public function createImage(UploadedFile $file, string $filename = null)
     {
         /** @var Image $image */
         $image = new Image();
@@ -41,9 +41,9 @@ class ImageManager extends EntityManager
         return $image;
     }
 
-    public function uploadFile(UploadedFile $file, string $filename, string $targetDir)
+    public function uploadFile(UploadedFile $file, string $targetDir, string $filename = null)
     {
-        $this->uploader->upload($file, $filename, $targetDir);
+        $filename = $this->uploader->upload($file, $targetDir, $filename);
         return $filename;
     }
 

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Galery;
 use App\Entity\Image;
+use App\Entity\Player;
 use App\Form\DataTransformer\MultipleFilesToImagesTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -35,14 +36,12 @@ class GaleryType extends AbstractType
                 'images',
                 CollectionType::class,
                 array(
-                    'entry_type' => EntityType::class,
-                    array(
-                        'class' => Image::class,
-                        'choice_label' => "name"
-                    ),
+                    'entry_type' => ImageType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'label' => "Ajoutez vos images"
+                    'entry_options' => array(
+                        'label' => "Ajoutez vos images"
+                    ),
                 )
             )
         ;

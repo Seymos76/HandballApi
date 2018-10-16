@@ -14,6 +14,7 @@
     <script>
         jQuery(document).ready(function () {
             jQuery('.add_collection_widget').click(function (e) {
+                console.log('add');
                 var list = jQuery(jQuery(this).attr('data-list'));
                 // Try to find the counter of the list
                 var counter = list.data('widget-counter') | list.children().length;

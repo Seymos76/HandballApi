@@ -41,6 +41,7 @@ class GaleryController extends AbstractController
             $galery->setSlug($slugger->slugify($galery->getName()));
             dump($this->getParameter('hb.galery_image')."/".$galery->getSlug());
             $images = $form->getData()->getImages();
+            dump($images);
             foreach ($images as $key => $value) {
                 $image = $imageManager->createImage($value);
                 $imageManager->uploadFile($value, $image->getFilename(), $this->getParameter('hb.galery_image')."/".$galery->getSlug());

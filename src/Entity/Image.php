@@ -26,6 +26,15 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Image(
+     *     mimeTypes={"image/png", "image/jpg", "image/jpeg"},
+     *     mimeTypesMessage="Ce format de fichier n'est pas accepté",
+     *     detectCorrupted=true,
+     *     allowLandscape=true,
+     *     allowPortrait=true,
+     *     maxSize="2M",
+     *     maxSizeMessage="Le fichier sélectionné est trop lourd."
+     * )
      */
     private $filename;
 
@@ -103,9 +112,9 @@ class Image
         return $this->extension;
     }
 
-    public function setExtension(string $extension): self
+    public function setExtension(string $mime_type): self
     {
-        $this->extension = $extension;
+        $this->extension = substr($mime_type, 6);
 
         return $this;
     }

@@ -18,14 +18,8 @@
             <tr>
                 <th>Image</th>
                 <td>
-                    {% set image_link = image.path ~ "/" ~ image.filename ~ "." ~ image.extension %}
-                    <img src="{{ image_link }}" alt="">
-                    <img src="{{ asset('uploads/players/' ~ image.filename ~ "." ~ image.extension) }}" alt="">
+                    <img src="{{ asset('uploads/single_image/' ~ image.filename) }}" alt="" height="300">
                 </td>
-            </tr>
-            <tr>
-                <th>Filename</th>
-                <td>{{ image.filename }}</td>
             </tr>
             <tr>
                 <th>Extension</th>
@@ -40,8 +34,8 @@
                 <td>{{ image.size }}</td>
             </tr>
             <tr>
-                <th>Alt</th>
-                <td>{{ image.alt }}</td>
+                <th>Title</th>
+                <td>{{ image.title }}</td>
             </tr>
         </tbody>
     </table>

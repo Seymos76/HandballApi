@@ -1,5 +1,5 @@
 {{ form_start(form) }}
-    {{ form_widget(form.name) }}
+{{ form_widget(form.name) }}
 {{ form_label(form.images) }}
 {{ form_errors(form.images) }}
 <ul id="images-fields-list" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}" data-widget-tags="{{ '<li></li>'|e }}">

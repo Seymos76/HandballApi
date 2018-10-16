@@ -4,6 +4,7 @@ namespace App\Controller\Administration;
 
 use App\Entity\Image;
 use App\Form\ImageType;
+use App\Manager\ImageManager;
 use App\Repository\ImageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,17 +27,20 @@ class ImageController extends AbstractController
     /**
      * @Route("/new", name="image_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ImageManager $imageManager): Response
     {
-        $image = new Image("undefined");
-        $form = $this->createForm(ImageType::class, $image);
+        $image = new Image();
+        $form = $this->createForm(ImageType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $imageManager->createImage($form->getData()['filename']);
+            $imageManager->uploadFile($form->getData()['filename'], $this->getParameter('hb.single_image'), $image->getFilename());
+            $image->setPath($this->getParameter('hb.single_image'));
             $em = $this->getDoctrine()->getManager();
             $em->persist($image);
             $em->flush();
-
+            $this->addFlash('success',"Image ajoutée !");
             return $this->redirectToRoute('image_index');
         }
 
