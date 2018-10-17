@@ -10,6 +10,7 @@ namespace App\Manager;
 
 
 use App\Entity\Galery;
+use App\Entity\Gallery;
 use App\Entity\Image;
 use App\Entity\Slide;
 use App\Service\Image\Uploader;
@@ -19,8 +20,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageManager extends EntityManager
 {
-    private $container;
-    private $uploader;
+    protected $container;
+    protected $uploader;
 
     public function __construct(EntityManagerInterface $manager, ContainerInterface $container, Uploader $uploader)
     {
@@ -47,7 +48,7 @@ class ImageManager extends EntityManager
         return $filename;
     }
 
-    public function addImageOnGallery(Galery $galery, string $filename)
+    public function addImageOnGallery(Gallery $gallery, string $filename)
     {
         $image = $this->getManager()->getRepository(Image::class)->findOneBy(
             array(
@@ -57,18 +58,17 @@ class ImageManager extends EntityManager
         if (null === $image || !$image instanceof Image) {
             return;
         }
-        $galery->addImage($image);
-        $this->persist($galery);
-        return $galery;
+        $gallery->addImage($image);
+        $this->persist($gallery);
+        return $gallery;
     }
 
-    public function removeImageFromApp(Image $image)
+    public function removeImageFromApp(Image $image, string $targetDirectory)
     {
-        $current_image = $this->container->getParameter('hb.galery_image')."/".$image->getFilename().".".$image->getExtension();
+        $current_image = $targetDirectory."/".$image->getFilename();
         if (null === $current_image) {
             return;
         }
-        $this->remove($image);
         self::deleteFile($current_image);
         return true;
     }
@@ -85,16 +85,5 @@ class ImageManager extends EntityManager
         } else {
             return false;
         }
-    }
-
-    public function validateImageAndGallery(Galery $galery, Image $image)
-    {
-        if (!$galery instanceof Galery || null === $galery) {
-            return;
-        }
-        if (!$image instanceof Image || null === $image) {
-            return;
-        }
-        return true;
     }
 }

@@ -6,7 +6,7 @@
 parameters:
     locale: 'fr'
     hb.player_image: '%kernel.project_dir%/public/uploads/players'
-    hb.galery_image: '%kernel.project_dir%/public/uploads/gallery'
+    hb.gallery_image: '%kernel.project_dir%/public/uploads/gallery'
     hb.slide_image: '%kernel.project_dir%/public/uploads/slides'
     hb.single_image: '%kernel.project_dir%/public/uploads/single_image'
 

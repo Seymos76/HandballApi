@@ -3,15 +3,16 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\GaleryRepository")
  * @ApiResource()
+ * @ORM\Entity(repositoryClass="App\Repository\GalleryRepository")
  */
-class Galery
+class Gallery
 {
     /**
      * @ORM\Id()
@@ -36,9 +37,14 @@ class Galery
     private $date_creation;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="gallery")
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="gallery", cascade={"persist", "remove"})
      */
     private $images;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $path;
 
     public function __construct()
     {
@@ -56,7 +62,7 @@ class Galery
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -68,9 +74,10 @@ class Galery
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug(): self
     {
-        $this->slug = $slug;
+        $slugger = new Slugify();
+        $this->slug = $slugger->slugify($this->getName());
 
         return $this;
     }
@@ -97,11 +104,17 @@ class Galery
 
     public function addImage(Image $image): self
     {
-        if (!$this->images->contains($image)) {
+        if (!in_array($image, $this->images)) {
             $this->images[] = $image;
             $image->setGallery($this);
         }
 
+        return $this;
+    }
+
+    public function resetImages()
+    {
+        $this->images = array();
         return $this;
     }
 
@@ -114,6 +127,18 @@ class Galery
                 $image->setGallery(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(): self
+    {
+        $this->path = $this->getDateCreation()->format('d-m-Y')."-".$this->getSlug() . "/";
 
         return $this;
     }

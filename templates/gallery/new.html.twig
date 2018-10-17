@@ -1,20 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Galery{% endblock %}
+{% block title %}New Gallery{% endblock %}
 
 {% block body %}
-    <h1>Create new Galery</h1>
+    <h1>Create new Gallery</h1>
 
-    {{ include('galery/_form.html.twig') }}
+    {{ include('gallery/_form.html.twig') }}
 
-    <a href="{{ path('galery_index') }}">back to list</a>
+    <a href="{{ path('gallery_index') }}">back to list</a>
 {% endblock %}
 
 {% block javascripts %}
     <script>
         jQuery(document).ready(function () {
-            jQuery('.add_collection_widget').click(function (e) {
-                console.log('add');
+            jQuery('.add_image_collection').click(function (e) {
                 var list = jQuery(jQuery(this).attr('data-list'));
                 // Try to find the counter of the list
                 var counter = list.data('widget-counter') | list.children().length;
@@ -33,7 +32,7 @@
                 list.data(' widget-counter', counter);
 
                 // create a new list element and add it to the list
-                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+                var newElem = jQuery(list.attr('data-widget-image')).html(newWidget);
                 newElem.appendTo(list);
             });
         });

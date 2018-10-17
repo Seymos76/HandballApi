@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block body %}
+    <h1>Gallery</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ gallery.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ gallery.name }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ gallery.slug }}</td>
+            </tr>
+            <tr>
+                <th>Date creation</th>
+                <td>{{ gallery.dateCreation ? gallery.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Images</th>
+                <td>
+					{% for image in gallery.images %}
+                        <img src="{{ asset('uploads/gallery/' ~ gallery.path ~ image.filename) }}"
+                             alt="" height="300">
+					{% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('gallery_index') }}">back to list</a>
+
+    <a href="{{ path('gallery_edit', {'id': gallery.id}) }}">edit</a>
+
+    {{ include('gallery/_delete_form.html.twig') }}
+{% endblock %}

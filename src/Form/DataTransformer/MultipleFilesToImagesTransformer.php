@@ -47,10 +47,12 @@ class MultipleFilesToImagesTransformer implements DataTransformerInterface
         }
         $filenames = [];
         foreach ($files as $file) {
-            $filename = $this->imageManager->createImage($file);
-            $this->imageManager->uploadFile($file, $filename, $this->container->getParameter('hb.galery_image'));
-            array_push($filenames, $filename);
+            dump($file);
+            //$filename = $this->imageManager->createImage($file);
+            //$this->imageManager->uploadFile($file, $filename, $this->container->getParameter('hb.galery_image'));
+            //array_push($filenames, $filename);
         }
+        die;
         $images = [];
         foreach ($filenames as $filename) {
             $image = $this->imageManager->getManager()->getRepository(Image::class)->findOneBy(

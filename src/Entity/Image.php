@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
  * @ApiResource()
  */
-class Image
+class Image implements \ArrayAccess
 {
     /**
      * @ORM\Id()
@@ -64,11 +64,6 @@ class Image
     private $team;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Galery", inversedBy="images")
-     */
-    private $gallery;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
@@ -77,6 +72,11 @@ class Image
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="images", cascade={"persist"})
+     */
+    private $gallery;
 
     public function getId(): ?int
     {
@@ -179,18 +179,6 @@ class Image
         return $this;
     }
 
-    public function getGallery(): ?Galery
-    {
-        return $this->gallery;
-    }
-
-    public function setGallery(?Galery $gallery): self
-    {
-        $this->gallery = $gallery;
-
-        return $this;
-    }
-
     public function getTitle(): ?string
     {
         return $this->title;
@@ -214,4 +202,38 @@ class Image
 
         return $this;
     }
+
+    public function getGallery(): ?Gallery
+    {
+        return $this->gallery;
+    }
+
+    public function setGallery(?Gallery $gallery): self
+    {
+        $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    public function offsetExists($offset)
+    {
+        // TODO: Implement offsetExists() method.
+    }
+
+    public function offsetGet($offset)
+    {
+        // TODO: Implement offsetGet() method.
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        // TODO: Implement offsetSet() method.
+    }
+
+    public function offsetUnset($offset)
+    {
+        // TODO: Implement offsetUnset() method.
+    }
+
+
 }
