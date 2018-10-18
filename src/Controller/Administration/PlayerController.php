@@ -4,6 +4,7 @@ namespace App\Controller\Administration;
 
 use App\Entity\Player;
 use App\Form\PlayerType;
+use App\Manager\PlayerManager;
 use App\Repository\PlayerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,23 +27,20 @@ class PlayerController extends AbstractController
     /**
      * @Route("/new", name="player_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, PlayerManager $playerManager): Response
     {
         $player = new Player();
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $player->setFullname($player->getFirstname() . " " . $player->getLastname());
-            $em->persist($player);
-            $em->flush();
+            $player->setFullname($player->getFirstname(). " " .$player->getLastname());
+            $playerManager->update($player);
             $this->addFlash('success', "Joueur ajouté avec succès !");
             return $this->redirectToRoute('player_index');
         }
 
         return $this->render('player/new.html.twig', [
-            'player' => $player,
             'form' => $form->createView(),
         ]);
     }
@@ -58,14 +56,14 @@ class PlayerController extends AbstractController
     /**
      * @Route("/{id}/edit", name="player_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Player $player): Response
+    public function edit(Request $request, Player $player, PlayerManager $playerManager): Response
     {
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $playerManager->update($player);
+            $this->addFlash('success',"Joueur mis à jour !");
             return $this->redirectToRoute('player_edit', ['id' => $player->getId()]);
         }
 

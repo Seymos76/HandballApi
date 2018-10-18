@@ -16,6 +16,7 @@
         <a href="{{ path('index') }}">Accueil</a>
 		{% if is_granted('ROLE_USER') %}
             <a href="{{ path('game_index') }}">Les matchs</a>
+            <a href="{{ path('team_index') }}">Les équipes</a>
             <a href="{{ path('user_index') }}">Les utilisateurs</a>
             <a href="{{ path('player_index') }}">Les joueurs</a>
             <a href="{{ path('image_index') }}">Les images</a>

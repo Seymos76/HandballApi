@@ -21,7 +21,9 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ slide.image }}</td>
+                <td>
+                    <img src="{{ asset('uploads/slides/' ~ slide.image) }}" alt="" height="300">
+                </td>
             </tr>
         </tbody>
     </table>

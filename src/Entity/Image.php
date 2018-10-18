@@ -54,11 +54,6 @@ class Image implements \ArrayAccess
     private $size;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Player", mappedBy="image", cascade={"persist", "remove"})
-     */
-    private $player;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Team", mappedBy="image", cascade={"persist", "remove"})
      */
     private $team;
@@ -139,24 +134,6 @@ class Image implements \ArrayAccess
     public function setSize(float $size): self
     {
         $this->size = $size;
-
-        return $this;
-    }
-
-    public function getPlayer(): ?Player
-    {
-        return $this->player;
-    }
-
-    public function setPlayer(?Player $player): self
-    {
-        $this->player = $player;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newImage = $player === null ? null : $this;
-        if ($newImage !== $player->getImage()) {
-            $player->setImage($newImage);
-        }
 
         return $this;
     }

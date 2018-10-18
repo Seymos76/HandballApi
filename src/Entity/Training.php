@@ -24,10 +24,10 @@ class Training
     private $training_date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TrainingCategory", inversedBy="trainings")
+     * @ORM\OneToOne(targetEntity="App\Entity\Team", inversedBy="training", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $trainingCategory;
+    private $team;
 
     public function getId(): ?int
     {
@@ -46,14 +46,14 @@ class Training
         return $this;
     }
 
-    public function getTrainingCategory(): ?TrainingCategory
+    public function getTeam(): ?Team
     {
-        return $this->trainingCategory;
+        return $this->team;
     }
 
-    public function setTrainingCategory(?TrainingCategory $trainingCategory): self
+    public function setTeam(Team $team): self
     {
-        $this->trainingCategory = $trainingCategory;
+        $this->team = $team;
 
         return $this;
     }

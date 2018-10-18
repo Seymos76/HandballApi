@@ -44,7 +44,7 @@ class Player
     private $team;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Image", inversedBy="player", cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
@@ -113,12 +113,12 @@ class Player
         return $this;
     }
 
-    public function getImage(): ?Image
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(?Image $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 

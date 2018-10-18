@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Player;
 use App\Entity\Team;
+use App\Form\DataTransformer\FileToArrayTransformer;
 use App\Form\DataTransformer\FileToImageTransformer;
 use App\Manager\ImageManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,7 +26,7 @@ class PlayerType extends AbstractType
     private $session;
     private $transformer;
 
-    public function __construct(ImageManager $imageManager, SessionInterface $session, FileToImageTransformer $transformer)
+    public function __construct(ImageManager $imageManager, SessionInterface $session, FileToArrayTransformer $transformer)
     {
         $this->imageManager = $imageManager;
         $this->session = $session;
@@ -68,7 +70,11 @@ class PlayerType extends AbstractType
             )
             ->add(
                 'image',
-                FileType::class
+                ImageType::class,
+                array(
+                    'data_class' => null,
+                    'required' => false,
+                )
             )
             ->get('image')->addModelTransformer($this->transformer)
         ;

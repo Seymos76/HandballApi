@@ -57,7 +57,6 @@ class FileToImageTransformer implements DataTransformerInterface
             throw new TransformationFailedException(sprintf('File was not found...', $file));
         }
         $image = $this->imageManager->createImage($file);
-        dump($image);
         if (null === $image || !$image instanceof Image) {
             throw new TransformationFailedException(sprintf('Image with "%s" does not exist...', $image));
         }

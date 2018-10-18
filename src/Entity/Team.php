@@ -26,12 +26,12 @@ class Team
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $league;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $season;
 
@@ -45,9 +45,20 @@ class Team
      */
     private $image;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Game", mappedBy="team")
+     */
+    private $games;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Training", mappedBy="team", cascade={"persist", "remove"})
+     */
+    private $training;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,6 +141,54 @@ class Team
     public function setImage(?Image $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Game[]
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game): self
+    {
+        if (!$this->games->contains($game)) {
+            $this->games[] = $game;
+            $game->setTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): self
+    {
+        if ($this->games->contains($game)) {
+            $this->games->removeElement($game);
+            // set the owning side to null (unless already changed)
+            if ($game->getTeam() === $this) {
+                $game->setTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTraining(): ?Training
+    {
+        return $this->training;
+    }
+
+    public function setTraining(Training $training): self
+    {
+        $this->training = $training;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $training->getTeam()) {
+            $training->setTeam($this);
+        }
 
         return $this;
     }

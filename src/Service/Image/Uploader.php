@@ -16,7 +16,7 @@ class Uploader
     public function upload(UploadedFile $file, $targetDirectory, string $filename = null)
     {
         if ($filename === null) {
-            $filename = $this->generateFileName();
+            $filename = $this->generateFileName().$file->guessExtension();
         }
         $file->move(
             $targetDirectory,

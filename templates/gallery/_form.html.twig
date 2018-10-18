@@ -1,4 +1,4 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'method': "POST"}}) }}
     {{ form_row(form.name) }}
 <ul id="image_field_list" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}" data-widget-image="{{ '<li></li>'|e }}">
 	{% for field in form.images %}

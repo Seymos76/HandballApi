@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Administration;
 
 use App\Entity\Slide;
 use App\Form\SlideType;
+use App\Manager\SlideManager;
 use App\Repository\SlideRepository;
 use App\Service\Image\Uploader;
 use Cocur\Slugify\Slugify;
@@ -29,27 +30,18 @@ class SlideController extends AbstractController
     /**
      * @Route("/new", name="slide_new", methods="GET|POST")
      */
-    public function new(Request $request, Uploader $uploader): Response
+    public function new(Request $request, SlideManager $slideManager): Response
     {
-        $slide = new Slide();
         $form = $this->createForm(SlideType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $slugger = new Slugify();
-            $slide->setName($form->getData()['name']);
-            $slide->setSlug($slugger->slugify($form->getData()['name']));
-            $filename = $uploader->upload($form->getData()['image'], $slide->getSlug(), $this->getParameter('hb.slide_image'));
-            $slide->setImage($filename);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($slide);
-            $em->flush();
-
+            $slide = $slideManager->createSlide($form->getData());
+            $this->addFlash('success',"Slide créé !");
             return $this->redirectToRoute('slide_index');
         }
 
         return $this->render('slide/new.html.twig', [
-            'slide' => $slide,
             'form' => $form->createView(),
         ]);
     }
@@ -65,14 +57,14 @@ class SlideController extends AbstractController
     /**
      * @Route("/{id}/edit", name="slide_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Slide $slide): Response
+    public function edit(Request $request, Slide $slide, SlideManager $slideManager): Response
     {
-        $form = $this->createForm(SlideType::class, $slide);
+        $form = $this->createForm(SlideType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $slide = $slideManager->updateSlide($form->getData(), $slide);
+            $this->addFlash('success',"Slide mis à jour !");
             return $this->redirectToRoute('slide_edit', ['id' => $slide->getId()]);
         }
 

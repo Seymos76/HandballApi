@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Training_date</th>
+                <th>Training team</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
             <tr>
                 <td>{{ training.id }}</td>
                 <td>{{ training.trainingDate ? training.trainingDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ training.team.name }}</td>
                 <td>
                     <a href="{{ path('training_show', {'id': training.id}) }}">show</a>
                     <a href="{{ path('training_edit', {'id': training.id}) }}">edit</a>
