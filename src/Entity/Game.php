@@ -53,6 +53,21 @@ class Game
      */
     private $looser_score;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="games")
+     */
+    private $team;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $appointment_location;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $appointment_date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +153,42 @@ class Game
     public function setLooserScore(?int $looser_score): self
     {
         $this->looser_score = $looser_score;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): self
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    public function getAppointmentLocation(): ?string
+    {
+        return $this->appointment_location;
+    }
+
+    public function setAppointmentLocation(string $appointment_location): self
+    {
+        $this->appointment_location = $appointment_location;
+
+        return $this;
+    }
+
+    public function getAppointmentDate(): ?\DateTimeInterface
+    {
+        return $this->appointment_date;
+    }
+
+    public function setAppointmentDate(\DateTimeInterface $appointment_date): self
+    {
+        $this->appointment_date = $appointment_date;
 
         return $this;
     }

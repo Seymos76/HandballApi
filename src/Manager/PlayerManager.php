@@ -9,13 +9,44 @@
 namespace App\Manager;
 
 
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Player;
+use Cocur\Slugify\Slugify;
 
-class PlayerManager extends EntityManager
+class PlayerManager extends ImageManager
 {
-    public function __construct(EntityManagerInterface $manager)
+    public function createPlayer(array $formData)
     {
-        parent::__construct($manager);
+        $player = new Player();
+        $player->setFirstname(ucfirst($formData['firstname']));
+        $player->setLastname(ucwords($formData['lastname']));
+        $player->setFullname($player->getFirstname(). " " .$player->getLastname());
+        $player->setPosition($formData['position']);
+        $player->setTeam($formData['team']);
+        $filename = $this->uploadFile($formData['image'], $this->container->getParameter('hb.player_image'));
+        $player->setImage($filename);
+        $this->update($player);
+        return $player;
+    }
+
+    public function updatePayer(array $formData)
+    {
+        if ($formData['image'] !== null) {
+            // fetch player
+            $player = $this->getManager()->getRepository(Player::class)->findOneBy(
+                array(
+                    'firstname' => $formData['fistname'],
+                    'lastname' => $formData['lastname'],
+                )
+            );
+            if (!$player) {
+                return;
+            }
+            // upload image
+            $filename = $this->uploadFile($formData['image'], $this->container->getParameter('hb.player_image'));
+            // set new image to player
+            $player->setImage($filename);
+            $this->update($player);
+        }
     }
 
     public function formatToJson(array $players)

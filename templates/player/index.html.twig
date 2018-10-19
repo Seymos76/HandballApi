@@ -13,6 +13,7 @@
                 <th>Lastname</th>
                 <th>Fullname</th>
                 <th>Position</th>
+                <th>Equipe</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,6 +25,7 @@
                 <td>{{ player.lastname }}</td>
                 <td>{{ player.fullname }}</td>
                 <td>{{ player.position }}</td>
+                <td>{{ player.team.name }}</td>
                 <td>
                     <a href="{{ path('player_show', {'id': player.id}) }}">show</a>
                     <a href="{{ path('player_edit', {'id': player.id}) }}">edit</a>

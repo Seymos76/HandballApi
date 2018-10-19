@@ -1,4 +1,10 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+{% if slide is defined %}
+	{{ form_row(form.name, {'attr': {'value': slide.name}}) }}
+    <img src="{{ asset('uploads/slides/' ~ slide.image) }}" alt="" height="300">
+{% else %}
+    {{ form_row(form.name) }}
+    {{ form_row(form.image) }}
+{% endif %}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

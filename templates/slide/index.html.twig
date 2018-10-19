@@ -10,7 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Date_creation</th>
+                <th>Slug</th>
+                <th>Image</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,7 +20,8 @@
             <tr>
                 <td>{{ slide.id }}</td>
                 <td>{{ slide.name }}</td>
-                <td>{{ slide.dateCreation ? slide.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ slide.slug }}</td>
+                <td>{{ slide.image }}</td>
                 <td>
                     <a href="{{ path('slide_show', {'id': slide.id}) }}">show</a>
                     <a href="{{ path('slide_edit', {'id': slide.id}) }}">edit</a>
@@ -27,7 +29,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

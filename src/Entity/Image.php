@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
  * @ApiResource()
  */
-class Image
+class Image implements \ArrayAccess
 {
     /**
      * @ORM\Id()
@@ -28,6 +26,15 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Image(
+     *     mimeTypes={"image/png", "image/jpg", "image/jpeg"},
+     *     mimeTypesMessage="Ce format de fichier n'est pas accepté",
+     *     detectCorrupted=true,
+     *     allowLandscape=true,
+     *     allowPortrait=true,
+     *     maxSize="2M",
+     *     maxSizeMessage="Le fichier sélectionné est trop lourd."
+     * )
      */
     private $filename;
 
@@ -47,41 +54,24 @@ class Image
     private $size;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $alt;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Player", mappedBy="image", cascade={"persist", "remove"})
-     */
-    private $player;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Team", mappedBy="image", cascade={"persist", "remove"})
      */
     private $team;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Galery", mappedBy="images")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $galeries;
+    private $title;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Slide", mappedBy="image", cascade={"persist", "remove"})
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $slide;
+    private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="images", cascade={"persist"})
      */
-    private $type;
-
-    public function __construct(string $type)
-    {
-        $this->galeries = new ArrayCollection();
-        $this->type = $type;
-    }
+    private $gallery;
 
     public function getId(): ?int
     {
@@ -117,9 +107,9 @@ class Image
         return $this->extension;
     }
 
-    public function setExtension(string $extension): self
+    public function setExtension(string $mime_type): self
     {
-        $this->extension = $extension;
+        $this->extension = substr($mime_type, 6);
 
         return $this;
     }
@@ -148,36 +138,6 @@ class Image
         return $this;
     }
 
-    public function getAlt(): ?string
-    {
-        return $this->alt;
-    }
-
-    public function setAlt(?string $alt): self
-    {
-        $this->alt = $alt;
-
-        return $this;
-    }
-
-    public function getPlayer(): ?Player
-    {
-        return $this->player;
-    }
-
-    public function setPlayer(?Player $player): self
-    {
-        $this->player = $player;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newImage = $player === null ? null : $this;
-        if ($newImage !== $player->getImage()) {
-            $player->setImage($newImage);
-        }
-
-        return $this;
-    }
-
     public function getTeam(): ?Team
     {
         return $this->team;
@@ -196,60 +156,61 @@ class Image
         return $this;
     }
 
-    /**
-     * @return Collection|Galery[]
-     */
-    public function getGaleries(): Collection
+    public function getTitle(): ?string
     {
-        return $this->galeries;
+        return $this->title;
     }
 
-    public function addGalery(Galery $galery): self
+    public function setTitle(?string $title): self
     {
-        if (!$this->galeries->contains($galery)) {
-            $this->galeries[] = $galery;
-            $galery->addImage($this);
-        }
+        $this->title = $title;
 
         return $this;
     }
 
-    public function removeGalery(Galery $galery): self
+    public function getDescription(): ?string
     {
-        if ($this->galeries->contains($galery)) {
-            $this->galeries->removeElement($galery);
-            $galery->removeImage($this);
-        }
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getSlide(): ?Slide
+    public function getGallery(): ?Gallery
     {
-        return $this->slide;
+        return $this->gallery;
     }
 
-    public function setSlide(Slide $slide): self
+    public function setGallery(?Gallery $gallery): self
     {
-        $this->slide = $slide;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $slide->getImage()) {
-            $slide->setImage($this);
-        }
+        $this->gallery = $gallery;
 
         return $this;
     }
 
-    public function getType(): ?string
+    public function offsetExists($offset)
     {
-        return $this->type;
+        // TODO: Implement offsetExists() method.
     }
 
-    public function setType(string $type): self
+    public function offsetGet($offset)
     {
-        $this->type = $type;
-
-        return $this;
+        // TODO: Implement offsetGet() method.
     }
+
+    public function offsetSet($offset, $value)
+    {
+        // TODO: Implement offsetSet() method.
+    }
+
+    public function offsetUnset($offset)
+    {
+        // TODO: Implement offsetUnset() method.
+    }
+
+
 }

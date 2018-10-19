@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
+use App\Entity\Team;
 use App\Entity\Training;
-use App\Entity\TrainingCategory;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -16,16 +16,16 @@ class TrainingType extends AbstractType
     {
         $builder
             ->add(
-                'training_date',
-                DateType::class
-            )
-            ->add(
-                'trainingCategory',
+                'team',
                 EntityType::class,
                 array(
-                    'class' => TrainingCategory::class,
+                    'class' => Team::class,
                     'choice_label' => 'name'
                 )
+            )
+            ->add(
+                'training_date',
+                DateType::class
             )
         ;
     }

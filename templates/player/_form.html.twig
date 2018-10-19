@@ -1,4 +1,11 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_row(form.firstname) }}
+	{{ form_row(form.lastname) }}
+	{{ form_row(form.position) }}
+	{{ form_row(form.team) }}
+	{% if player.image is not null %}
+		<img src="{{ asset('uploads/players/' ~ player.image) }}" alt="">
+	{% endif %}
+	{{ form_row(form.image) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

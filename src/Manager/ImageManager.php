@@ -10,6 +10,7 @@ namespace App\Manager;
 
 
 use App\Entity\Galery;
+use App\Entity\Gallery;
 use App\Entity\Image;
 use App\Entity\Slide;
 use App\Service\Image\Uploader;
@@ -19,8 +20,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageManager extends EntityManager
 {
-    private $container;
-    private $uploader;
+    protected $container;
+    protected $uploader;
 
     public function __construct(EntityManagerInterface $manager, ContainerInterface $container, Uploader $uploader)
     {
@@ -29,28 +30,25 @@ class ImageManager extends EntityManager
         $this->uploader = $uploader;
     }
 
-    public function createImage(UploadedFile $file)
+    public function createImage(UploadedFile $file, string $filename = null)
     {
+        /** @var Image $image */
         $image = new Image();
-        $image->setFilename(self::getUniqueName().".".$file->guessExtension());
+        $image->setFilename($this->uploader->generateFileName().".".$file->guessExtension());
         $image->setExtension($file->guessExtension());
         $image->setMimeType($file->getMimeType());
         $image->setSize($file->getSize());
         $this->update($image);
-        return $image->getFilename();
+        return $image;
     }
 
-    public function uploadFile(UploadedFile $file, string $filename, string $targetDir)
+    public function uploadFile(UploadedFile $file, string $targetDir, string $filename = null)
     {
-        $this->uploader->upload($file, $filename, $targetDir);
+        $filename = $this->uploader->upload($file, $targetDir, $filename);
+        return $filename;
     }
 
-    public function getUniqueName(): ?string
-    {
-        return $unique = md5(uniqid());
-    }
-
-    public function addImageOnGallery(Galery $galery, string $filename)
+    public function addImageOnGallery(Gallery $gallery, string $filename)
     {
         $image = $this->getManager()->getRepository(Image::class)->findOneBy(
             array(
@@ -60,18 +58,17 @@ class ImageManager extends EntityManager
         if (null === $image || !$image instanceof Image) {
             return;
         }
-        $galery->addImage($image);
-        $this->update($galery);
-        return $galery;
+        $gallery->addImage($image);
+        $this->persist($gallery);
+        return $gallery;
     }
 
-    public function removeImageFromApp(Image $image)
+    public function removeImageFromApp(Image $image, string $targetDirectory)
     {
-        $current_image = $this->container->getParameter('hb.galery_image')."/".$image->getFilename().".".$image->getExtension();
+        $current_image = $targetDirectory."/".$image->getFilename();
         if (null === $current_image) {
             return;
         }
-        $this->remove($image);
         self::deleteFile($current_image);
         return true;
     }
@@ -88,16 +85,5 @@ class ImageManager extends EntityManager
         } else {
             return false;
         }
-    }
-
-    public function validateImageAndGallery(Galery $galery, Image $image)
-    {
-        if (!$galery instanceof Galery || null === $galery) {
-            return;
-        }
-        if (!$image instanceof Image || null === $image) {
-            return;
-        }
-        return true;
     }
 }

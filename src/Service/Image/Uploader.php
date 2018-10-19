@@ -13,13 +13,20 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Uploader
 {
-    public function upload(UploadedFile $file, string $filename, $targetDirectory)
+    public function upload(UploadedFile $file, $targetDirectory, string $filename = null)
     {
-        $file_name = $filename . "." . $file->guessExtension();
+        if ($filename === null) {
+            $filename = $this->generateFileName().$file->guessExtension();
+        }
         $file->move(
             $targetDirectory,
-            $file_name
+            $filename
         );
-        return $file_name;
+        return $filename;
+    }
+
+    public function generateFileName()
+    {
+        return uniqid();
     }
 }
