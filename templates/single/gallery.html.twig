@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    Galerie
+    {{ dump(gallery) }}
+	{% for i in gallery.images %}
+		{{ dump(gallery.slug) }}
+		{{ dump(i.filename) }}
+		<img src="{{ asset('uploads/gallery/' ~ gallery.slug ~ "/" ~ i.filename) }}" alt="">
+        {{ dump(i) }}
+	{% endfor %}
+{% endblock %}

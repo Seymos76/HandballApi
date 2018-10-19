@@ -9,6 +9,7 @@
 namespace App\Service\Mail;
 
 
+use App\Entity\Message;
 use App\Entity\User;
 use Psr\Container\ContainerInterface;
 
@@ -21,6 +22,23 @@ class Mailer
     {
         $this->mailer = $mailer;
         $this->container = $container;
+    }
+
+    public function sendMessage(Message $message)
+    {
+        $message_to_send = (new \Swift_Message("Nouveau message depuis le site associatif"))
+            ->setTo("contact@forgesleseauxhandball.fr")
+            ->setFrom($message->getEmail())
+            ->setCharset("UTF-8")
+            ->setBody(
+                $this->container->get('twig')->render(
+                    'email/contact_message.html.twig',
+                    array('message' => $message)
+                ),
+                'text/html'
+            );
+        $this->mailer->send($message_to_send);
+        return true;
     }
 
     public function sendAccountActivationCode(User $user)

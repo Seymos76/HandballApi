@@ -5,6 +5,7 @@ namespace App\Controller\Administration;
 use App\Entity\Gallery;
 use App\Entity\Image;
 use App\Form\GalleryType;
+use App\Form\ImageType;
 use App\Manager\GalleryManager;
 use App\Manager\ImageManager;
 use App\Repository\GalleryRepository;
@@ -49,11 +50,23 @@ class GalleryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="gallery_show", methods="GET")
+     * @Route("/{id}", name="gallery_show", methods="GET|POST")
      */
-    public function show(Gallery $gallery): Response
+    public function show(Request $request, Gallery $gallery, GalleryManager $galleryManager): Response
     {
-        return $this->render('gallery/show.html.twig', ['gallery' => $gallery]);
+        $form = $this->createForm(ImageType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $image = $galleryManager->createImage($form->getData()['filename']);
+            $filename = $galleryManager->uploadFile($form->getData()['filename'], $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
+            $image->setFilename($filename);
+            $gallery->addImage($image);
+            $galleryManager->update($image);
+            $galleryManager->update($gallery);
+            $this->addFlash('success',"Image ajoutée !");
+            return $this->redirectToRoute('gallery_show', ['id' => $gallery->getId()]);
+        }
+        return $this->render('gallery/show.html.twig', ['gallery' => $gallery, 'form' => $form->createView()]);
     }
 
     /**
@@ -82,24 +95,25 @@ class GalleryController extends AbstractController
     }
 
     /**
-     * @Route("/remove-image-from-gallery/{gallery}/{image}", name="image_gallery_delete")
-     * @ParamConverter("gallery", class="App\Entity\Gallery")
-     * @ParamConverter("image", class="App\Entity\Image")
+     * @Route(path="/remove-image-from-this-gallery", name="remove_image_from_gallery")
      * @param Request $request
-     * @param Gallery $gallery
-     * @param Image $image
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param GalleryManager $galleryManager
+     * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteImageFromGallery(Request $request, Gallery $gallery, Image $image, GalleryManager $galleryManager)
+    public function deleteImage(Request $request, GalleryManager $galleryManager)
     {
-        if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
+        if ($request->isMethod("POST")) {
+            $image = $galleryManager->getManager()->getRepository(Image::class)->find($request->request->get('image_id'));
+            $gallery = $galleryManager->getManager()->getRepository(Gallery::class)->find($request->request->get('gallery_id'));
             $gallery->removeImage($image);
-            $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getDateCreation()->format('Y'));
+            $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
+            $galleryManager->remove($image);
             $galleryManager->update($gallery);
             $this->addFlash('success',"Image supprimée de la galerie !");
+            return $this->redirectToRoute('gallery_show', array('id' => $gallery->getId()));
+        } else {
+            return false;
         }
-
-        return $this->redirectToRoute('gallery_edit', array('id' => $gallery->getId()));
     }
 
     /**
@@ -111,9 +125,10 @@ class GalleryController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $images = $gallery->getImages();
             foreach ($images as $image) {
-                $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getDateCreation()->format('Y'));
+                $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
                 $gallery->removeImage($image);
             }
+            $galleryManager->removeFolder($this->getParameter('hb.gallery_image')."/".$gallery->getPath());
             $em->remove($gallery);
             $em->flush();
             $this->addFlash('success',"Galerie supprimée !");

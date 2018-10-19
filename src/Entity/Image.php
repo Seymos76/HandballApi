@@ -25,7 +25,7 @@ class Image implements \ArrayAccess
     private $path;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image(
      *     mimeTypes={"image/png", "image/jpg", "image/jpeg"},
      *     mimeTypesMessage="Ce format de fichier n'est pas accepté",

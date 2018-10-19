@@ -20,6 +20,10 @@
                 <td>{{ gallery.slug }}</td>
             </tr>
             <tr>
+                <th>Path</th>
+                <td>{{ gallery.path }}</td>
+            </tr>
+            <tr>
                 <th>Date creation</th>
                 <td>{{ gallery.dateCreation ? gallery.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
@@ -29,11 +33,19 @@
 					{% for image in gallery.images %}
                         <img src="{{ asset('uploads/gallery/' ~ gallery.path ~ image.filename) }}"
                              alt="" height="300">
+                        {% include('gallery/_delete_image.html.twig') %}
 					{% endfor %}
                 </td>
             </tr>
         </tbody>
     </table>
+
+    {{ form_start(form) }}
+    {{ form_row(form.filename) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    <button type="submit">Ajouter une image</button>
+    {{ form_end(form) }}
 
     <a href="{{ path('gallery_index') }}">back to list</a>
 

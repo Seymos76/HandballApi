@@ -1,0 +1,5 @@
+<form action="{{ path('remove_image_from_gallery') }}" method="post">
+	<input type="hidden" name="image_id" value="{{ image.id }}">
+	<input type="hidden" name="gallery_id" value="{{ gallery.id }}">
+	<button type="submit">Supprimer l'image</button>
+</form>
