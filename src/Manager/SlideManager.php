@@ -20,7 +20,7 @@ class SlideManager extends ImageManager
         $slugger = new Slugify();
         $slide->setName($formData['name']);
         $slide->setSlug($slugger->slugify($formData['name']));
-        $filename = $this->uploader->upload($formData['image'], $slide->getSlug(), $this->container->getParameter('hb.slide_image'));
+        $filename = $this->uploader->upload($formData['image'], $this->container->getParameter('hb.slide_image'), $slide->getSlug());
         $slide->setImage($filename);
         $this->update($slide);
         return $slide;

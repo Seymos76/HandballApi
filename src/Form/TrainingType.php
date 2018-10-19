@@ -16,16 +16,16 @@ class TrainingType extends AbstractType
     {
         $builder
             ->add(
-                'training_date',
-                DateType::class
-            )
-            ->add(
                 'team',
                 EntityType::class,
                 array(
                     'class' => Team::class,
                     'choice_label' => 'name'
                 )
+            )
+            ->add(
+                'training_date',
+                DateType::class
             )
         ;
     }

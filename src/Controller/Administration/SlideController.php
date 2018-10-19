@@ -36,7 +36,7 @@ class SlideController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $slide = $slideManager->createSlide($form->getData());
+            $slideManager->createSlide($form->getData());
             $this->addFlash('success',"Slide créé !");
             return $this->redirectToRoute('slide_index');
         }
