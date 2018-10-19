@@ -28,6 +28,12 @@
 		{% elseif is_granted('ROLE_ADMIN') %}
             <a href="{{ path('admin') }}">Admin</a>
 		{% else %}
+            <a href="">Entrainements</a>
+            <a href="">Matchs</a>
+            <a href="">Résultats</a>
+            <a href="">Galerie</a>
+            <a href="">Contact</a>
+            <a href="">Actualités</a>
             <a href="{{ path('register') }}">Inscription</a>
             <a href="{{ path('login') }}">Connexion</a>
             <a href="{{ path('ask_for_password_reinitialisation') }}">Réinitialiser mon mot de passe</a>
