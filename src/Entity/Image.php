@@ -73,6 +73,11 @@ class Image implements \ArrayAccess
      */
     private $gallery;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Article", mappedBy="image", cascade={"persist", "remove"})
+     */
+    private $article;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -210,6 +215,24 @@ class Image implements \ArrayAccess
     public function offsetUnset($offset)
     {
         // TODO: Implement offsetUnset() method.
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newImage = $article === null ? null : $this;
+        if ($newImage !== $article->getImage()) {
+            $article->setImage($newImage);
+        }
+
+        return $this;
     }
 
 

@@ -9,6 +9,7 @@ parameters:
     hb.gallery_image: '%kernel.project_dir%/public/uploads/gallery'
     hb.slide_image: '%kernel.project_dir%/public/uploads/slides'
     hb.single_image: '%kernel.project_dir%/public/uploads/single_image'
+    hb.article_image: '%kernel.project_dir%/public/uploads/articles'
 
 services:
     # default configuration for services in *this* file
