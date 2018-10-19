@@ -5,6 +5,7 @@ namespace App\Controller\Administration;
 use App\Entity\Gallery;
 use App\Entity\Image;
 use App\Form\GalleryType;
+use App\Form\ImageType;
 use App\Manager\GalleryManager;
 use App\Manager\ImageManager;
 use App\Repository\GalleryRepository;
@@ -49,11 +50,23 @@ class GalleryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="gallery_show", methods="GET")
+     * @Route("/{id}", name="gallery_show", methods="GET|POST")
      */
-    public function show(Gallery $gallery): Response
+    public function show(Request $request, Gallery $gallery, GalleryManager $galleryManager): Response
     {
-        return $this->render('gallery/show.html.twig', ['gallery' => $gallery]);
+        $form = $this->createForm(ImageType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $image = $galleryManager->createImage($form->getData()['filename']);
+            $filename = $galleryManager->uploadFile($form->getData()['filename'], $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
+            $image->setFilename($filename);
+            $gallery->addImage($image);
+            $galleryManager->update($image);
+            $galleryManager->update($gallery);
+            $this->addFlash('success',"Image ajoutée !");
+            return $this->redirectToRoute('gallery_show', ['id' => $gallery->getId()]);
+        }
+        return $this->render('gallery/show.html.twig', ['gallery' => $gallery, 'form' => $form->createView()]);
     }
 
     /**
@@ -79,27 +92,6 @@ class GalleryController extends AbstractController
             'gallery' => $gallery,
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/remove-image-from-gallery/{gallery}/{image}", name="image_gallery_delete")
-     * @ParamConverter("gallery", class="App\Entity\Gallery")
-     * @ParamConverter("image", class="App\Entity\Image")
-     * @param Request $request
-     * @param Gallery $gallery
-     * @param Image $image
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteImageFromGallery(Request $request, Gallery $gallery, Image $image, GalleryManager $galleryManager)
-    {
-        if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
-            $gallery->removeImage($image);
-            $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
-            $galleryManager->update($gallery);
-            $this->addFlash('success',"Image supprimée de la galerie !");
-        }
-
-        return $this->redirectToRoute('gallery_edit', array('id' => $gallery->getId()));
     }
 
     /**
