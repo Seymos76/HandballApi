@@ -17,13 +17,13 @@ class GalleryManager extends ImageManager
     {
         $gallery->setSlug();
         $gallery->setPath();
-        dump($gallery);
         $files = $gallery->getImages();
         $images = [];
         foreach ($files as $k => $v) {
             $image = $this->createImage($v['filename']);
+            $filename = $this->uploadFile($v['filename'], $this->container->getParameter('hb.gallery_image').'/'.$gallery->getPath());
+            $image->setFilename($filename);
             array_push($images, $image);
-            $this->uploadFile($v['filename'], $this->container->getParameter('hb.gallery_image').'/'.$gallery->getPath(), $image->getFilename());
         }
         $gallery->resetImages();
         foreach ($images as $image) {

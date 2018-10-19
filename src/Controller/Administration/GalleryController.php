@@ -94,12 +94,34 @@ class GalleryController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
             $gallery->removeImage($image);
-            $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getDateCreation()->format('Y'));
+            $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
             $galleryManager->update($gallery);
             $this->addFlash('success',"Image supprimée de la galerie !");
         }
 
         return $this->redirectToRoute('gallery_edit', array('id' => $gallery->getId()));
+    }
+
+    /**
+     * @Route(path="/remove-image-from-this-gallery", name="remove_image_from_gallery")
+     * @param Request $request
+     * @param GalleryManager $galleryManager
+     * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteImage(Request $request, GalleryManager $galleryManager)
+    {
+        if ($request->isMethod("POST")) {
+            $image = $galleryManager->getManager()->getRepository(Image::class)->find($request->request->get('image_id'));
+            $gallery = $galleryManager->getManager()->getRepository(Gallery::class)->find($request->request->get('gallery_id'));
+            $gallery->removeImage($image);
+            $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
+            $galleryManager->remove($image);
+            $galleryManager->update($gallery);
+            $this->addFlash('success',"Image supprimée de la galerie !");
+            return $this->redirectToRoute('gallery_show', array('id' => $gallery->getId()));
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -111,9 +133,10 @@ class GalleryController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $images = $gallery->getImages();
             foreach ($images as $image) {
-                $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getDateCreation()->format('Y'));
+                $galleryManager->removeImageFromApp($image, $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
                 $gallery->removeImage($image);
             }
+            $galleryManager->removeFolder($this->getParameter('hb.gallery_image')."/".$gallery->getPath());
             $em->remove($gallery);
             $em->flush();
             $this->addFlash('success',"Galerie supprimée !");

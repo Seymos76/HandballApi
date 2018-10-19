@@ -3,4 +3,7 @@
 {% block body %}
 	galeries
 	{{ dump(galleries) }}
+	{% for g in galleries %}
+		<a href="{{ path('gallery', {'slug': g.slug}) }}">Galerie {{ g.name }}</a>
+	{% endfor %}
 {% endblock %}

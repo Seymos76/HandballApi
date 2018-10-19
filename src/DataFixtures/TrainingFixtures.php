@@ -21,15 +21,15 @@ class TrainingFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= 10; $i++) {
             $training = new Training();
             $training->setTrainingDate(new \DateTime('now'));
-            $cat = $this->getReference('category'.rand(1,8));
-            $training->setTrainingCategory($cat);
+            $team = $this->getReference('team'.rand(1,4));
+            $training->setTeam($team);
         }
     }
 
     public function getDependencies()
     {
         return array(
-            TrainingCategoryFixtures::class
+            TeamFixtures::class
         );
     }
 }

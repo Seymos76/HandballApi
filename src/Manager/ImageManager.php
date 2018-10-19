@@ -30,11 +30,10 @@ class ImageManager extends EntityManager
         $this->uploader = $uploader;
     }
 
-    public function createImage(UploadedFile $file, string $filename = null)
+    public function createImage(UploadedFile $file)
     {
         /** @var Image $image */
         $image = new Image();
-        $image->setFilename($this->uploader->generateFileName().".".$file->guessExtension());
         $image->setExtension($file->guessExtension());
         $image->setMimeType($file->getMimeType());
         $image->setSize($file->getSize());
@@ -65,7 +64,7 @@ class ImageManager extends EntityManager
 
     public function removeImageFromApp(Image $image, string $targetDirectory)
     {
-        $current_image = $targetDirectory."/".$image->getFilename();
+        $current_image = $targetDirectory.$image->getFilename();
         if (null === $current_image) {
             return;
         }
@@ -81,6 +80,16 @@ class ImageManager extends EntityManager
     {
         if (file_exists($file)) {
             unlink($file);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function removeFolder(string $folder)
+    {
+        if (is_dir($folder)) {
+            rmdir($folder);
             return true;
         } else {
             return false;
