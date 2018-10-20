@@ -34,11 +34,6 @@ class Article
     private $date_creation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="articles")
-     */
-    private $gallery;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $summary;
@@ -95,18 +90,6 @@ class Article
     public function setDateCreation(\DateTimeInterface $date_creation): self
     {
         $this->date_creation = $date_creation;
-
-        return $this;
-    }
-
-    public function getGallery(): ?Gallery
-    {
-        return $this->gallery;
-    }
-
-    public function setGallery(?Gallery $gallery): self
-    {
-        $this->gallery = $gallery;
 
         return $this;
     }

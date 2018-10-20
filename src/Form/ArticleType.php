@@ -26,32 +26,31 @@ class ArticleType extends AbstractType
         $builder
             ->add(
                 'title',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "Titre de l'article"
+                )
             )
             ->add(
                 'summary',
                 TextareaType::class,
                 array(
-                    'required' => false
+                    'required' => false,
+                    'label' => "Résumé de l'article (si non rempli, sera généré automatiquement"
                 )
             )
             ->add(
                 'content',
-                TextareaType::class
-            )
-            ->add(
-                'gallery',
-                EntityType::class,
+                TextareaType::class,
                 array(
-                    'class' => Gallery::class,
-                    'choice_label' => 'name',
-                    'required' => false
+                    'label' => "Contenu de votre article"
                 )
             )
             ->add(
                 'image',
                 ImageType::class,
                 array(
+                    'label' => "Image à la une (facultative)",
                     'data_class' => null,
                     'required' => false,
                 )

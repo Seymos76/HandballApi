@@ -29,22 +29,12 @@
             </tr>
             <tr>
                 <th>Content</th>
-                <td>{{ article.content }}</td>
+                <td>{{ article.content|raw }}</td>
             </tr>
 			{% if article.image is not null %}
                 <tr>
                     <th>Image</th>
                     <td><img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="" height="300"></td>
-                </tr>
-			{% endif %}
-			{% if article.gallery is not null %}
-                <tr>
-                    <th>Galerie</th>
-                    <td>
-						{% for i in article.gallery.images %}
-                            <img src="{{ asset('uploads/gallery/' ~ article.gallery.path ~ i.filename) }}" alt="">
-						{% endfor %}
-                    </td>
                 </tr>
 			{% endif %}
         </tbody>

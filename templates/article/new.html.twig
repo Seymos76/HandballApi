@@ -9,3 +9,12 @@
 
     <a href="{{ path('article_index') }}">back to list</a>
 {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('ckeditor_standard/adapters/jquery.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('ckeditor_standard/ckeditor.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('textarea.ckeditor').ckeditor();
+        });
+    </script>
+{% endblock %}
