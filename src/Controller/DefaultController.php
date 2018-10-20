@@ -84,6 +84,22 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @Route("/galerie/{slug}", name="gallery")
+     */
+    public function gallery(string $slug, GalleryRepository $repository)
+    {
+        return $this->render(
+            'default/gallery.html.twig', [
+                'gallery' => $repository->findOneBy(
+                    array(
+                        'slug' => $slug
+                    )
+                )
+            ]
+        );
+    }
+
+    /**
      * @Route(path="/contact", name="contact")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response

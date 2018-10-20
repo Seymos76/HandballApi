@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello !{% endblock %}
+
+{% block body %}
+    <h1>Blog</h1>
+	{% for a in articles %}
+        <article>
+			<h2>{{ a.title }}</h2>
+			<figure>
+				<img alt="" src="{{ asset('uploads/articles/' ~ a.image) }}" height="300" />
+			</figure>
+			<p>{{ a.summary }}</p>
+			<a href="{{ path('article', {'slug': a.slug}) }}">Lire l'article</a>
+		</article>
+	{% endfor %}
+{% endblock %}

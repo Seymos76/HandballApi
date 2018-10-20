@@ -23,6 +23,7 @@
             <a href="{{ path('gallery_index') }}">Les galeries</a>
             <a href="{{ path('slide_index') }}">Les slides</a>
             <a href="{{ path('training_index') }}">Les entraînements</a>
+            <a href="{{ path('article_index') }}">Les articles</a>
             <a href="{{ path('password_change') }}">Changer le mot de passe</a>
             <a href="{{ path('logout') }}">Déconnexion</a>
 		{% elseif is_granted('ROLE_ADMIN') %}
@@ -32,7 +33,7 @@
             <a href="{{ path('matchs') }}">Matchs</a>
             <a href="{{ path('results') }}">Résultats</a>
             <a href="{{ path('galleries') }}">Galerie</a>
-            <a href="">Actualités</a>
+            <a href="{{ path('blog') }}">Actualités</a>
             <a href="{{ path('contact') }}">Contact</a>
             <a href="{{ path('register') }}">Inscription</a>
             <a href="{{ path('login') }}">Connexion</a>

@@ -211,6 +211,4 @@ class Image implements \ArrayAccess
     {
         // TODO: Implement offsetUnset() method.
     }
-
-
 }

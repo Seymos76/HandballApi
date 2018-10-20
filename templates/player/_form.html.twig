@@ -3,7 +3,7 @@
 	{{ form_row(form.lastname) }}
 	{{ form_row(form.position) }}
 	{{ form_row(form.team) }}
-	{% if player.image is not null %}
+	{% if player is defined and player.image is not null %}
 		<img src="{{ asset('uploads/players/' ~ player.image) }}" alt="">
 	{% endif %}
 	{{ form_row(form.image) }}

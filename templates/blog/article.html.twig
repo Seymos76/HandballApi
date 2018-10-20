@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<h1>{{ article.title }}</h1>
+
+	<img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="">
+
+	<p>{{ article.content|raw }}</p>
+
+	{{ form_start(form) }}
+	{{ form_row(form.name) }}
+	{{ form_row(form.email) }}
+	{{ form_row(form.content) }}
+	<button type="submit">Commenter</button>
+	{{ form_end(form) }}
+
+	{% if article.comments|length > 0 %}
+		{% for c in article.comments %}
+			<p>{{ c.name }}</p>
+			<p>{{ c.email }}</p>
+			<p>{{ c.content }}</p>
+			<hr>
+		{% endfor %}
+	{% endif %}
+{% endblock %}
