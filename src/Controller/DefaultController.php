@@ -8,6 +8,7 @@ use App\Form\MessageType;
 use App\Manager\MessageManager;
 use App\Repository\GalleryRepository;
 use App\Repository\GameRepository;
+use App\Repository\SlideRepository;
 use App\Repository\TrainingRepository;
 use App\Service\Mail\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,10 +21,13 @@ class DefaultController extends AbstractController
      * @Route(path="/", name="index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index()
+    public function index(SlideRepository $slideRepository, GameRepository $gameRepository)
     {
         return $this->render(
-            'default/index.html.twig'
+            'default/index.html.twig', [
+                'slides' => $slideRepository->findAll(),
+                'matchs' => $gameRepository->findAll()
+            ]
         );
     }
 

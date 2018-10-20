@@ -21,7 +21,10 @@ class EmailPasswordReinitialisationType extends AbstractType
         $builder
             ->add(
                 'email',
-                EmailType::class
+                EmailType::class,
+                array(
+                    'label' => "Entres ton e-mail ici pour qu'on puisse t'envoyer un lien de réinitialisation !"
+                )
             );
     }
 

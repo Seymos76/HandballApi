@@ -15,15 +15,24 @@ class TeamType extends AbstractType
         $builder
             ->add(
                 'name',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "Nom de l'équipe"
+                )
             )
             ->add(
                 'league',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "League"
+                )
             )
             ->add(
                 'season',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "Saison"
+                )
             )
         ;
     }

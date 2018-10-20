@@ -17,11 +17,17 @@ class SlideType extends AbstractType
         $builder
             ->add(
                 'name',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "Nom du slide"
+                )
             )
             ->add(
                 'image',
-                FileType::class
+                FileType::class,
+                array(
+                    'label' => "Image associée"
+                )
             )
         ;
     }

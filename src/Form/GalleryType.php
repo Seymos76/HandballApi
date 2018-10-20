@@ -24,7 +24,10 @@ class GalleryType extends AbstractType
         $builder
             ->add(
                 'name',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "Nom de la galerie"
+                )
             )
             ->add(
                 'images',
@@ -33,7 +36,8 @@ class GalleryType extends AbstractType
                     'entry_type' => ImageType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'required' => false
+                    'required' => false,
+                    'label' => "Ajoutes les images"
                 )
             )
             //->get('images')->addModelTransformer($this->transformer)

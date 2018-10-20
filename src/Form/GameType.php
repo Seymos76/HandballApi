@@ -19,31 +19,47 @@ class GameType extends AbstractType
         $builder
             ->add(
                 'match_date',
-                DateType::class
+                DateType::class,
+                array(
+                    'label' => "Date de la convocation"
+                )
             )
             ->add(
                 'team',
                 EntityType::class,
                 array(
                     'class' => Team::class,
-                    'choice_label' => 'name'
+                    'choice_label' => 'name',
+                    'label' => "L'équipe qui va jouer"
                 )
             )
             ->add(
                 'opponent',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "L'équipe adverse"
+                )
             )
             ->add(
                 'location',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "Le lieu du match"
+                )
             )
             ->add(
                 'appointmentLocation',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "Le lieu du rendez-vous"
+                )
             )
             ->add(
                 'appointmentDate',
-                DateTimeType::class
+                DateTimeType::class,
+                array(
+                    'label' => "La date et l'heure du rendez-vous"
+                )
             )
         ;
     }
