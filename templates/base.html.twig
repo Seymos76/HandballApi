@@ -28,7 +28,7 @@
             <a href="{{ path('password_change') }}">Changer le mot de passe</a>
             <a href="{{ path('logout') }}">Déconnexion</a>
 		{% elseif is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('admin') }}">Admin</a>
+            <a href="{{ path('administration') }}">Admin</a>
 		{% else %}
             <a href="{{ path('trainings') }}">Entrainements</a>
             <a href="{{ path('matchs') }}">Matchs</a>

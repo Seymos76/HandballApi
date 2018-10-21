@@ -40,14 +40,25 @@
         </tbody>
     </table>
 
-    {{ form_start(form) }}
-    {{ form_row(form.filename) }}
-    {{ form_row(form.title) }}
-    {{ form_row(form.description) }}
-    <button type="submit">Ajouter une image</button>
-    {{ form_end(form) }}
+    {{ render(controller('App\\Controller\\Administration\\GalleryController::addImageToGallery')) }}
 
     <a href="{{ path('gallery_index') }}">back to list</a>
 
     {{ include('gallery/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var remove_image_submit = $("button[name=remove_image_submit]");
+        var add_image_submit = $("button[name=add_image_submit]");
+        $("input[name=add_image_on_gallery_id]")[0].value = {{ gallery.id }};
+        remove_image_submit.click(function (e) {
+            e.preventDefault();
+            $("form[name=remove_image_form]").submit();
+        });
+        add_image_submit.click(function (e) {
+            e.preventDefault();
+            $("form[name=image]").submit();
+        });
+    </script>
 {% endblock %}

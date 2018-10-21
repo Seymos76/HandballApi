@@ -7,7 +7,6 @@ use App\Entity\Image;
 use App\Form\GalleryType;
 use App\Form\ImageType;
 use App\Manager\GalleryManager;
-use App\Manager\ImageManager;
 use App\Repository\GalleryRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,14 +42,15 @@ class GalleryController extends AbstractController
             return $this->redirectToRoute('gallery_index');
         }
 
-        return $this->render('gallery/new.html.twig', [
+        return $this->render('administration/gallery/new.html.twig', [
             'gallery' => $gallery,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="gallery_show", methods="GET|POST")
+     * @Route("/{id}", name="gallery_show", methods="GET")
+     * @ParamConverter("gallery", class="App\Entity\Gallery")
      */
     public function show(Request $request, Gallery $gallery, GalleryManager $galleryManager): Response
     {
@@ -66,7 +66,7 @@ class GalleryController extends AbstractController
             $this->addFlash('success',"Image ajoutée !");
             return $this->redirectToRoute('gallery_show', ['id' => $gallery->getId()]);
         }
-        return $this->render('gallery/show.html.twig', ['gallery' => $gallery, 'form' => $form->createView()]);
+        return $this->render('administration/gallery/show.html.twig', ['gallery' => $gallery, 'form' => $form->createView()]);
     }
 
     /**
@@ -88,19 +88,47 @@ class GalleryController extends AbstractController
             return $this->redirectToRoute('gallery_edit', ['id' => $gallery->getId()]);
         }
 
-        return $this->render('gallery/edit.html.twig', [
+        return $this->render('administration/gallery/edit.html.twig', [
             'gallery' => $gallery,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route(path="/remove-image-from-this-gallery", name="remove_image_from_gallery")
+     * @Route(path="/add-image-on-gallery", name="add_image_on_gallery", methods="POST")
+     * @param Request $request
+     * @param GalleryManager $galleryManager
+     */
+    public function addImageToGallery(Request $request, GalleryManager $galleryManager)
+    {
+        $form = $this->createForm(ImageType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $image = $galleryManager->createImage($form->getData()['filename']);
+            $gallery = $galleryManager->getManager()->getRepository(Gallery::class)->find($request->request->get('add_image_on_gallery_id'));
+            $filename = $galleryManager->uploadFile($form->getData()['filename'], $this->getParameter('hb.gallery_image')."/".$gallery->getPath());
+            $image->setFilename($filename);
+            $gallery->addImage($image);
+            $galleryManager->update($image);
+            $galleryManager->update($gallery);
+            $this->addFlash('success',"Image ajoutée !");
+            return $this->redirectToRoute('gallery_show', ['id' => $gallery->getId()]);
+        }
+        return $this->render(
+            'administration/gallery/_add_image.html.twig',
+            array(
+                'form' => $form->createView()
+            )
+        );
+    }
+
+    /**
+     * @Route(path="/remove-image-from-gallery", name="remove_image_from_gallery", methods="POST")
      * @param Request $request
      * @param GalleryManager $galleryManager
      * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteImage(Request $request, GalleryManager $galleryManager)
+    public function removeImageFromGallery(Request $request, GalleryManager $galleryManager)
     {
         if ($request->isMethod("POST")) {
             $image = $galleryManager->getManager()->getRepository(Image::class)->find($request->request->get('image_id'));

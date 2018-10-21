@@ -23,7 +23,7 @@ class GameController extends AbstractController
      */
     public function index(GameRepository $gameRepository): Response
     {
-        return $this->render('game/index.html.twig', ['games' => $gameRepository->findAll()]);
+        return $this->render('administration/game/index.html.twig', ['games' => $gameRepository->findAll()]);
     }
 
     /**
@@ -43,7 +43,7 @@ class GameController extends AbstractController
             return $this->redirectToRoute('game_index');
         }
 
-        return $this->render('game/new.html.twig', [
+        return $this->render('administration/game/new.html.twig', [
             'game' => $game,
             'form' => $form->createView(),
         ]);
@@ -54,7 +54,7 @@ class GameController extends AbstractController
      */
     public function show(Game $game): Response
     {
-        return $this->render('game/show.html.twig', ['game' => $game]);
+        return $this->render('administration/game/show.html.twig', ['game' => $game]);
     }
 
     /**
@@ -71,7 +71,7 @@ class GameController extends AbstractController
             return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
         }
 
-        return $this->render('game/edit.html.twig', [
+        return $this->render('administration/game/edit.html.twig', [
             'game' => $game,
             'form' => $form->createView(),
         ]);
@@ -94,7 +94,7 @@ class GameController extends AbstractController
             $this->addFlash('success',"Match mis à jour avec les résultats !");
             return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
         }
-        return $this->render('game/validate.html.twig', [
+        return $this->render('administration/game/validate.html.twig', [
             'game' => $game,
             'form' => $form->createView()
         ]);
