@@ -1,0 +1,36 @@
+div.home__info_button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  z-index: 5;
+  border-radius: 50%;
+  display: flex;
+
+  button {
+    background-color: transparent;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+
+    i.fa {
+      color: #ffffff;
+    }
+  }
+}
+
+section.home__info {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: 600px;
+  height: 300px;
+  border: 2px solid red;
+}
+
+@import "elements/home_slider";
+@import "elements/home_next_match";
+@import "elements/last_result";

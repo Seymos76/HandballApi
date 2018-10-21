@@ -1,0 +1,42 @@
+.main__navigation__overlay {
+  position: fixed;
+  top: 150px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: antiquewhite;
+  z-index: 1;
+}
+.overlay__menu__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #f4f4f4;
+  justify-content: center;
+}
+.navigation__container {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  display: flex;
+
+  nav {
+    position: relative;
+    margin: auto;
+    width: 50%;
+    height: auto;
+
+    a {
+      display: inline-block;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      text-decoration: none;
+      margin: 25px auto;
+      border-bottom: 5px solid #10BFDB;
+      font-size: 1.6em;
+      text-align: center;
+      font-family: "New Athletic M54";
+    }
+  }
+}
