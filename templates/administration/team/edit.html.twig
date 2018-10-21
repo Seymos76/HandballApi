@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Team</h1>
 
-    {{ include('team/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('administration/team/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('team_index') }}">back to list</a>
 
-    {{ include('team/_delete_form.html.twig') }}
+    {{ include('administration/team/_delete_form.html.twig') }}
 {% endblock %}
