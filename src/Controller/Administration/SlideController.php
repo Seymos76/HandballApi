@@ -24,7 +24,7 @@ class SlideController extends AbstractController
      */
     public function index(SlideRepository $slideRepository): Response
     {
-        return $this->render('slide/index.html.twig', ['slides' => $slideRepository->findAll()]);
+        return $this->render('administration/slide/index.html.twig', ['slides' => $slideRepository->findAll()]);
     }
 
     /**
@@ -41,7 +41,7 @@ class SlideController extends AbstractController
             return $this->redirectToRoute('slide_index');
         }
 
-        return $this->render('slide/new.html.twig', [
+        return $this->render('administration/slide/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -51,7 +51,7 @@ class SlideController extends AbstractController
      */
     public function show(Slide $slide): Response
     {
-        return $this->render('slide/show.html.twig', ['slide' => $slide]);
+        return $this->render('administration/slide/show.html.twig', ['slide' => $slide]);
     }
 
     /**
@@ -68,7 +68,7 @@ class SlideController extends AbstractController
             return $this->redirectToRoute('slide_edit', ['id' => $slide->getId()]);
         }
 
-        return $this->render('slide/edit.html.twig', [
+        return $this->render('administration/slide/edit.html.twig', [
             'slide' => $slide,
             'form' => $form->createView(),
         ]);

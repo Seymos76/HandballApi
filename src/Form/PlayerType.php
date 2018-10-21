@@ -38,11 +38,17 @@ class PlayerType extends AbstractType
         $builder
             ->add(
                 'firstname',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "Prénom du joueur"
+                )
             )
             ->add(
                 'lastname',
-                TextType::class
+                TextType::class,
+                array(
+                    'label' => "NOM du joueur"
+                )
             )
             ->add(
                 'position',
@@ -57,7 +63,8 @@ class PlayerType extends AbstractType
                         "Ailier droit" => "right_wing",
                         "Demi-centre" => "pivot"
                     ),
-                    'expanded' => false
+                    'expanded' => false,
+                    'label' => "Position du joueur sur le terrain"
                 )
             )
             ->add(
@@ -65,7 +72,8 @@ class PlayerType extends AbstractType
                 EntityType::class,
                 array(
                     'class' => Team::class,
-                    'choice_label' => 'name'
+                    'choice_label' => 'name',
+                    'label' => "Équipe du joueur"
                 )
             )
             ->add(
@@ -74,6 +82,7 @@ class PlayerType extends AbstractType
                 array(
                     'data_class' => null,
                     'required' => false,
+                    'label' => "Photo de profil du joueur"
                 )
             )
             ->get('image')->addModelTransformer($this->transformer)

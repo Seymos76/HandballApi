@@ -3,6 +3,9 @@
 {% block body %}
 	Page d'accueil
 	Slider
+	{% for s in slides %}
+		{{ dump(s) }}
+	{% endfor %}
 	Résultats derniers matchs
 	Prochains matchs
 	Sponsors

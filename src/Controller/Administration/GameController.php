@@ -4,7 +4,10 @@ namespace App\Controller\Administration;
 
 use App\Entity\Game;
 use App\Form\GameType;
+use App\Form\ResultType;
+use App\Manager\GameManager;
 use App\Repository\GameRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +23,7 @@ class GameController extends AbstractController
      */
     public function index(GameRepository $gameRepository): Response
     {
-        return $this->render('game/index.html.twig', ['games' => $gameRepository->findAll()]);
+        return $this->render('administration/game/index.html.twig', ['games' => $gameRepository->findAll()]);
     }
 
     /**
@@ -40,7 +43,7 @@ class GameController extends AbstractController
             return $this->redirectToRoute('game_index');
         }
 
-        return $this->render('game/new.html.twig', [
+        return $this->render('administration/game/new.html.twig', [
             'game' => $game,
             'form' => $form->createView(),
         ]);
@@ -51,26 +54,49 @@ class GameController extends AbstractController
      */
     public function show(Game $game): Response
     {
-        return $this->render('game/show.html.twig', ['game' => $game]);
+        return $this->render('administration/game/show.html.twig', ['game' => $game]);
     }
 
     /**
      * @Route("/{id}/edit", name="game_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Game $game): Response
+    public function edit(Request $request, Game $game, GameManager $manager): Response
     {
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('game_edit', ['id' => $game->getId()]);
+            $manager->update($game);
+            $this->addFlash('success',"Match mis à jour !");
+            return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
         }
 
-        return $this->render('game/edit.html.twig', [
+        return $this->render('administration/game/edit.html.twig', [
             'game' => $game,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route(path="/{id}/validate-match", name="game_validate", methods="GET|POST")
+     * @ParamConverter("game", class="App\Entity\Game")
+     * @param Request $request
+     * @param Game $game
+     * @param GameManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function validateGame(Request $request, Game $game, GameManager $manager)
+    {
+        $form = $this->createForm(ResultType::class, $game);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->update($game);
+            $this->addFlash('success',"Match mis à jour avec les résultats !");
+            return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
+        }
+        return $this->render('administration/game/validate.html.twig', [
+            'game' => $game,
+            'form' => $form->createView()
         ]);
     }
 

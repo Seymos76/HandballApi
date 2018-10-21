@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validate game{% endblock %}
+
+{% block body %}
+	<h1>Validate game</h1>
+
+	{{ include('administration/game/_results_form.html.twig') }}
+
+	<a href="{{ path('game_index') }}">back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+        var btn_submit = $("button[type=submit]");
+        var btn = $("button[type=button]");
+        btn_submit.attr('disabled','disabled');
+		$(".btn_winner").click(function () {
+		    $("#result_winner").val(this.textContent);
+        });
+		$(".btn_looser").click(function () {
+		    $("#result_looser").val(this.textContent);
+        });
+		btn.click(function () {
+            if ($("#result_looser")[0].value === $("#result_winner")[0].value) {
+                btn_submit.attr('disabled','disabled');
+            } else {
+                btn_submit.removeAttr('disabled');
+			}
+        });
+	</script>
+{% endblock %}

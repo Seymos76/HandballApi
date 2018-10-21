@@ -20,7 +20,7 @@ class TeamController extends AbstractController
      */
     public function index(TeamRepository $teamRepository): Response
     {
-        return $this->render('team/index.html.twig', ['teams' => $teamRepository->findAll()]);
+        return $this->render('administration/team/index.html.twig', ['teams' => $teamRepository->findAll()]);
     }
 
     /**
@@ -40,7 +40,7 @@ class TeamController extends AbstractController
             return $this->redirectToRoute('team_index');
         }
 
-        return $this->render('team/new.html.twig', [
+        return $this->render('administration/team/new.html.twig', [
             'team' => $team,
             'form' => $form->createView(),
         ]);
@@ -51,7 +51,7 @@ class TeamController extends AbstractController
      */
     public function show(Team $team): Response
     {
-        return $this->render('team/show.html.twig', ['team' => $team]);
+        return $this->render('administration/team/show.html.twig', ['team' => $team]);
     }
 
     /**
@@ -68,7 +68,7 @@ class TeamController extends AbstractController
             return $this->redirectToRoute('team_edit', ['id' => $team->getId()]);
         }
 
-        return $this->render('team/edit.html.twig', [
+        return $this->render('administration/team/edit.html.twig', [
             'team' => $team,
             'form' => $form->createView(),
         ]);

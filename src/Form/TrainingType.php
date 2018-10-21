@@ -20,12 +20,16 @@ class TrainingType extends AbstractType
                 EntityType::class,
                 array(
                     'class' => Team::class,
-                    'choice_label' => 'name'
+                    'choice_label' => 'name',
+                    'label' => "Équipe"
                 )
             )
             ->add(
                 'training_date',
-                DateType::class
+                DateType::class,
+                array(
+                    'label' => "Date de l'entraînement"
+                )
             )
         ;
     }
