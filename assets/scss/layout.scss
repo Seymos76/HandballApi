@@ -1,97 +1,75 @@
 html {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 body {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+@import "structure";
+header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100px;
+  z-index: 999;
+  padding: 15px 25px;
+  justify-content: space-between;
+
+  div.header__logo {
+    text-align: center;
+    width: 108px;
+    height: 100%;
+
+    img {
+      height: 100%;
+    }
+  }
+  div.header__menu_button {
+    width: 108px;
+    height: 100%;
+    padding: 15px 20px;
+
+    button {
+      display: inline-block;
+      text-decoration: none;
+      width: 100%;
+      height: auto;
+      border: 1px solid red;
+      background-color: transparent;
+
+      i.fa {
+        font-size: 2.5em;
+        color: #13BEDB;
+      }
+    }
+  }
+}
+header.active {
+  background-color: #fff;
 }
 
-section.main__navigation__section {
-	position: fixed;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	width: 20%;
-
-	div.main__navigation__container {
-		margin: 10px;
-		height: 100%;
-		justify-content: space-around;
-
-		.main__navigation__menu__toggle {
-			position: relative;
-			width: 100%;
-			height: 15%;
-			display: flex;
-
-			button {
-				display: inline-block;
-				background-color: #14bfdb;
-				padding: 10px 20px;
-				border: none;
-				margin: auto;
-
-				i.fa, span {
-					color: white;
-					font-size: 1.5em;
-				}
-			}
-		}
-		.main__navigation__logo {
-			width: 100%;
-			height: 60%;
-			padding: auto;
-			display: flex;
-
-			a {
-				display: inline-block;
-				margin: auto;
-			}
-		}
-		.main__navigation__social {
-			width: 60%;
-			height: 15%;
-			padding: auto;
-			margin: auto;
-			display: flex;
-
-			a {
-				display: inline-block;
-				margin: auto;
-				width: 50px;
-				height: 50px;
-				text-decoration: none;
-
-				i.fa {
-					font-size: 2em;
-					color: aqua;
-				}
-			}
-		}
-	}
-}
 @import "elements/navigation_overlay";
 section.main {
-	position: relative;
-	width: 80%;
-	height: auto;
-	margin-left: 20%;
-	margin-top: 0;
-	background-color: rgba(19, 191, 219, .4);
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 0;
+  padding-top: 100px;
 }
 
 div.page__header {
-	width: 30%;
-	margin: auto;
-	height: 150px;
+  width: 30%;
+  margin: auto;
+  height: 150px;
 
-	h1 {
-		line-height: 80px;
-		color: #000000;
-		border-bottom: 5px solid #12BEDB;
-		text-align: center;
-	}
+  h1 {
+    line-height: 80px;
+    color: #000000;
+    border-bottom: 5px solid #12BEDB;
+    text-align: center;
+  }
 }

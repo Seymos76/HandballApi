@@ -1,14 +1,19 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.css');
-
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// var $ = require('jquery');
-
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+console.log('app is ok');
+const $ = require('jquery');
+$(function () {
+    const menu_toggle = $("#menu_toggle");
+    const menu_icon = $("#menu_toggle i.fa");
+    const overlay_menu = $(".main__navigation__overlay");
+    menu_toggle.click(function () {
+        if (overlay_menu.hasClass('active')) {
+            menu_icon.removeClass('fa-times');
+            menu_icon.addClass('fa-bars');
+            overlay_menu.removeClass('active');
+        } else {
+            console.log('menu displayed');
+            overlay_menu.addClass('active');
+            menu_icon.removeClass('fa-bars');
+            menu_icon.addClass('fa-times');
+        }
+    });
+});

@@ -20,23 +20,25 @@ class GameRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Game
+     * @param string $match_date
+     * @return array Games[]
      */
-    public function findFutureGame()
+    public function findFutureGames(string $match_date): ?array
     {
         return $this->createQueryBuilder('g')
             ->where('g.winner = :winner')
+            ->andWhere('g.match_date = :match_date')
             ->setParameter('winner', null)
+            ->setParameter('match_date', $match_date)
             ->getQuery()
-            ->setMaxResults(1)
             ->getResult();
     }
 
     public function findResults()
     {
         return $this->createQueryBuilder('g')
-            ->where('g.winner = :winner')
-            ->setParameter('winner', !null)
+            ->where('g.winner != :winner')
+            ->setParameter('winner', null)
             ->getQuery()
             ->getArrayResult();
     }

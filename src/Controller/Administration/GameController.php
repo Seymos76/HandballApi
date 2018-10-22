@@ -7,6 +7,7 @@ use App\Form\GameType;
 use App\Form\ResultType;
 use App\Manager\GameManager;
 use App\Repository\GameRepository;
+use App\Service\Date;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,9 +30,10 @@ class GameController extends AbstractController
     /**
      * @Route("/new", name="game_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Date $serviceDate): Response
     {
         $game = new Game();
+        $game->setMatchDate($serviceDate->getSaturday());
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
 

@@ -1,127 +1,46 @@
 .main__navigation__overlay {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 20%;
-	background-color: antiquewhite;
-	z-index: 1;
+  display: none;
+}
+.main__navigation__overlay.active {
+  display: block;
+  position: fixed;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: antiquewhite;
+  z-index: 1;
 }
 .overlay__menu__container {
-	position: relative;
-	width: 50%;
-	height: 100%;
-	background-color: #f4f4f4;
-	justify-content: center;
-}
-.overlay__about__container {
-	position: relative;
-	width: 50%;
-	height: 100%;
-	display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #f4f4f4;
+  justify-content: center;
 }
 .navigation__container {
-	position: relative;
-	width: 100%;
-	height: 60%;
-	display: flex;
+  position: relative;
+  width: 100%;
+  height: 60%;
+  display: flex;
 
-	nav {
-		position: relative;
-		margin: auto;
-		width: 90%;
-		height: auto;
+  nav {
+    position: relative;
+    margin: auto;
+    width: 50%;
+    height: auto;
 
-		a {
-			display: inline-block;
-			width: 100%;
-			height: 40px;
-			line-height: 40px;
-			text-decoration: none;
-			margin: 25px auto;
-			border-bottom: 5px solid #10BFDB;
-			font-size: 1.6em;
-			font-family: "New Athletic M54";
-		}
-	}
-}
-.buttons__container {
-	position: relative;
-	width: 100%;
-	height: 15%;
-	justify-content: space-around;
-
-	a {
-		display: inline-block;
-		margin: auto;
-		padding: 10px 40px;
-		height: 40px;
-		line-height: 40px;
-		text-decoration: none;
-		color: white;
-		background-color: #10BFDB;
-		border-radius: 10px;
-	}
-}
-
-.about__container {
-	position: relative;
-	width: 95%;
-	height: 80%;
-	margin: auto;
-
-	.about__header {
-		width: 80%;
-		text-align: center;
-		margin: auto;
-		height: auto;
-		max-height: 250px;
-
-		img {
-			width: 128px;
-			margin: auto;
-		}
-		h2 {
-			font-size: 1.5em;
-		}
-	}
-
-	.about__members {
-		width: 90%;
-		margin: 0 auto;
-		justify-content: space-around;
-
-		.about__member {
-			border: 1px solid white;
-			border-radius: 50%;
-			width: 200px;
-			height: 200px;
-			text-align: center;
-
-			img {
-				display: inline-block;
-				margin: auto;
-				width: 80px;
-				height: 80px;
-			}
-			span.member__name {
-				display: inline-block;
-				font-size: 1em;
-				height: 40px;
-			}
-			span.member__job {
-				display: inline-block;
-				font-size: .8em;
-				height: 40px;
-			}
-		}
-
-		img {
-			display: inline-block;
-		}
-	}
-	.about__text {
-		width: 80%;
-		margin: auto;
-	}
+    a {
+      display: inline-block;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      text-decoration: none;
+      margin: 25px auto;
+      border-bottom: 5px solid #10BFDB;
+      font-size: 1.6em;
+      text-align: center;
+      font-family: "New Athletic M54";
+    }
+  }
 }

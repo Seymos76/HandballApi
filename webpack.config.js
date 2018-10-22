@@ -7,28 +7,21 @@ Encore
     .setPublicPath('/build')
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
+    .createSharedEntry('app', ["./assets/scss/layout.scss", "./assets/js/app.js"])
+    .addStyleEntry('home_css', './assets/scss/home.scss')
+    .addEntry('home_js', ['./assets/js/jssor.slider-27.5.0.min.js', './assets/js/slider.js'])
     .enableSassLoader(function(sassOptions) {
-        sassOptions.includePaths = ['assets/scss'];
+        sassOptions.includePaths = ["assets/scss", "assets/css"];
     })
-    .createSharedEntry('home',[''])
-    .addEntry('index', './assets/js/app.js')
-    //.addEntry('page1', './assets/js/page1.js')
-    //.addEntry('page2', './assets/js/page2.js')
-
-    /*
-     * FEATURE CONFIG
-     *
-     * Enable & configure other features below. For a full
-     * list of features, see:
-     * https://symfony.com/doc/current/frontend.html#adding-more-features
-     */
     .cleanupOutputBeforeBuild()
+    .autoProvideVariables({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+    })
+    .autoProvidejQuery()
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
-    // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
 ;
-
 module.exports = Encore.getWebpackConfig();

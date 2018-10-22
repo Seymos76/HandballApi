@@ -10,6 +10,7 @@ use App\Repository\GalleryRepository;
 use App\Repository\GameRepository;
 use App\Repository\SlideRepository;
 use App\Repository\TrainingRepository;
+use App\Service\Date;
 use App\Service\Mail\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +22,24 @@ class DefaultController extends AbstractController
      * @Route(path="/", name="index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(SlideRepository $slideRepository, GameRepository $gameRepository)
+    public function index(SlideRepository $slideRepository, GameRepository $gameRepository, Date $date)
     {
+        $slides = $slideRepository->findAll();
+        $games = $gameRepository->findBy(
+            array(
+                'match_date' => $date->getSaturday()
+            )
+        );
+        $results = $gameRepository->findBy(
+            array(
+                'match_date' => "20-10-2018"
+            )
+        );
         return $this->render(
             'default/index.html.twig', [
-                'slides' => $slideRepository->findAll(),
-                'matchs' => $gameRepository->findAll()
+                'slides' => $slides,
+                'games' => $games,
+                'result' => $results
             ]
         );
     }

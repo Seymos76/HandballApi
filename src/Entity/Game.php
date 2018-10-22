@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
@@ -19,7 +20,8 @@ class Game
     private $id;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotNull()
      */
     private $match_date;
 
@@ -73,12 +75,12 @@ class Game
         return $this->id;
     }
 
-    public function getMatchDate(): ?\DateTimeInterface
+    public function getMatchDate(): ?string
     {
         return $this->match_date;
     }
 
-    public function setMatchDate(?\DateTimeInterface $match_date): self
+    public function setMatchDate(?string $match_date): self
     {
         $this->match_date = $match_date;
 

@@ -18,13 +18,6 @@ class GameType extends AbstractType
     {
         $builder
             ->add(
-                'match_date',
-                DateType::class,
-                array(
-                    'label' => "Date de la convocation"
-                )
-            )
-            ->add(
                 'team',
                 EntityType::class,
                 array(
