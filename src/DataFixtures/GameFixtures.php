@@ -27,19 +27,23 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         for ($i = 1; $i <= 7; $i++) {
+            $data = self::getRandLocation();
+            $rand = array_rand($data,1);
             $match = new Game();
             $match->setMatchDate($this->serviceDate->getSaturday());
-            $match->setLocation($this->getRandLocation());
-            $match->setOpponent($this->getRandLocation());
+            $match->setLocation($data[$rand]);
+            $match->setOpponent($data[$rand]);
             $team = $this->getReference("team".mt_rand(1,4));
             $match->setTeam($team);
             $manager->persist($match);
         }
         for ($i = 8; $i <= 16; $i++) {
+            $data = self::getRandLocation();
+            $rand = array_rand($data,1);
             $match = new Game();
             $match->setMatchDate("20-10-2018");
-            $match->setLocation($this->getRandLocation());
-            $match->setOpponent($this->getRandLocation());
+            $match->setLocation($data[$rand]);
+            $match->setOpponent($data[$rand]);
             $team = $this->getReference("team".mt_rand(1,4));
             $match->setWinnerScore(20);
             $match->setLooserScore(15);
@@ -49,7 +53,7 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getRandLocation(): ?string
+    public function getRandLocation(): ?array
     {
         $locations = array(
             "Forges-les-Eaux",
@@ -58,8 +62,7 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
             "Neufchâtel",
             "Montville"
         );
-        $rand = array_rand($locations, 1);
-        return $rand;
+        return $locations;
     }
 
     public function getDependencies()

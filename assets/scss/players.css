@@ -1,0 +1,38 @@
+.players__container {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 350px);
+  grid-auto-flow: row dense;
+  grid-auto-rows: minmax(450px, 500px); }
+
+.player__container {
+  grid-column-start: auto;
+  width: 300px;
+  height: 450px;
+  margin-bottom: 25px;
+  background-color: #13bfdb; }
+  .player__container .player__team, .player__container .player__name, .player__container .player__position {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 50px;
+    text-align: center; }
+    .player__container .player__team span, .player__container .player__name span, .player__container .player__position span {
+      display: inline-block;
+      line-height: 50px;
+      color: white; }
+  .player__container .player__avatar {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 300px; }
+    .player__container .player__avatar img {
+      height: 100%; }
+  .player__container .player__name, .player__container .player__position {
+    background-color: #2b353e; }
+  .player__container .player__position span {
+    color: whitesmoke; }
+
+/*# sourceMappingURL=players.css.map */

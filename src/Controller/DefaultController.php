@@ -25,16 +25,15 @@ class DefaultController extends AbstractController
     public function index(SlideRepository $slideRepository, GameRepository $gameRepository, Date $date)
     {
         $slides = $slideRepository->findAll();
-        $games = $gameRepository->findBy(
+        /*$games = $gameRepository->findBy(
             array(
                 'match_date' => $date->getSaturday()
             )
-        );
-        $results = $gameRepository->findBy(
-            array(
-                'match_date' => "20-10-2018"
-            )
-        );
+        );*/
+        $games = $gameRepository->findFutureGames($date->getSaturday());
+        $results = $gameRepository->findBy(array('match_date' => "20-10-2018"));
+        dump($games);
+        dump($results);
         return $this->render(
             'default/index.html.twig', [
                 'slides' => $slides,

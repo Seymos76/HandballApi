@@ -26,9 +26,7 @@ class GameRepository extends ServiceEntityRepository
     public function findFutureGames(string $match_date): ?array
     {
         return $this->createQueryBuilder('g')
-            ->where('g.winner = :winner')
-            ->andWhere('g.match_date = :match_date')
-            ->setParameter('winner', null)
+            ->where('g.match_date = :match_date')
             ->setParameter('match_date', $match_date)
             ->getQuery()
             ->getResult();
