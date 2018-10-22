@@ -1,0 +1,16 @@
+.full_width {
+	width: 100%;
+}
+.flex_column {
+	display: flex;
+	flex-direction: column;
+}
+.flex_row {
+	display: flex;
+	flex-direction: row;
+}
+
+
+.debug {
+	border: 1px solid red;
+}
