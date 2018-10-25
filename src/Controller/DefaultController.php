@@ -8,6 +8,7 @@ use App\Form\MessageType;
 use App\Manager\MessageManager;
 use App\Repository\GalleryRepository;
 use App\Repository\GameRepository;
+use App\Repository\MeetingRepository;
 use App\Repository\SlideRepository;
 use App\Repository\TrainingRepository;
 use App\Service\Date;
@@ -22,22 +23,17 @@ class DefaultController extends AbstractController
      * @Route(path="/", name="index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(SlideRepository $slideRepository, GameRepository $gameRepository, Date $date)
+    public function index(SlideRepository $slideRepository, MeetingRepository $meetingRepository, Date $date)
     {
         $slides = $slideRepository->findAll();
-        /*$games = $gameRepository->findBy(
-            array(
-                'match_date' => $date->getSaturday()
-            )
-        );*/
-        $games = $gameRepository->findFutureGames($date->getSaturday());
-        $results = $gameRepository->findBy(array('match_date' => "20-10-2018"));
-        dump($games);
+        $meeting = $meetingRepository->findNextMeeting($date->getNextSaturday());
+        $results = $meetingRepository->findBy(array('meeting_date' => $date->getLastSaturday()));
+        dump($meeting);
         dump($results);
         return $this->render(
             'default/index.html.twig', [
                 'slides' => $slides,
-                'games' => $games,
+                'meeting' => $meeting,
                 'result' => $results
             ]
         );

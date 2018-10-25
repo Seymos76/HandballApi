@@ -20,12 +20,6 @@ class Game
     private $id;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotNull()
-     */
-    private $match_date;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $location;
@@ -70,21 +64,15 @@ class Game
      */
     private $appointment_date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Meeting", inversedBy="games", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $meeting;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getMatchDate(): ?string
-    {
-        return $this->match_date;
-    }
-
-    public function setMatchDate(?string $match_date): self
-    {
-        $this->match_date = $match_date;
-
-        return $this;
     }
 
     public function getLocation(): ?string
@@ -191,6 +179,18 @@ class Game
     public function setAppointmentDate(\DateTimeInterface $appointment_date): self
     {
         $this->appointment_date = $appointment_date;
+
+        return $this;
+    }
+
+    public function getMeeting(): ?Meeting
+    {
+        return $this->meeting;
+    }
+
+    public function setMeeting(?Meeting $meeting): self
+    {
+        $this->meeting = $meeting;
 
         return $this;
     }

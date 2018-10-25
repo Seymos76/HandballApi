@@ -19,19 +19,6 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
-    /**
-     * @param string $match_date
-     * @return array Games[]
-     */
-    public function findFutureGames(string $match_date): ?array
-    {
-        return $this->createQueryBuilder('g')
-            ->where('g.match_date = :match_date')
-            ->setParameter('match_date', $match_date)
-            ->getQuery()
-            ->getResult();
-    }
-
     public function findResults()
     {
         return $this->createQueryBuilder('g')
