@@ -22,9 +22,4 @@ class MeetingManager extends EntityManager
         }
         return true;
     }
-
-    public function getNextMeeting()
-    {
-
-    }
 }

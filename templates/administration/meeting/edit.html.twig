@@ -1,11 +1,13 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}Edit Meeting{% endblock %}
+{% block title %}Gestion des convocations{% endblock %}
+{% block header %}Modification convocation du {{ meeting.meetingDate }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Meeting</h1>
-
-    {{ include('administration/meeting/_form.html.twig', {'button_label': 'Update'}) }}
+	{% form_theme form
+		'administration/meeting/jquery.collection.html.twig'
+	%}
+	{{ include('administration/meeting/_form.html.twig') }}
 
     <a href="{{ path('meeting_index') }}">back to list</a>
 
@@ -13,30 +15,13 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('admin/js/jquery.collection.js') }}"></script>
     <script>
-        jQuery(document).ready(function () {
-            jQuery('.add_game').click(function (e) {
-                var list = jQuery(jQuery(this).attr('data-list'));
-                // Try to find the counter of the list
-                var counter = list.data('widget-counter') | list.children().length;
-                // If the counter does not exist, use the length of the list
-                if (!counter) { counter = list.children().length; }
-
-                // grab the prototype template
-                var newWidget = list.attr('data-prototype');
-                // replace the "__name__" used in the id and name of the prototype
-                // with a number that's unique to your emails
-                // end name attribute looks like name="contact[emails][2]"
-                newWidget = newWidget.replace(/__name__/g, counter);
-                // Increase the counter
-                counter++;
-                // And store it, the length cannot be used if deleting widgets is allowed
-                list.data(' widget-counter', counter);
-
-                // create a new list element and add it to the list
-                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-                newElem.appendTo(list);
-            });
+        $('.game_collection_entry').collection({
+            up: '<a href="#" class="btn btn-default"><span class="fa fa-arrow-up"></span></a>',
+            down: '<a href="#" class="btn btn-default"><span class="fa fa-arrow-down"></span></a>',
+            add: '<a href="#" class="btn btn-default"><span class="fa fa-plus"></span></a>',
+            remove: '<a href="#" class="btn btn-default"><span class="fa fa-trash"></span></a>'
         });
     </script>
 {% endblock %}

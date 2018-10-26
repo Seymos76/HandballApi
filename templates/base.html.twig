@@ -15,8 +15,8 @@
 	{% for message in app.session.flashbag.get('success') %}
         {{ message }}
 	{% endfor %}
-	<header class="debug flex_row">
-		<div class="header__logo debug">
+	<header class="flex_row">
+		<div class="header__logo">
 			<img src="{{ asset('images/logo.png') }}" alt="">
 		</div>
 		<div class="header__menu_button">

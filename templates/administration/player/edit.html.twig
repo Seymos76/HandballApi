@@ -1,10 +1,9 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}Edit Player{% endblock %}
+{% block title %}Gestion des joueurs{% endblock %}
+{% block header %}Modification du joueur {{ player.fullname }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Player</h1>
-
     {{ include('administration/player/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('player_index') }}">back to list</a>

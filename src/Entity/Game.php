@@ -70,6 +70,16 @@ class Game
      */
     private $meeting;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canceled;
+
+    public function __construct()
+    {
+        $this->canceled = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -191,6 +201,18 @@ class Game
     public function setMeeting(?Meeting $meeting): self
     {
         $this->meeting = $meeting;
+
+        return $this;
+    }
+
+    public function getCanceled(): ?bool
+    {
+        return $this->canceled;
+    }
+
+    public function setCanceled(bool $canceled): self
+    {
+        $this->canceled = $canceled;
 
         return $this;
     }

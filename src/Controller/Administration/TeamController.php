@@ -36,7 +36,7 @@ class TeamController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($team);
             $em->flush();
-
+            $this->addFlash('success',"L'équipe a été créée !");
             return $this->redirectToRoute('team_index');
         }
 

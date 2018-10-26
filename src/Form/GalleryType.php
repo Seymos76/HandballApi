@@ -37,7 +37,11 @@ class GalleryType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'required' => false,
-                    'label' => "Ajoutes les images"
+                    'label' => "Ajoutes les images",
+                    'prototype' => true,
+                    'attr' => array(
+                        'class' => "image_collection_entry"
+                    )
                 )
             )
             //->get('images')->addModelTransformer($this->transformer)

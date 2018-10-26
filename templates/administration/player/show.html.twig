@@ -1,11 +1,10 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}Player{% endblock %}
+{% block title %}Gestion des joueurs{% endblock %}
+{% block header %}Joueur {{ player.fullname }}{% endblock %}
 
 {% block body %}
-    <h1>Player</h1>
-
-    <table class="table">
+    <table class="table table-responsive-sm table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>

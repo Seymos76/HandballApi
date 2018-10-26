@@ -20,7 +20,12 @@ class MeetingType extends AbstractType
                 array(
                     'entry_type' => GameType::class,
                     'allow_add' => true,
-                    'allow_delete' => true
+                    'allow_delete' => true,
+                    'prototype' => true,
+                    'required' => false,
+                    'attr' => array(
+                        'class' => "game_collection_entry"
+                    )
                 )
             )
         ;

@@ -1,11 +1,11 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}Meeting index{% endblock %}
+{% block title %}Gestion des convocations{% endblock %}
+{% block header %}Gérer les convocations{% endblock %}
 
 {% block body %}
-    <h1>Meeting index</h1>
 
-    <table class="table">
+    <table class="table table-bordered table-responsive-sm">
         <thead>
             <tr>
                 <th>Id</th>
@@ -21,8 +21,8 @@
                 <td>{{ meeting.meetingDate }}</td>
                 <td>{{ meeting.games|length }}</td>
                 <td>
-                    <a href="{{ path('meeting_show', {'id': meeting.id}) }}">show</a>
-                    <a href="{{ path('meeting_edit', {'id': meeting.id}) }}">edit</a>
+                    <a href="{{ path('meeting_show', {'id': meeting.id}) }}" class="btn btn-outline-info"><i class="fa fa-eye"></i></a>
+                    <a href="{{ path('meeting_edit', {'id': meeting.id}) }}" class="btn btn-outline-warning"><i class="fa fa-edit"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('meeting_new') }}">Create new</a>
+    <a href="{{ path('meeting_new') }}" class="btn btn-outline-primary">Create new</a>
 {% endblock %}

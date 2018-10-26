@@ -25,7 +25,7 @@ class MeetingRepository extends ServiceEntityRepository
             ->where('m.meeting_date = :meeting_date')
             ->setParameter('meeting_date', $date)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
 //    /**

@@ -15,7 +15,6 @@ class Date
     {
         $date = new \DateTime('now');
         $formattedDate = $date->format('w');
-        dump($formattedDate);
         return (int)$formattedDate;
     }
 
@@ -25,17 +24,6 @@ class Date
         $newDate = new \DateTime('now');
         $formatted = $newDate->format('d-m-Y');
         $saturday = date("d-m-Y", strtotime($formatted ." + {$numbers['number']} days"));
-        return $saturday;
-    }
-
-    public function getLastSaturday(): ?string
-    {
-        $numbers = self::getNumberForLastSaturday();
-        dump($numbers);
-        die;
-        $newDate = new \DateTime('now');
-        $formatted = $newDate->format('d-m-Y');
-        $saturday = date("d-m-Y", strtotime($formatted . " - {$numbers['number']} days"));
         return $saturday;
     }
 
@@ -54,24 +42,6 @@ class Date
         return array(
             'saturday' => $saturday,
             'number' => $saturday - $currentDay
-        );
-    }
-
-    public function getNumberForLastSaturday(): ?array
-    {
-        $currentDay = self::getCurrentDayFormattedToInteger();
-        switch ($currentDay) {
-            case 1: $saturday = $currentDay + 2; break;
-            case 2: $saturday = $currentDay + 3; break;
-            case 3: $saturday = $currentDay + 4; break;
-            case 4: $saturday = $currentDay + 5; break;
-            case 5: $saturday = $currentDay + 6; break;
-            case 6: $saturday = $currentDay + 7; break;
-            case 7: $saturday = $currentDay + 1; break;
-        }
-        return array(
-            'saturday' => $saturday,
-            'number' => $saturday
         );
     }
 }

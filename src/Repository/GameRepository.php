@@ -19,13 +19,15 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
-    public function findResults()
+    public function findLastResults()
     {
         return $this->createQueryBuilder('g')
             ->where('g.winner != :winner')
             ->setParameter('winner', null)
+            ->orderBy('g.id', 'DESC')
             ->getQuery()
-            ->getArrayResult();
+            ->setMaxResults(7)
+            ->getResult();
     }
 
 //    /**

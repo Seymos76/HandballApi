@@ -1,11 +1,10 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}Slide{% endblock %}
+{% block title %}Gestion des slides{% endblock %}
+{% block header %}Slide {{ slide.id }}{% endblock %}
 
 {% block body %}
-    <h1>Slide</h1>
-
-    <table class="table">
+    <table class="table table-responsive-sm table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>

@@ -31,9 +31,8 @@ class MeetingController extends AbstractController
     public function new(Request $request, Date $date, MeetingManager $meetingManager): Response
     {
         $meeting = new Meeting();
-        $meeting->setMeetingDate($date->getLastSaturday());
-        dump($meeting);
-        die;
+        $saturday = $date->getNextSaturday();
+        $meeting->setMeetingDate($saturday);
         $form = $this->createForm(MeetingType::class, $meeting);
         $form->handleRequest($request);
 
@@ -49,6 +48,7 @@ class MeetingController extends AbstractController
         return $this->render('administration/meeting/new.html.twig', [
             'meeting' => $meeting,
             'form' => $form->createView(),
+            'saturday' => $saturday
         ]);
     }
 
@@ -63,15 +63,29 @@ class MeetingController extends AbstractController
     /**
      * @Route("/{id}/edit", name="meeting_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Meeting $meeting): Response
+    public function edit(Request $request, Meeting $meeting, MeetingManager $meetingManager): Response
     {
         $form = $this->createForm(MeetingType::class, $meeting);
+        $nb_matchs = $meeting->getGames()->count();
+        dump((int)$nb_matchs);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($meeting->getGames()->count());
+            $new_count = $meeting->getGames()->count();
+            $new_count = (int)$new_count;
+            dump($new_count);
+            if ($new_count > $nb_matchs) {
+                foreach ($meeting->getGames() as $game) {
+                    if ($game->getId() === null) {
+                        $game->setMeeting($meeting);
+                        $meetingManager->update($game);
+                    }
+                }
+            }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('meeting_edit', ['id' => $meeting->getId()]);
+            return $this->redirectToRoute('meeting_show', ['id' => $meeting->getId()]);
         }
 
         return $this->render('administration/meeting/edit.html.twig', [

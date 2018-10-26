@@ -1,14 +1,4 @@
 {{ form_start(form) }}
-<ul id="game_field_list" data-prototype="{{ form_widget(form.games.vars.prototype)|e }}" data-widget-tags="<li></li>">
-	{{ dump(form.games.children) }}
-	{% for field in form.games %}
-        <li>
-			{{ form_errors(field) }}
-			{{ form_widget(field) }}
-        </li>
-	{% endfor %}
-</ul>
-    {{ form_widget(form.games) }}
-<button type="button" class="add_game" data-list="#game_field_list">Ajouter un match</button>
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{% include "administration/meeting/_game_widget.html.twig" %}
+    <button class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -1,11 +1,20 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}New Slide{% endblock %}
+{% block title %}Gestion des slides{% endblock %}
+{% block header %}Nouveau slide{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Slide</h1>
-
     {{ include('administration/slide/_form.html.twig') }}
 
     <a href="{{ path('slide_index') }}">back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $("form[name=slide]").children("div.form-group")[1].children("div.custom-file").removeClass('custom-file');
+        $("#slide_image").removeClass("custom-file-input");
+    </script>
 {% endblock %}

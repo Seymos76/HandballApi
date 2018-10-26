@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Entity\Team;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -52,6 +53,14 @@ class GameType extends AbstractType
                 DateTimeType::class,
                 array(
                     'label' => "La date et l'heure du rendez-vous"
+                )
+            )
+            ->add(
+                'canceled',
+                CheckboxType::class,
+                array(
+                    'label' => "Cochez si match annulé",
+                    'required' => false
                 )
             )
         ;

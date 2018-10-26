@@ -104,10 +104,6 @@ class Gallery
 
     public function addImage(Image $image): self
     {
-        /*if (!in_array($image, $this->images)) {
-            $this->images[] = $image;
-            $image->setGallery($this);
-        }*/
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
             $image->setGallery($this);
@@ -118,7 +114,7 @@ class Gallery
 
     public function resetImages()
     {
-        $this->images = array();
+        $this->images = new ArrayCollection();
         return $this;
     }
 
