@@ -1,0 +1,87 @@
+.result__container {
+
+	.result__row {
+		width: 100%;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+
+		.result__item {
+			width: 100%;
+			height: 100%;
+			margin: 25px auto;
+			display: flex;
+			flex-direction: row;
+			border-radius: 20%;
+
+			.result__team, .result__training {
+				line-height: 100px;
+				text-align: center;
+				z-index: .5;
+				color: white;
+				font-size: 1.5em;
+			}
+			.result__team {
+				width: 40%;
+				background-color: #10BFDB;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				p {
+					margin: auto;
+				}
+				.result__angle {
+					position: absolute;
+					left: 40%;
+					width:50px;
+					border:50px solid transparent;
+					border-left:50px solid #10BFDB;
+					z-index: .8;
+				}
+			}
+			.result__training {
+				width: 60%;
+				background-color: #2A276E;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.result__row {
+		height: auto !important;
+		border-radius: 20%;
+
+		.result__item {
+			width: 100%;
+			height: auto !important;
+			margin: 15px auto !important;
+			display: flex;
+			flex-direction: column !important;
+
+			.result__team, .result__training {
+				line-height: 100px;
+				text-align: center;
+				z-index: .5;
+				color: white;
+				font-size: 1.5em;
+			}
+			.result__team {
+				width: 100% !important;
+				background-color: #10BFDB;
+				display: flex;
+				flex-direction: column !important;
+				p {
+					margin: auto;
+				}
+				.result__angle {
+					display: none;
+				}
+			}
+			.result__training {
+				width: 100% !important;
+				background-color: #2A276E;
+			}
+		}
+	}
+}

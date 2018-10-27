@@ -1,10 +1,9 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}Edit Training{% endblock %}
+{% block title %}Gestion des entraînements{% endblock %}
+{% block header %}Modification entrainement {{ training.team.name }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Training</h1>
-
     {{ include('administration/training/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('training_index') }}">back to list</a>

@@ -1,0 +1,95 @@
+/* line 1, ../sass/article.scss */
+.article__container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  z-index: .8;
+}
+
+/* line 10, ../sass/article.scss */
+figure {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+@media screen and (max-width: 420px) {
+  /* line 21, ../sass/article.scss */
+  figure {
+    height: 300px;
+  }
+}
+/* line 26, ../sass/article.scss */
+article {
+  position: relative;
+  width: 60%;
+  height: auto;
+  margin: 25px auto;
+}
+/* line 32, ../sass/article.scss */
+article .article__details {
+  text-align: center;
+}
+/* line 35, ../sass/article.scss */
+article .article__details small {
+  font-size: 1em;
+}
+/* line 39, ../sass/article.scss */
+article .article__details p {
+  text-align: left;
+}
+
+/* line 44, ../sass/article.scss */
+.pagination__container {
+  position: relative;
+  width: 90%;
+  margin: 25px auto;
+  text-align: center;
+  display: flex;
+}
+/* line 51, ../sass/article.scss */
+.pagination__container nav {
+  margin: auto;
+}
+
+@media screen and (max-width: 420px) {
+  /* line 57, ../sass/article.scss */
+  article {
+    width: 100%;
+    height: auto;
+    margin: 15px auto;
+  }
+  /* line 62, ../sass/article.scss */
+  article .article__details {
+    text-align: center;
+  }
+  /* line 65, ../sass/article.scss */
+  article .article__details small {
+    font-size: 1em;
+  }
+  /* line 69, ../sass/article.scss */
+  article .article__details p {
+    text-align: left;
+    padding: 10px;
+  }
+
+  /* line 75, ../sass/article.scss */
+  .pagination__container {
+    position: relative;
+    width: 95%;
+    margin: 25px auto;
+    text-align: center;
+    display: flex;
+  }
+  /* line 82, ../sass/article.scss */
+  .pagination__container nav {
+    margin: auto;
+  }
+}

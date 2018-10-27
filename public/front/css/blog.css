@@ -1,0 +1,77 @@
+/* line 1, ../sass/blog.scss */
+.articles__container {
+  position: relative;
+  width: 60%;
+  margin: 25px auto;
+}
+
+@media screen and (max-width: 420px) {
+  /* line 8, ../sass/blog.scss */
+  .articles__container {
+    width: 95%;
+    margin: 15px auto;
+  }
+}
+/* line 14, ../sass/blog.scss */
+article {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 30%;
+  margin: 20px auto;
+  height: auto;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  box-shadow: 0 5px 3px #e0e0e0;
+}
+/* line 26, ../sass/blog.scss */
+article figure {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+/* line 31, ../sass/blog.scss */
+article figure img {
+  width: 100%;
+  border-radius: 20px;
+}
+/* line 36, ../sass/blog.scss */
+article .article__details {
+  width: 100%;
+  margin: 0 auto;
+  height: inherit;
+  text-align: center;
+  padding: 20px 0;
+}
+/* line 42, ../sass/blog.scss */
+article .article__details h2 {
+  font-size: 1.4em;
+  font-family: "New Athletic M54";
+}
+/* line 46, ../sass/blog.scss */
+article .article__details p {
+  font-size: 1em;
+  padding: 5px 20px;
+}
+
+@media screen and (max-width: 420px) {
+  /* line 56, ../sass/blog.scss */
+  article {
+    width: 95%;
+    margin: 15px auto;
+  }
+}
+/* line 62, ../sass/blog.scss */
+.pagination__container {
+  position: relative;
+  width: 90%;
+  margin: 25px auto;
+  text-align: center;
+  display: flex;
+}
+/* line 69, ../sass/blog.scss */
+.pagination__container nav {
+  margin: auto;
+}

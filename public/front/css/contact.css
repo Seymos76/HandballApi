@@ -1,0 +1,57 @@
+/* line 1, ../sass/contact.scss */
+.contact__container {
+  width: 60%;
+  margin: 25px auto;
+  justify-content: center;
+}
+
+/* line 6, ../sass/contact.scss */
+.contact__informations, .contact__form {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: auto;
+  padding: 15px;
+}
+
+/* line 13, ../sass/contact.scss */
+.contact__informations {
+  text-align: center;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+/* line 19, ../sass/contact.scss */
+.contact__informations > * {
+  margin: auto;
+}
+/* line 23, ../sass/contact.scss */
+.contact__informations .contact__info__coords {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+@media screen and (min-width: 800px) and (max-width: 1024px) {
+  /* line 32, ../sass/contact.scss */
+  .contact__info__coords {
+    flex-direction: column !important;
+  }
+  /* line 34, ../sass/contact.scss */
+  .contact__info__coords div {
+    margin: 15px auto;
+  }
+}
+@media screen and (min-width: 421px) and (max-width: 799px) {
+  /* line 40, ../sass/contact.scss */
+  .contact__info__coords {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 420px) {
+  /* line 45, ../sass/contact.scss */
+  .contact__info__coords {
+    flex-direction: column;
+  }
+}
