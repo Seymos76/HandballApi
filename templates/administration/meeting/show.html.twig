@@ -32,19 +32,37 @@
 		{% endfor %}
         </tbody>
     </table>
+    <button type="submit" class="btn btn-outline-primary">Valider les résultats</button>
 
-	{% for key, form in forms %}
-        <div class="modal fade" id="validate_{{ form.vars.data.id }}" tabindex="-1" role="dialog" aria-labelledby="validatingGame{{ form.vars.data.id }}" aria-hidden="true">
+	{% for key, field in form.games %}
+        <div class="modal fade" id="validate_{{ field.vars.data.id }}" tabindex="-1" role="dialog" aria-labelledby="validatingGame{{ field.vars.data.id }}" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ key }}Rencontre du {{ meeting.meetingDate }}, match {{ form.vars.data.id }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ key }}Rencontre du {{ meeting.meetingDate }}, match {{ field.vars.data.id }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        {% include('administration/meeting/_validate_game.html.twig') %}
+						{{ form_start(field) }}
+                        <fieldset class="form-group">
+							{{ form_label(field.children["winner"]) }}
+							{{ form_widget(field.children["winner"]) }}
+                        </fieldset>
+                        <fieldset class="form-group">
+							{{ form_label(field.children["looser"]) }}
+							{{ form_widget(field.children["looser"]) }}
+                        </fieldset>
+                        <fieldset class="form-group">
+							{{ form_label(field.children["winnerScore"]) }}
+							{{ form_widget(field.children["winnerScore"]) }}
+                        </fieldset>
+                        <fieldset class="form-group">
+							{{ form_label(field.children["looserScore"]) }}
+							{{ form_widget(field.children["looserScore"]) }}
+                        </fieldset>
+						{{ form_end(field) }}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer sans enregistrer</button>

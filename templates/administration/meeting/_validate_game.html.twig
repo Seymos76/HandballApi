@@ -1,4 +1,4 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'name': "result_form_"~form.vars.data.id}}) }}
 <div class="form-group">
 	<label class="required" for="result_winner">{{ form_label(form.winner) }} :
 		<button type="button" class="btn_winner">{{ form.vars.data.team.name }}</button> ou
@@ -15,7 +15,6 @@
 	{{ form_widget(form.looser) }}
 </div>
 {{ form_row(form.looserScore) }}
-<button type="submit">Valider les résultats</button>
 {% do form.winner.setRendered %}
 {% do form.looser.setRendered %}
 {{ form_end(form) }}

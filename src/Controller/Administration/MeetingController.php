@@ -4,6 +4,7 @@ namespace App\Controller\Administration;
 
 use App\Entity\Meeting;
 use App\Form\MeetingType;
+use App\Form\MeetingValidatorType;
 use App\Form\ResultType;
 use App\Manager\MeetingManager;
 use App\Repository\MeetingRepository;
@@ -59,12 +60,15 @@ class MeetingController extends AbstractController
     public function show(Meeting $meeting, Request $request): Response
     {
         $games = $meeting->getGames();
+        $formValidator = $this->createForm(MeetingValidatorType::class, $meeting);
         $array_forms = array();
         foreach ($games as $game) {
             $form = $this->createForm(ResultType::class, $game);
             array_push($array_forms, $form->createView());
         }
-        return $this->render('administration/meeting/show.html.twig', ['meeting' => $meeting, 'forms' => $array_forms]);
+        return $this->render('administration/meeting/show.html.twig',
+            ['meeting' => $meeting, 'forms' => $array_forms, 'form' => $formValidator->createView()]
+        );
     }
 
     /**
