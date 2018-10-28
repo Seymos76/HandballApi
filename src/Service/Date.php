@@ -11,37 +11,37 @@ namespace App\Service;
 
 class Date
 {
+    public function getNextSaturday(): ?string
+    {
+        $nextSaturday = strtotime("next Saturday");
+        $saturday = date('d/m/Y', $nextSaturday);
+        return $saturday;
+    }
+
+    public function getPreviousSaturday()
+    {
+        $sat = 6;
+        $stmp = time(); #Get current timestamp
+        $day = date('N',$stmp); #Get numeric day of week
+        while($day != $sat) #Match to Friday
+        {
+            $stmp = $stmp - 86400; #subtract i day
+            $day = date('N',$stmp); #Get numeric day of week
+        }
+        //$finish = date('Y-m-d',$stmp);#Saturday date
+        $currentDay = self::getCurrentDayFormattedToInteger();
+        if ($currentDay === 0) {
+            $start = date('d-m-Y',$stmp); #7 days previous
+        } else {
+            $start = date('d-m-Y',$stmp - (86400*7)); #7 days previous
+        }
+        return $start;
+    }
+
     public function getCurrentDayFormattedToInteger(): ?int
     {
         $date = new \DateTime('now');
         $formattedDate = $date->format('w');
         return (int)$formattedDate;
-    }
-
-    public function getNextSaturday(): ?string
-    {
-        $numbers = self::getNumberForNextSaturday();
-        $newDate = new \DateTime('now');
-        $formatted = $newDate->format('d-m-Y');
-        $saturday = date("d-m-Y", strtotime($formatted ." + {$numbers['number']} days"));
-        return $saturday;
-    }
-
-    public function getNumberForNextSaturday(): ?array
-    {
-        $currentDay = self::getCurrentDayFormattedToInteger();
-        switch ($currentDay) {
-            case 1: $saturday = $currentDay + 5; break;
-            case 2: $saturday = $currentDay + 4; break;
-            case 3: $saturday = $currentDay + 3; break;
-            case 4: $saturday = $currentDay + 2; break;
-            case 5: $saturday = $currentDay + 1; break;
-            case 6: $saturday = $currentDay; break;
-            case 7: $saturday = $currentDay + 6; break;
-        }
-        return array(
-            'saturday' => $saturday,
-            'number' => $saturday - $currentDay
-        );
     }
 }

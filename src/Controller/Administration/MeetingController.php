@@ -4,6 +4,7 @@ namespace App\Controller\Administration;
 
 use App\Entity\Meeting;
 use App\Form\MeetingType;
+use App\Form\ResultType;
 use App\Manager\MeetingManager;
 use App\Repository\MeetingRepository;
 use App\Service\Date;
@@ -53,11 +54,17 @@ class MeetingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="meeting_show", methods="GET")
+     * @Route("/{id}", name="meeting_show", methods="GET|POST")
      */
-    public function show(Meeting $meeting): Response
+    public function show(Meeting $meeting, Request $request): Response
     {
-        return $this->render('administration/meeting/show.html.twig', ['meeting' => $meeting]);
+        $games = $meeting->getGames();
+        $array_forms = array();
+        foreach ($games as $game) {
+            $form = $this->createForm(ResultType::class, $game);
+            array_push($array_forms, $form->createView());
+        }
+        return $this->render('administration/meeting/show.html.twig', ['meeting' => $meeting, 'forms' => $array_forms]);
     }
 
     /**

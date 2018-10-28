@@ -1,30 +1,83 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}Meeting{% endblock %}
+{% block title %}Gestion des rencontres sportives{% endblock %}
+{% block header %}Rencontres sportives du {{ meeting.meetingDate }}{% endblock %}
 
 {% block body %}
-    <h1>Meeting</h1>
-
-    <table class="table">
+    <table class="table table-striped table-responsive-sm">
+        <thead>
+        <tr>
+            <th>Match</th>
+            <th>Équipe</th>
+            <th>Adversaire</th>
+            <th></th>
+        </tr>
+        </thead>
         <tbody>
+		{% for g in meeting.games %}
             <tr>
-                <th>Id</th>
-                <td>{{ meeting.id }}</td>
+                <td>{{ g.id }}</td>
+                <td>{{ g.team.name }}</td>
+                <td>{{ g.opponent }}</td>
+                <td>
+					{% if g.winner == null %}
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#validate_{{ g.id }}">
+                            Inscrire les scores
+                        </button>
+					{% else %}
+                        Résultat ok
+					{% endif %}
+                </td>
             </tr>
-            <tr>
-                <th>Meeting_date</th>
-                <td>{{ meeting.meetingDate }}</td>
-            </tr>
-            <tr>
-                <th>Matchs</th>
-                <td>{{ meeting.games|length }}</td>
-            </tr>
+		{% endfor %}
         </tbody>
     </table>
+
+	{% for key, form in forms %}
+        <div class="modal fade" id="validate_{{ form.vars.data.id }}" tabindex="-1" role="dialog" aria-labelledby="validatingGame{{ form.vars.data.id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ key }}Rencontre du {{ meeting.meetingDate }}, match {{ form.vars.data.id }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% include('administration/meeting/_validate_game.html.twig') %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer sans enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+	{% endfor %}
 
     <a href="{{ path('meeting_index') }}">back to list</a>
 
     <a href="{{ path('meeting_edit', {'id': meeting.id}) }}">edit</a>
 
     {{ include('administration/meeting/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var btn_submit = $("button[type=submit]");
+        var btn = $("button[type=button]");
+        btn_submit.attr('disabled','disabled');
+        $(".btn_winner").click(function () {
+            $("#result_winner").val(this.textContent);
+        });
+        $(".btn_looser").click(function () {
+            $("#result_looser").val(this.textContent);
+        });
+        btn.click(function () {
+            if ($("#result_looser")[0].value === $("#result_winner")[0].value) {
+                btn_submit.attr('disabled','disabled');
+            } else {
+                btn_submit.removeAttr('disabled');
+            }
+        });
+    </script>
 {% endblock %}

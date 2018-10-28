@@ -25,16 +25,20 @@ class DefaultController extends AbstractController
      */
     public function index(SlideRepository $slideRepository, MeetingRepository $meetingRepository, GameRepository $gameRepository, Date $date)
     {
+        $saturday = $date->getNextSaturday();
+        $prev_saturday = $date->getPreviousSaturday();
+        dump($prev_saturday);
+        dump($saturday);
         $slides = $slideRepository->findAll();
-        $meeting = $meetingRepository->findNextMeeting($date->getNextSaturday());
-        $results = $gameRepository->findLastResults();
+        $meeting = $meetingRepository->findNextMeeting($saturday);
+        $result = $meetingRepository->findLastMeeting($prev_saturday);
         dump($meeting);
-        dump($results);
+        dump($result);
         return $this->render(
             'default/index.html.twig', [
                 'slides' => $slides,
                 'meeting' => $meeting,
-                'result' => $results
+                'result' => $result
             ]
         );
     }

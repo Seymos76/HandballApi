@@ -28,6 +28,15 @@ class MeetingRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findLastMeeting(string $date)
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.meeting_date = :meeting_date')
+            ->setParameter('meeting_date', $date)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return Meeting[] Returns an array of Meeting objects
 //     */

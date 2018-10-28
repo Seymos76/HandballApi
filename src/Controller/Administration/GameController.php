@@ -96,6 +96,7 @@ class GameController extends AbstractController
             $this->addFlash('success',"Match mis à jour avec les résultats !");
             return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
         }
+        dump($game);
         return $this->render('administration/game/validate.html.twig', [
             'game' => $game,
             'form' => $form->createView()
