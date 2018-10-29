@@ -30,9 +30,15 @@ class Meeting
      */
     private $games;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $validated;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
+        $this->validated = false;
     }
 
     public function getId(): ?int
@@ -79,6 +85,18 @@ class Meeting
                 $game->setMeeting(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getValidated(): ?bool
+    {
+        return $this->validated;
+    }
+
+    public function setValidated(bool $validated): self
+    {
+        $this->validated = $validated;
 
         return $this;
     }

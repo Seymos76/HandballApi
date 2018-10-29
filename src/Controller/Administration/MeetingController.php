@@ -57,17 +57,17 @@ class MeetingController extends AbstractController
     /**
      * @Route("/{id}", name="meeting_show", methods="GET|POST")
      */
-    public function show(Meeting $meeting, Request $request): Response
+    public function show(Meeting $meeting, Request $request, MeetingManager $meetingManager): Response
     {
-        $games = $meeting->getGames();
         $formValidator = $this->createForm(MeetingValidatorType::class, $meeting);
-        $array_forms = array();
-        foreach ($games as $game) {
-            $form = $this->createForm(ResultType::class, $game);
-            array_push($array_forms, $form->createView());
+        $formValidator->handleRequest($request);
+        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
+            $meetingManager->update($meeting);
+            $this->addFlash('success',"Rencontre et matchs mis à jour !");
+            return $this->redirectToRoute('meeting_show', ['id' => $meeting->getId()]);
         }
         return $this->render('administration/meeting/show.html.twig',
-            ['meeting' => $meeting, 'forms' => $array_forms, 'form' => $formValidator->createView()]
+            ['meeting' => $meeting, 'form' => $formValidator->createView()]
         );
     }
 
