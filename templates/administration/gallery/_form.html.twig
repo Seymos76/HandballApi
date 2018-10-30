@@ -1,20 +1,6 @@
-{{ form_start(form, {'attr': {'method': "POST"}}) }}
+{{ form_start(form) }}
     {{ form_row(form.name) }}
-<ul id="image_field_list" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}" data-widget-image="{{ '<li></li>'|e }}">
-	{% for field in form.images %}
-        <li>
-			{% if field.vars['value'] is defined %}
-				{{ dump(field.vars['value']) }}
-				<img src="{{ asset('uploads/gallery/' ~ gallery.path ~ field.vars['value'].filename) }}" alt="" height="300">
-				{{ include('gallery/_delete_image_gallery_form.html.twig') }}
-			{% else %}
-				{{ form_errors(field) }}
-				{{ form_widget(field) }}
-			{% endif %}
-        </li>
-	{% endfor %}
-</ul>
-<button type="button" class="add_image_collection" data-list="#image_field_list">Ajouter une image</button>
+{% include "administration/gallery/_image_widget.html.twig" %}
 <button class="btn" type="submit">{{ button_label|default('Save') }}</button>
 {% do form.images.setRendered %}
 {{ form_end(form) }}

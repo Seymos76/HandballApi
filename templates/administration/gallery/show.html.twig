@@ -1,11 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'administration/admin.html.twig' %}
 
-{% block title %}Gallery{% endblock %}
+{% block title %}Gestion des albums photo{% endblock %}
+{% block header %}Albums photo du {{ gallery.dateCreation|date('d/m/Y') }}{% endblock %}
 
 {% block body %}
-    <h1>Gallery</h1>
-
-    <table class="table">
+    <table class="table table-responsive-sm table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -33,7 +32,7 @@
 					{% for image in gallery.images %}
                         <img src="{{ asset('uploads/gallery/' ~ gallery.path ~ image.filename) }}"
                              alt="" height="300">
-                        {% include('gallery/_delete_image.html.twig') %}
+                        {% include('administration/gallery/_delete_image.html.twig') %}
 					{% endfor %}
                 </td>
             </tr>

@@ -1,0 +1,144 @@
+{% extends 'administration/admin.html.twig' %}
+
+{% block title %}Gestion des rencontres sportives{% endblock %}
+{% block header %}Rencontres sportives du {{ meeting.meetingDate }}{% endblock %}
+
+{% block body %}
+    <table class="table table-striped table-responsive-sm">
+        <thead>
+        <tr>
+            <th>Match</th>
+            <th>Équipe</th>
+            <th>Adversaire</th>
+			{% if meeting.validated %}
+                <th>Vainqueur</th>
+                <th>Perdant</th>
+			{% else %}
+                <th>Validation</th>
+			{% endif %}
+        </tr>
+        </thead>
+        <tbody>
+		{% for g in meeting.games %}
+            <tr>
+                <td>{{ g.id }}</td>
+                <td>{{ g.team.name }}</td>
+                <td>{{ g.opponent }}</td>
+				{% if meeting.validated %}
+                    <td>{{ g.winner }} : {{ g.winnerScore }}</td>
+                    <td>{{ g.looser }} : {{ g.looserScore }}</td>
+				{% else %}
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#validate_{{ g.id }}">
+                            Inscrire les scores
+                        </button>
+                    </td>
+				{% endif %}
+            </tr>
+		{% endfor %}
+        </tbody>
+    </table>
+
+	{% if meeting.validated == false %}
+		{{ form_start(form) }}
+		{% for key, field in form.games %}
+            <div class="modal fade" id="validate_{{ field.vars.data.id }}" data-form-key="{{ key }}" data-field-id="{{ field.vars.data.id }}" tabindex="-1" role="dialog" aria-labelledby="validatingGame{{ field.vars.data.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Rencontre du {{ meeting.meetingDate }}, match {{ field.vars.data.id }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <fieldset class="form-group">
+								{{ form_label(field.children["winner"]) }}
+                                <button type="button" class="btn btn-success btn_winner" data-key="{{ key }}">{{ field.vars.data.team.name }}</button> ou
+                                <button type="button" class="btn btn-success btn_winner" data-key="{{ key }}">{{ field.vars.data.opponent }}</button>
+								{{ form_widget(field.children["winner"]) }}
+                            </fieldset>
+                            <fieldset class="form-group">
+								{{ form_label(field.children["looser"]) }}
+                                <button type="button" class="btn btn-danger btn_looser" data-key="{{ key }}">{{ field.vars.data.team.name }}</button> ou
+                                <button type="button" class="btn btn-danger btn_looser" data-key="{{ key }}">{{ field.vars.data.opponent }}</button>
+								{{ form_widget(field.children["looser"]) }}
+                            </fieldset>
+                            <fieldset class="form-group">
+								{{ form_label(field.children["winnerScore"]) }}
+								{{ form_widget(field.children["winnerScore"]) }}
+                            </fieldset>
+                            <fieldset class="form-group">
+								{{ form_label(field.children["looserScore"]) }}
+								{{ form_widget(field.children["looserScore"]) }}
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Valider</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		{% endfor %}
+        <button type="submit" class="btn btn-outline-primary">Valider les résultats</button>
+		{{ form_end(form) }}
+	{% endif %}
+
+    <a href="{{ path('meeting_index') }}">back to list</a>
+
+    <a href="{{ path('meeting_edit', {'id': meeting.id}) }}">edit</a>
+
+    {{ include('administration/meeting/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var btn_submit = $("button[type=submit]");
+        btn_submit.attr('disabled','disabled');
+        $(".btn_winner").click(function (e) {
+            console.log(e.currentTarget);
+            console.log(e.currentTarget.dataset.key);
+            let key = e.currentTarget.dataset.key;
+            let btn_value = e.currentTarget.innerText;
+            console.log(e.data);
+            $("#meeting_validator_games_"+key+"_winner").val(btn_value);
+        });
+        $(".btn_looser").click(function (e) {
+            let key = e.currentTarget.dataset.key;
+            let btn_value = e.currentTarget.innerText;
+            console.log(e.data);
+            $("#meeting_validator_games_"+key+"_looser").val(btn_value);
+        });
+        function validateFields() {
+            let valid_winners = 0;
+            for (let i = valid_winners; i <= 4; i++) {
+                if ($("#meeting_validator_games_" + i + "_winner").value !== $("#meeting_validator_games_" + i + "_looser")) {
+                    console.log('ok, valid_winners : '+valid_winners);
+                    console.log('i : '+i);
+                    valid_winners = i;
+                } else {
+                    console.log('ko');
+                    valid_winners--;
+                }
+            }
+            return valid_winners;
+        }
+        
+        btn_submit.mouseover(function () {
+            let valid_fields = validateFields();
+            console.log('valid_fields = '+valid_fields);
+            if (valid_fields === 4) {
+                btn_submit.removeAttr('disabled');
+            }
+        });
+
+        btn_submit.click(function (e) {
+            e.preventDefault();
+            if (btn_submit.attr('disabled')) {
+                console.log('disabled');
+            } else {
+                $("form[name=meeting_validator]").submit();
+            }
+        });
+    </script>
+{% endblock %}

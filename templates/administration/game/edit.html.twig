@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'administration/admin.html.twig' %}
 
 {% block title %}Edit game{% endblock %}
 
 {% block body %}
-    <h1>Edit game</h1>
+    <h1>Edit {{ game.matchDate }} game</h1>
 
     {{ include('administration/game/_form.html.twig', {'button_label': 'Update'}) }}
 

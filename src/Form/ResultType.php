@@ -27,14 +27,16 @@ class ResultType extends AbstractType
                 'winner',
                 TextType::class,
                 array(
-                    'label' => "Vainqueur"
+                    'label' => "Vainqueur",
+                    'required' => true
                 )
             )
             ->add(
                 'winnerScore',
                 IntegerType::class,
                 array(
-                    'label' => "Score du vainqueur"
+                    'label' => "Score du vainqueur",
+                    'required' => true
                 )
             )
             ->add(
@@ -42,13 +44,15 @@ class ResultType extends AbstractType
                 TextType::class,
                 array(
                     'label' => "Équipe vaincue",
+                    'required' => true
                 )
             )
             ->add(
                 'looserScore',
                 IntegerType::class,
                 array(
-                    'label' => "Score de l'équipe vaincue"
+                    'label' => "Score de l'équipe vaincue",
+                    'required' => true
                 )
             );
     }

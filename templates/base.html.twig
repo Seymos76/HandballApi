@@ -2,8 +2,10 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>Association de Handball Forges-les-Eaux {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 		{% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -13,35 +15,36 @@
 	{% for message in app.session.flashbag.get('success') %}
         {{ message }}
 	{% endfor %}
-    <nav>
-        <a href="{{ path('index') }}">Accueil</a>
-		{% if is_granted('ROLE_USER') %}
-            <a href="{{ path('game_index') }}">Les matchs</a>
-            <a href="{{ path('team_index') }}">Les équipes</a>
-            <a href="{{ path('user_index') }}">Les utilisateurs</a>
-            <a href="{{ path('player_index') }}">Les joueurs</a>
-            <a href="{{ path('image_index') }}">Les images</a>
-            <a href="{{ path('gallery_index') }}">Les galeries</a>
-            <a href="{{ path('slide_index') }}">Les slides</a>
-            <a href="{{ path('training_index') }}">Les entraînements</a>
-            <a href="{{ path('article_index') }}">Les articles</a>
-            <a href="{{ path('password_change') }}">Changer le mot de passe</a>
-            <a href="{{ path('logout') }}">Déconnexion</a>
-		{% elseif is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('administration') }}">Admin</a>
-		{% else %}
-            <a href="{{ path('trainings') }}">Entrainements</a>
-            <a href="{{ path('matchs') }}">Matchs</a>
-            <a href="{{ path('results') }}">Résultats</a>
-            <a href="{{ path('galleries') }}">Galerie</a>
-            <a href="{{ path('blog') }}">Actualités</a>
-            <a href="{{ path('contact') }}">Contact</a>
-            <a href="{{ path('register') }}">Inscription</a>
-            <a href="{{ path('login') }}">Connexion</a>
-            <a href="{{ path('ask_for_password_reinitialisation') }}">Réinitialiser mon mot de passe</a>
-		{% endif %}
-    </nav>
+	<header class="flex_row">
+		<div class="header__logo">
+			<img src="{{ asset('images/logo.png') }}" alt="">
+		</div>
+		<div class="header__menu_button">
+			<button type="button" id="menu_toggle">
+				<i class="fa fa-bars"></i>
+			</button>
+		</div>
+	</header>
+	<section class="main__navigation__overlay flex_row">
+		<div class="overlay__menu__container flex_column">
+			<div class="navigation__container">
+				<nav class="flex_column">
+					<a href="{{ path('index') }}">Accueil</a>
+					<a href="{{ path('trainings') }}">Les entrainements</a>
+					<a href="{{ path('results') }}">Les resultats</a>
+					<a href="{{ path('galleries') }}">La galerie</a>
+					<a href="{{ path('blog') }}">Les actualites</a>
+					<a href="{{ path('contact') }}">Nous contacter</a>
+				</nav>
+			</div>
+		</div>
+	</section>
+
+    <section class="main">
         {% block body %}{% endblock %}
+    </section>
+    <script src="{{ asset('build/manifest.js') }}"></script>
+    <script src="{{ asset('build/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

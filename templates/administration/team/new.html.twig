@@ -1,10 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'administration/admin.html.twig' %}
 
-{% block title %}New Team{% endblock %}
+{% block title %}Gestion des équipes{% endblock %}
+{% block header %}Ajouter une équipe{% endblock %}
 
 {% block body %}
-    <h1>Create new Team</h1>
-
     {{ include('administration/team/_form.html.twig') }}
 
     <a href="{{ path('team_index') }}">back to list</a>

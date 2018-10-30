@@ -1,0 +1,20 @@
+{{ form_start(form, {'attr': {'name': "result_form_"~form.vars.data.id}}) }}
+<div class="form-group">
+	<label class="required" for="result_winner">{{ form_label(form.winner) }} :
+		<button type="button" class="btn_winner">{{ form.vars.data.team.name }}</button> ou
+		<button type="button" class="btn_winner">{{ form.vars.data.opponent }}</button>
+	</label>
+	{{ form_widget(form.winner) }}
+</div>
+{{ form_row(form.winnerScore) }}
+<div class="form-group">
+	<label class="required" for="result_winner">{{ form_label(form.looser) }} :
+		<button type="button" class="btn_looser">{{ form.vars.data.team.name }}</button> ou
+		<button type="button" class="btn_looser">{{ form.vars.data.opponent }}</button>
+	</label>
+	{{ form_widget(form.looser) }}
+</div>
+{{ form_row(form.looserScore) }}
+{% do form.winner.setRendered %}
+{% do form.looser.setRendered %}
+{{ form_end(form) }}

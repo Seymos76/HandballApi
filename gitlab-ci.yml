@@ -38,7 +38,6 @@ variables:
 stages:
 - deploy
 
-
 deploy:
   stage: deploy
   only:

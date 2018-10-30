@@ -1,9 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Administration{% endblock %}
-
-{% block body %}
-	{% if app.user %}
-		{{ dump(app.user) }}
-	{% endif %}
-{% endblock %}

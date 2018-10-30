@@ -24,14 +24,16 @@ class TeamType extends AbstractType
                 'league',
                 TextType::class,
                 array(
-                    'label' => "League"
+                    'label' => "League",
+                    'required' => false,
                 )
             )
             ->add(
                 'season',
                 TextType::class,
                 array(
-                    'label' => "Saison"
+                    'label' => "Saison",
+                    'required' => false,
                 )
             )
         ;

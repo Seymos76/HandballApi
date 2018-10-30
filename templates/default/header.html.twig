@@ -1,0 +1,28 @@
+<header class="debug flex_row">
+	<div class="header__logo debug">
+		<img src="{{ asset('build/images/logo.751d0cb0.png') }}" alt="">
+	</div>
+	<div class="header__menu_button">
+		<button @click="toggleMenu()">
+			<i class="fa" :class="class_name"></i>
+		</button>
+	</div>
+</header>
+<section class="main__navigation__overlay flex_row" v-if="menu">
+	<div class="overlay__menu__container flex_column">
+		<div class="navigation__container">
+			<nav class="flex_column">
+				<a href="{{ path('index') }}">Accueil</a>
+				<a href="{{ path('trainings') }}">Entrainements</a>
+				<a href="{{ path('matchs') }}">Matchs</a>
+				<a href="{{ path('results') }}">Résultats</a>
+				<a href="{{ path('galleries') }}">Galerie</a>
+				<a href="{{ path('blog') }}">Actualités</a>
+				<a href="{{ path('contact') }}">Contact</a>
+				<a href="{{ path('register') }}">Inscription</a>
+				<a href="{{ path('login') }}">Connexion</a>
+				<a href="{{ path('ask_for_password_reinitialisation') }}">Réinitialiser mon mot de passe</a>
+			</nav>
+		</div>
+	</div>
+</section>

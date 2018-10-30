@@ -1,10 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'administration/admin.html.twig' %}
 
-{% block title %}New Comment{% endblock %}
+{% block title %}Gestion des commentaires{% endblock %}
+{% block header %}Ajout d'un commentaire{% endblock %}
 
 {% block body %}
-    <h1>Create new Comment</h1>
-
     {{ include('administration/comment/_form.html.twig') }}
 
     <a href="{{ path('comment_index') }}">back to list</a>

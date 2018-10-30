@@ -19,15 +19,6 @@ class GameManager extends EntityManager
         parent::__construct($manager);
     }
 
-    /**
-     * @return Game
-     */
-    public function getFutureGame()
-    {
-        $future = $this->getManager()->getRepository(Game::class)->findFutureGame();
-        return $future;
-    }
-
     public function formatObjectToJson(Game $game)
     {
         $json = array(

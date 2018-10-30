@@ -1,0 +1,28 @@
+{% for g in games %}
+	<div class="next__match__item">
+		<div class="next__match__teams">
+			<h3>{{ g.team.name }} VS {{ g.opponent }}</h3>
+		</div>
+		<div class="next__match__timer flex_row" data-timer="{{ next_meeting.meetingDate }}">
+			<div class="timer__box flex_column">
+				<span class="timer__numeric timer__days"></span>
+				<span class="timer__text">jours</span>
+			</div>
+			<div class="timer__box flex_column">
+				<span class="timer__numeric timer__hours">06</span>
+				<span class="timer__text">heures</span>
+			</div>
+			<div class="timer__box flex_column">
+				<span class="timer__numeric timer__minutes">30</span>
+				<span class="timer__text">minutes</span>
+			</div>
+			<div class="timer__box flex_column">
+				<span class="timer__numeric timer__seconds">30</span>
+				<span class="timer__text">secondes</span>
+			</div>
+		</div>
+		<div class="next__match__appoint">
+			<p>Lieu de RDV : Gymnase de Forges-les-Eaux</p>
+		</div>
+	</div>
+{% endfor %}

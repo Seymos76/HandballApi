@@ -1,0 +1,24 @@
+/* line 1, ../sass/events.scss */
+.events__container {
+  justify-content: space-around;
+  height: auto;
+}
+
+/* line 5, ../sass/events.scss */
+.event__column {
+  width: 350px;
+}
+
+/* line 8, ../sass/events.scss */
+.event__type {
+  height: 80px;
+  display: flex;
+  border-bottom: 5px solid #12BEDB;
+  background-color: #e0e0e0;
+}
+/* line 14, ../sass/events.scss */
+.event__type h2 {
+  font-size: 1.5em;
+  margin: auto;
+  color: #000000;
+}

@@ -1,11 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'administration/admin.html.twig' %}
 
-{% block title %}Comment{% endblock %}
+{% block title %}Gestion des commentaires{% endblock %}
+{% block header %}Commentaire de {{ comment.name }}{% endblock %}
 
 {% block body %}
-    <h1>Comment</h1>
-
-    <table class="table">
+    <table class="table table-responsive-sm table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>

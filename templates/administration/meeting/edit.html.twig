@@ -1,0 +1,27 @@
+{% extends 'administration/admin.html.twig' %}
+
+{% block title %}Gestion des convocations{% endblock %}
+{% block header %}Modification convocation du {{ meeting.meetingDate }}{% endblock %}
+
+{% block body %}
+	{% form_theme form
+		'administration/meeting/jquery.collection.html.twig'
+	%}
+	{{ include('administration/meeting/_form.html.twig') }}
+
+    <a href="{{ path('meeting_index') }}">back to list</a>
+
+    {{ include('administration/meeting/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('admin/js/jquery.collection.js') }}"></script>
+    <script>
+        $('.game_collection_entry').collection({
+            up: '<a href="#" class="btn btn-default"><span class="fa fa-arrow-up"></span></a>',
+            down: '<a href="#" class="btn btn-default"><span class="fa fa-arrow-down"></span></a>',
+            add: '<a href="#" class="btn btn-default"><span class="fa fa-plus"></span></a>',
+            remove: '<a href="#" class="btn btn-default"><span class="fa fa-trash"></span></a>'
+        });
+    </script>
+{% endblock %}

@@ -8,8 +8,10 @@ use App\Form\MessageType;
 use App\Manager\MessageManager;
 use App\Repository\GalleryRepository;
 use App\Repository\GameRepository;
+use App\Repository\MeetingRepository;
 use App\Repository\SlideRepository;
 use App\Repository\TrainingRepository;
+use App\Service\Date;
 use App\Service\Mail\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +23,22 @@ class DefaultController extends AbstractController
      * @Route(path="/", name="index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(SlideRepository $slideRepository, GameRepository $gameRepository)
+    public function index(SlideRepository $slideRepository, MeetingRepository $meetingRepository, Date $date)
     {
+        $saturday = $date->getNextSaturday();
+        $prev_saturday = $date->getPreviousSaturday();
+        dump($prev_saturday);
+        dump($saturday);
+        $slides = $slideRepository->findAll();
+        $next_meeting = $meetingRepository->findNextMeeting($saturday);
+        $last_meeting = $meetingRepository->findLastMeeting($prev_saturday);
+        dump($next_meeting);
+        dump($last_meeting);
         return $this->render(
             'default/index.html.twig', [
-                'slides' => $slideRepository->findAll(),
-                'matchs' => $gameRepository->findAll()
+                'slides' => $slides,
+                'next_meeting' => $next_meeting,
+                'last_meeting' => $last_meeting
             ]
         );
     }

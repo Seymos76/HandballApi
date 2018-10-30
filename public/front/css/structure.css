@@ -1,0 +1,77 @@
+/* line 1, ../sass/structure.scss */
+html {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 5, ../sass/structure.scss */
+* {
+  box-sizing: inherit;
+}
+/* line 7, ../sass/structure.scss */
+*:focus {
+  outline: none;
+}
+
+/* line 11, ../sass/structure.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 14, ../sass/structure.scss */
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial;
+}
+
+/* line 23, ../sass/structure.scss */
+.full_width {
+  width: 100%;
+}
+
+/* line 26, ../sass/structure.scss */
+.flex_column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 30, ../sass/structure.scss */
+.flex_row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* line 36, ../sass/structure.scss */
+.container {
+  position: relative;
+  width: 60%;
+  margin: auto;
+}
+
+@media screen and (min-width: 800px) and (max-width: 1024px) {
+  /* line 43, ../sass/structure.scss */
+  .container {
+    width: 80% !important;
+  }
+}
+@media screen and (min-width: 421px) and (max-width: 799px) {
+  /* line 48, ../sass/structure.scss */
+  .container {
+    width: 90% !important;
+  }
+}
+@media screen and (max-width: 420px) {
+  /* line 53, ../sass/structure.scss */
+  .container {
+    width: 100% !important;
+  }
+}
+/* line 59, ../sass/structure.scss */
+.debug {
+  border: 1px solid red;
+}
