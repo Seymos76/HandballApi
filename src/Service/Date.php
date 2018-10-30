@@ -23,12 +23,18 @@ class Date
         $sat = 6;
         $stmp = time(); #Get current timestamp
         $day = date('N',$stmp); #Get numeric day of week
-        while($day != $sat) #Match to Friday
+        while($day != $sat) #Match to Saturday
         {
             $stmp = $stmp - 86400; #subtract i day
             $day = date('N',$stmp); #Get numeric day of week
         }
-        //$finish = date('Y-m-d',$stmp);#Saturday date
+        $finish = date('d-m-Y',$stmp);#Saturday date
+        return $finish;
+    }
+
+    public function getPreviousPreviousSaturday()
+    {
+        $stmp = time();
         $currentDay = self::getCurrentDayFormattedToInteger();
         if ($currentDay === 0) {
             $start = date('d-m-Y',$stmp); #7 days previous

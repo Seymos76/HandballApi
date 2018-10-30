@@ -3,21 +3,21 @@
 		<div class="next__match__teams">
 			<h3>{{ g.team.name }} VS {{ g.opponent }}</h3>
 		</div>
-		<div class="next__match__timer flex_row">
+		<div class="next__match__timer flex_row" data-timer="{{ next_meeting.meetingDate }}">
 			<div class="timer__box flex_column">
-				<span class="timer__numeric">20</span>
+				<span class="timer__numeric timer__days"></span>
 				<span class="timer__text">jours</span>
 			</div>
 			<div class="timer__box flex_column">
-				<span class="timer__numeric">06</span>
+				<span class="timer__numeric timer__hours">06</span>
 				<span class="timer__text">heures</span>
 			</div>
 			<div class="timer__box flex_column">
-				<span class="timer__numeric">30</span>
+				<span class="timer__numeric timer__minutes">30</span>
 				<span class="timer__text">minutes</span>
 			</div>
 			<div class="timer__box flex_column">
-				<span class="timer__numeric">30</span>
+				<span class="timer__numeric timer__seconds">30</span>
 				<span class="timer__text">secondes</span>
 			</div>
 		</div>

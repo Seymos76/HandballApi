@@ -23,22 +23,22 @@ class DefaultController extends AbstractController
      * @Route(path="/", name="index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(SlideRepository $slideRepository, MeetingRepository $meetingRepository, GameRepository $gameRepository, Date $date)
+    public function index(SlideRepository $slideRepository, MeetingRepository $meetingRepository, Date $date)
     {
         $saturday = $date->getNextSaturday();
         $prev_saturday = $date->getPreviousSaturday();
         dump($prev_saturday);
         dump($saturday);
         $slides = $slideRepository->findAll();
-        $meeting = $meetingRepository->findNextMeeting($saturday);
-        $result = $meetingRepository->findLastMeeting($prev_saturday);
-        dump($meeting);
-        dump($result);
+        $next_meeting = $meetingRepository->findNextMeeting($saturday);
+        $last_meeting = $meetingRepository->findLastMeeting($prev_saturday);
+        dump($next_meeting);
+        dump($last_meeting);
         return $this->render(
             'default/index.html.twig', [
                 'slides' => $slides,
-                'meeting' => $meeting,
-                'result' => $result
+                'next_meeting' => $next_meeting,
+                'last_meeting' => $last_meeting
             ]
         );
     }
