@@ -20,6 +20,19 @@ services:
       ports:
         - "8002:3306"
 
+    phpmyadmin:
+      image: nazarpc/phpmyadmin:latest
+      container_name: docker-symfony4-phpmyadmin
+      working_dir: /application
+      volumes:
+        - handball_api:/var/lib/phpmyadmin
+      environment:
+        - MYSQL_ROOT_PASSWORD=dinosaure76
+        - MYSQL_USER=handball_api
+        - MYSQL_PASSWORD=handball_api
+      ports:
+        - "8003:8080"
+
     webserver:
       image: nginx:alpine
       container_name: docker-symfony4-webserver
@@ -34,6 +47,7 @@ services:
       depends_on:
         - mysql
         - php-fpm
+        - phpmyadmin
 
     php-fpm:
       build: phpdocker/php-fpm
