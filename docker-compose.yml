@@ -10,10 +10,10 @@ services:
       working_dir: /application
       entrypoint: ['/entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
       volumes:
-        - .:/application
+        - handball_api:/var/lib/mysql
       environment:
-        - TZ=Europe/Moscow
-        - MYSQL_ROOT_PASSWORD/ dinosaure76
+        - TZ=Europe/Paris
+        - MYSQL_ROOT_PASSWORD=dinosaure76
         - MYSQL_DATABASE=handball_api
         - MYSQL_USER=handball_api
         - MYSQL_PASSWORD=handball_api
@@ -43,6 +43,8 @@ services:
         - .:/application
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
 
+volumes:
+  handball_api:
 networks:
   default:
     external:
