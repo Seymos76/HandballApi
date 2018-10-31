@@ -10,6 +10,7 @@ use App\Repository\GalleryRepository;
 use App\Repository\GameRepository;
 use App\Repository\MeetingRepository;
 use App\Repository\SlideRepository;
+use App\Repository\TeamRepository;
 use App\Repository\TrainingRepository;
 use App\Service\Date;
 use App\Service\Mail\Mailer;
@@ -62,11 +63,43 @@ class DefaultController extends AbstractController
      * @param GameRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function matchs(GameRepository $repository)
+    public function games(GameRepository $repository)
     {
         return $this->render(
             'default/matchs.html.twig', [
                 'matchs' => $repository->findAll()
+            ]
+        );
+    }
+
+    /**
+     * @Route(path="/les-equipes", name="teams")
+     * @param TeamRepository $repository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function teams(TeamRepository $repository)
+    {
+        return $this->render(
+            'default/teams.html.twig', [
+                'teams' => $repository->findAll()
+            ]
+        );
+    }
+
+    /**
+     * @Route(path="/equipe/{slug}", name="team")
+     * @param TeamRepository $repository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function team(TeamRepository $repository, string $slug)
+    {
+        return $this->render(
+            'default/team.html.twig', [
+                'team' => $repository->findOneBy(
+                    array(
+                        'slug' => $slug
+                    )
+                )
             ]
         );
     }

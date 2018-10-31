@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<h1>Les équipes</h1>
+
+	{{ dump(teams) }}
+	{% for t in teams %}
+		<a href="{{ path('team', {'slug': t.slug}) }}">{{ t.name }}</a>
+	{% endfor %}
+{% endblock %}
