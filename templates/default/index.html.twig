@@ -30,8 +30,12 @@
 {% block javascripts %}
 	<script src="{{ asset('build/home_js.js') }}"></script>
 	<script>
+        {% if next_meeting is not null %}
 		console.log("{{ next_meeting.meetingDate }}");
 		let targetDate = new Date("{{ next_meeting.meetingDate }}");
+        {% else %}
+        let targetDate = new Date();
+        {% endif %}
 		console.log(targetDate);
         let now = new Date();
 		let count = setInterval(function () {
