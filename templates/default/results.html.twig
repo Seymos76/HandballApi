@@ -2,5 +2,9 @@
 
 {% block body %}
 	Results
-	{{ dump(results) }}
+	{% for m in meetings %}
+		{% for g in m.games %}
+			{{ dump(g) }}
+		{% endfor %}
+	{% endfor %}
 {% endblock %}

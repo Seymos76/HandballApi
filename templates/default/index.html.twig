@@ -7,7 +7,6 @@
 		{% include "default/home/_slider.html.twig" %}
 	{% endif %}
 	{% if last_meeting is defined and last_meeting is not null %}
-		{% set games = last_meeting.games %}
 		<div class="page__header">
 			<h2>Resultats des matchs du {{ last_meeting.meetingDate }}</h2>
 		</div>

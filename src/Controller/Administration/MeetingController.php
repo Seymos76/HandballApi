@@ -81,6 +81,7 @@ class MeetingController extends AbstractController
                 $this->addFlash('error',$errorString);
                 return $this->redirectToRoute('meeting_show', ['id' => $meeting->getId()]);
             }
+            $meeting->setValidated(true);
             $meetingManager->update($meeting);
             $this->addFlash('success',"Rencontre et matchs mis à jour !");
             return $this->redirectToRoute('meeting_show', ['id' => $meeting->getId()]);

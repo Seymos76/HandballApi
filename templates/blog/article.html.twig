@@ -5,21 +5,34 @@
 
 	<img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="">
 
+	{% if article.summary != article.content|slice(0,200) %}
+		<p>{{ article.summary|raw }}</p>
+	{% endif %}
+
 	<p>{{ article.content|raw }}</p>
 
-	{{ form_start(form) }}
-	{{ form_row(form.name) }}
-	{{ form_row(form.email) }}
-	{{ form_row(form.content) }}
-	<button type="submit">Commenter</button>
-	{{ form_end(form) }}
+	{% if previous_article is not null %}
+		<a href="{{ path('article', {'slug': previous_article.slug}) }}" class="btn btn-outline-default">Article précédent</a>
+	{% endif %}
+	{% if next_article is not null %}
+		<a href="{{ path('article', {'slug': next_article.slug}) }}" class="btn btn-outline-default">Article suivant</a>
+	{% endif %}
+
+	{% if is_granted('ROLE_USER') %}
+		{{ form_start(form) }}
+		{{ form_row(form.content) }}
+		<button type="submit">Commenter</button>
+		{{ form_end(form) }}
+	{% else %}
+		<a href="{{ path('login') }}" class="btn btn-outline-primary">Connectes-toi pour commenter !</a>
+	{% endif %}
 
 	{% if article.comments|length > 0 %}
 		{% for c in article.comments %}
-			<p>{{ c.name }}</p>
-			<p>{{ c.email }}</p>
-			<p>{{ c.content }}</p>
+			<p>{{ dump(c) }}</p>
 			<hr>
 		{% endfor %}
+	{% else %}
+		Aucun commentaire
 	{% endif %}
 {% endblock %}

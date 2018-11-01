@@ -16,12 +16,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/actualites", name="blog")
+     * @Route("/actualites/{page}", name="blog", requirements={"page"="\d+"})
      */
-    public function blog(ArticleRepository $repository)
+    public function blog(ArticleRepository $repository, $page = 1)
     {
+        $perPage = 1;
+        dump($page);
+        $allArticles = $repository->findAll();
+        $nbPages = ceil(count($allArticles)/$perPage);
+        $articles = $repository->findBy(
+            [],
+            ['id' => 'DESC'],
+            $perPage,
+            $page/$perPage
+        );
+        dump($articles);
         return $this->render('blog/blog.html.twig', [
-            'articles' => $repository->findAll(),
+            'articles' => $articles,
+            'per_page' => $perPage,
+            'nb_pages' => $nbPages
         ]);
     }
 
@@ -33,11 +46,18 @@ class BlogController extends AbstractController
      */
     public function article(ArticleRepository $repository, Article $article, ArticleManager $articleManager, Request $request)
     {
+        $previousArticle = $repository->findOneBy(['id' => $article->getId()-1]);
+        $nextArticle = $repository->findOneBy(
+            array(
+                'id' => $article->getId()+1
+            )
+        );
         $comment = new Comment();
         $comment->setArticle($article);
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor($this->getUser());
             $articleManager->update($comment);
             $this->addFlash('success',"Commentaire ajouté !");
             return $this->redirectToRoute('article', ['slug' => $article->getSlug()]);
@@ -49,6 +69,8 @@ class BlogController extends AbstractController
                         'slug' => $article->getSlug(),
                     )
                 ),
+                'previous_article' => $previousArticle ?? null,
+                'next_article' => $nextArticle ?? null,
                 'form' => $form->createView()
             ]
         );

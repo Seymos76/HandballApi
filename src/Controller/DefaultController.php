@@ -28,11 +28,12 @@ class DefaultController extends AbstractController
     {
         $saturday = $date->getNextSaturday();
         $prev_saturday = $date->getPreviousSaturday();
+        $prev_saturday = preg_replace("/-/", "/", $prev_saturday);
         dump($prev_saturday);
         dump($saturday);
         $slides = $slideRepository->findAll();
-        $next_meeting = $meetingRepository->findNextMeeting($saturday);
         $last_meeting = $meetingRepository->findLastMeeting($prev_saturday);
+        $next_meeting = $meetingRepository->findNextMeeting($saturday);
         dump($next_meeting);
         dump($last_meeting);
         return $this->render(
@@ -109,11 +110,11 @@ class DefaultController extends AbstractController
      * @param GameRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function results(GameRepository $repository)
+    public function results(MeetingRepository $repository)
     {
         return $this->render(
             'default/results.html.twig', [
-                'results' => $repository->findResults()
+                'meetings' => $repository->findValidatedMeetings()
             ]
         );
     }
