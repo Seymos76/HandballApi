@@ -27,4 +27,22 @@
 	{% for g in galleries %}
 		<a href="{{ path('gallery', {'slug': g.slug}) }}">Galerie {{ g.name }}</a>
 	{% endfor %}
+
+	<nav aria-label="Page navigation example">
+		<ul class="pagination">
+			{% if page > 1 %}
+				<li class="page-item"><a class="page-link" href="{{ path('galleries', {'page': page-1}) }}">Previous</a></li>
+			{% endif %}
+			{% for i in 1..nb_pages %}
+				{% if page == i %}
+					<li class="page-item active"><a href="{{ path('galleries', {'page': i}) }}" class="page-link">{{ i }}</a></li>
+				{% else %}
+					<li class="page-item"><a href="{{ path('galleries', {'page': i}) }}" class="page-link">{{ i }}</a></li>
+				{% endif %}
+			{% endfor %}
+			{% if page < nb_pages %}
+				<li class="page-item"><a class="page-link" href="{{ path('galleries', {'page': page+1}) }}">Next</a></li>
+			{% endif %}
+		</ul>
+	</nav>
 {% endblock %}

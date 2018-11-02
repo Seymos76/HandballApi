@@ -18,23 +18,24 @@ class BlogController extends AbstractController
     /**
      * @Route("/actualites/{page}", name="blog", requirements={"page"="\d+"})
      */
-    public function blog(ArticleRepository $repository, $page = 1)
+    public function blog(ArticleRepository $repository, int $page = 1)
     {
         $perPage = 1;
-        dump($page);
         $allArticles = $repository->findAll();
         $nbPages = ceil(count($allArticles)/$perPage);
+        $limit = ceil($page*$perPage);
+        $offset = ceil($limit-$perPage);
         $articles = $repository->findBy(
             [],
             ['id' => 'DESC'],
-            $perPage,
-            $page/$perPage
+            $limit,
+            $offset
         );
-        dump($articles);
         return $this->render('blog/blog.html.twig', [
             'articles' => $articles,
             'per_page' => $perPage,
-            'nb_pages' => $nbPages
+            'nb_pages' => $nbPages,
+            'page' => $page
         ]);
     }
 

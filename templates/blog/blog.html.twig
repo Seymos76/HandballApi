@@ -17,11 +17,19 @@
 
 	<nav aria-label="Page navigation example">
 		<ul class="pagination">
-			<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+			{% if page > 1 %}
+				<li class="page-item"><a class="page-link" href="{{ path('blog', {'page': page-1}) }}">Previous</a></li>
+			{% endif %}
 			{% for i in 1..nb_pages %}
-				<li class="page-item"><a href="{{ path('blog', {'page': i}) }}" class="page-link">{{ i }}</a></li>
+				{% if page == i %}
+					<li class="page-item active"><a href="{{ path('blog', {'page': i}) }}" class="page-link">{{ i }}</a></li>
+				{% else %}
+					<li class="page-item"><a href="{{ path('blog', {'page': i}) }}" class="page-link">{{ i }}</a></li>
+				{% endif %}
 			{% endfor %}
-			<li class="page-item"><a class="page-link" href="#">Next</a></li>
+			{% if page < nb_pages %}
+				<li class="page-item"><a class="page-link" href="{{ path('blog', {'page': page+1}) }}">Next</a></li>
+			{% endif %}
 		</ul>
 	</nav>
 {% endblock %}

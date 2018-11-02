@@ -8,7 +8,7 @@ use App\Form\MeetingValidatorType;
 use App\Form\ResultType;
 use App\Manager\MeetingManager;
 use App\Repository\MeetingRepository;
-use App\Service\Date;
+use App\Service\Helpers\DateHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +31,7 @@ class MeetingController extends AbstractController
     /**
      * @Route("/new", name="meeting_new", methods="GET|POST")
      */
-    public function new(Request $request, Date $date, MeetingManager $meetingManager): Response
+    public function new(Request $request, DateHelper $date, MeetingManager $meetingManager): Response
     {
         $meeting = new Meeting();
         $saturday = $date->getNextSaturday();

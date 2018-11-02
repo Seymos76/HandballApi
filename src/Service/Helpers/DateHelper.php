@@ -6,10 +6,10 @@
  * Time: 16:53
  */
 
-namespace App\Service;
+namespace App\Service\Helpers;
 
 
-class Date
+class DateHelper
 {
     public function getNextSaturday(): ?string
     {
