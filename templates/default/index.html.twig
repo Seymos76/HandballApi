@@ -1,11 +1,12 @@
 {% extends "base.html.twig" %}
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('build/home_css.css') }}">
+	<link rel="stylesheet" href="{{ asset('build/home.css') }}">
 {% endblock %}
 {% block body %}
 	{% if slides is defined and slides|length != 0 %}
 		{% include "default/home/_slider.html.twig" %}
 	{% endif %}
+	<div id="react_hello_root"></div>
 	{% if last_meeting is defined and last_meeting is not null %}
 		<div class="page__header">
 			<h2>Resultats des matchs du {{ last_meeting.meetingDate }}</h2>
@@ -22,6 +23,7 @@
 		</div>
 		<section class="flex_row container home__next__matchs">
 			{% set games = next_meeting.games %}
+			<div id="timers_root"></div>
 			{% include "default/home/_next_matchs.html.twig" %}
 		</section>
 	{% endif %}

@@ -7,6 +7,7 @@ use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Manager\ArticleManager;
 use App\Repository\ArticleRepository;
+use App\Service\Blog\Pagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,13 +19,13 @@ class BlogController extends AbstractController
     /**
      * @Route("/actualites/{page}", name="blog", requirements={"page"="\d+"})
      */
-    public function blog(ArticleRepository $repository, int $page = 1)
+    public function blog(ArticleRepository $repository, int $page = 1, Pagination $pagination)
     {
         $perPage = 1;
         $allArticles = $repository->findAll();
-        $nbPages = ceil(count($allArticles)/$perPage);
-        $limit = ceil($page*$perPage);
-        $offset = ceil($limit-$perPage);
+        $nbPages = $pagination->getTotalPages($allArticles, $perPage);
+        $limit = $pagination->getLimit($page, $perPage);
+        $offset = $pagination->getOffset($limit, $perPage);
         $articles = $repository->findBy(
             [],
             ['id' => 'DESC'],

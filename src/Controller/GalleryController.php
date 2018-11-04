@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\GalleryRepository;
+use App\Service\Blog\Pagination;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,13 +14,13 @@ class GalleryController extends AbstractController
      * @param GalleryRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function galleries(GalleryRepository $repository, int $page = 1)
+    public function galleries(GalleryRepository $repository, int $page = 1, Pagination $pagination)
     {
         $perPage = 1;
         $allGalleries = $repository->findAll();
-        $nbPages = ceil(count($allGalleries)/$perPage);
-        $limit = ceil($page*$perPage);
-        $offset = ceil($limit-$perPage);
+        $nbPages = $pagination->getTotalPages($allGalleries, $perPage);
+        $limit = $pagination->getLimit($page, $perPage);
+        $offset = $pagination->getOffset($limit, $perPage);
         $galleries = $repository->findBy(
             [],
             ['id' => 'DESC'],

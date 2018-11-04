@@ -1,20 +1,36 @@
+const $ = require('jquery');
 $( document ).ready(function() {
+    const menu_toggle = $("#menu_toggle");
+    const menu_icon = $("#menu_toggle i.fa");
+    const overlay_menu = $(".main__navigation__overlay");
+    menu_toggle.click(function () {
+        if (overlay_menu.hasClass('active')) {
+            menu_icon.removeClass('fa-times');
+            menu_icon.addClass('fa-bars');
+            overlay_menu.removeClass('active');
+        } else {
+            console.log('menu displayed');
+            overlay_menu.addClass('active');
+            menu_icon.removeClass('fa-bars');
+            menu_icon.addClass('fa-times');
+        }
+    });
     let timers = $(".next__match__timer");
     let now = new Date();
     let targetDate = timers[0].dataset.timer;
-    console.log(targetDate);
+    //console.log(targetDate);
     let targetDay = targetDate.slice(0,2);
     let targetMonth = targetDate.slice(3,5);
     let targetYear = targetDate.slice(6,targetDate.length);
-    console.log(targetDay);
+    /*console.log(targetDay);
     console.log(targetMonth);
-    console.log(targetYear);
+    console.log(targetYear);*/
     let formattedTargetDate = new Date(targetMonth+"/"+targetDay+"/"+targetYear);
     let distance = formattedTargetDate - now;
-    console.log("Date cible");
+    /*console.log("Date cible");
     console.log(formattedTargetDate);
     console.log("Aujourd'hui");
-    console.log(now);
+    console.log(now);*/
 
     $.each(timers, function (key, timer) {
         let targetDate = timer.dataset.timer;

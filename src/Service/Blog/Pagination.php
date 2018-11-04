@@ -11,5 +11,18 @@ namespace App\Service\Blog;
 
 class Pagination
 {
-    const PER_PAGE = 1;
+    public function getTotalPages(array $totalElements, int $perPage)
+    {
+        return ceil(count($totalElements)/$perPage);
+    }
+
+    public function getLimit(int $page, int $perPage)
+    {
+        return ceil($page * $perPage);
+    }
+
+    public function getOffset(int $limit, int $perPage)
+    {
+        return ceil($limit - $perPage);
+    }
 }

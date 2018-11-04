@@ -7,12 +7,13 @@ Encore
     .setPublicPath('/build')
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
-    .createSharedEntry('app', ["./assets/scss/layout.scss", "./assets/js/app.js"])
-    //.addStyleEntry('home_css', './assets/scss/home.scss')
+    .createSharedEntry('app', ["./assets/scss/layout.scss","./assets/js/app.js"])
     .addEntry('home_js', ["./assets/js/slider/jssor_slider.min.js", "./assets/js/slider/slider.js", "./assets/js/home.js"])
+    .addStyleEntry('home', "./assets/scss/home.scss")
     .enableSassLoader(function(sassOptions) {
         sassOptions.includePaths = ["assets/scss", "assets/css"];
     })
+    .enableReactPreset()
     .cleanupOutputBeforeBuild()
     .autoProvideVariables({
         $: 'jquery',
