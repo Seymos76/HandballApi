@@ -1,22 +1,44 @@
 {% extends "base.html.twig" %}
-
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('build/article.css') }}">
+{% endblock %}
 {% block body %}
-	<h1>{{ article.title }}</h1>
-
-	<img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="">
-
-	{% if article.summary != article.content|slice(0,200) %}
-		<p>{{ article.summary|raw }}</p>
-	{% endif %}
-
-	<p>{{ article.content|raw }}</p>
-
-	{% if previous_article is not null %}
-		<a href="{{ path('article', {'slug': previous_article.slug}) }}" class="btn btn-outline-default">Article précédent</a>
-	{% endif %}
-	{% if next_article is not null %}
-		<a href="{{ path('article', {'slug': next_article.slug}) }}" class="btn btn-outline-default">Article suivant</a>
-	{% endif %}
+	<div class="page__header">
+		<h1>Titre article</h1>
+	</div>
+	<section class="article__container flex_column">
+		<figure style="background-image: url('{{ asset('uploads/articles/' ~ article.image) }}')">
+		</figure>
+		<article>
+			<div class="article__details">
+				<small>Publié le {{ article.dateCreation|date('d/m/Y') }}</small>
+				{% if article.summary != article.content|slice(0,200) %}
+					<p>{{ article.summary|raw }}</p>
+				{% endif %}
+			</div>
+			<p>{{ article.content|raw }}</p>
+		</article>
+	</section>
+	<section class="pagination__container">
+		<nav aria-label="Blog pagination">
+			<ul class="pagination pagination-lg">
+				{% if previous_article is not null %}
+					<li class="page-item">
+						<a href="{{ path('article', {'slug': previous_article.slug}) }}" class="page-link">
+							<i class="fa fa-arrow-left"></i> Article précédent
+						</a>
+					</li>
+				{% endif %}
+				{% if next_article is not null %}
+					<li class="page-item">
+						<a href="{{ path('article', {'slug': next_article.slug}) }}" class="page-link">
+							Article suivant <i class="fa fa-arrow-right"></i>
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</nav>
+	</section>
 
 	{% if is_granted('ROLE_USER') %}
 		{{ form_start(form) }}

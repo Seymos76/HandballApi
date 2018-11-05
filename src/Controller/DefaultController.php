@@ -84,4 +84,13 @@ class DefaultController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @Route(path="/mentions-legales", name="mentions")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function mentions()
+    {
+        return $this->render('default/mentions.html.twig');
+    }
 }
