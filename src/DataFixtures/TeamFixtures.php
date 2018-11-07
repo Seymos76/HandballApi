@@ -10,6 +10,7 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Team;
+use Cocur\Slugify\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -20,6 +21,7 @@ class TeamFixtures extends Fixture
         for ($i = 1; $i <= 4; $i++) {
             $team = new Team();
             $team->setName("Equipe $i");
+            $team->setSlug("equipe-$i");
             $team->setLeague("Ligue $i");
             $team->setSeason("2018");
             $this->addReference('team'.$i, $team);
