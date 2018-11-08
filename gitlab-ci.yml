@@ -40,7 +40,7 @@ deploy:
   only:
   - master
   script:
-  - echo "Deployment in progress"
+  - echo "Deployment loading"
   - scp -r ./* $server_user@$server_host:/var/www/vhosts/louisthomas.fr/handball.louisthomas.fr/
   - ssh $server_user@$server_host "cd /var/www/vhosts/louisthomas.fr/handball.louisthomas.fr/ && composer install --no-dev --optimize-autoloader"
   - ssh $server_user@$server_host "rm -rf /var/www/vhosts/louisthomas.fr/handball.louisthomas.fr/var/cache && rm -rf /var/www/vhosts/louisthomas.fr/handball.louisthomas.fr/var/log"
