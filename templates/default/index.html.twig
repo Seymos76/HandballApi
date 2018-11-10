@@ -3,6 +3,9 @@
 	<link rel="stylesheet" href="{{ asset('build/home.css') }}">
 {% endblock %}
 {% block body %}
+	<section class="slider__overlay">
+		<h1>Association de Handball de Forges-les-Eaux</h1>
+	</section>
 	{% if slides is defined and slides|length != 0 %}
 		{% include "default/home/_slider.html.twig" %}
 	{% endif %}

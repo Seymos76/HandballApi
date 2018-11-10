@@ -8,9 +8,10 @@
 		'administration/meeting/jquery.collection.html.twig'
 	%}
 	{{ include('administration/meeting/_form.html.twig') }}
-
-    <a href="{{ path('meeting_index') }}">back to list</a>
-
+	<br>
+    <a href="{{ path('meeting_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
+	<br>
+	<br>
     {{ include('administration/meeting/_delete_form.html.twig') }}
 {% endblock %}
 

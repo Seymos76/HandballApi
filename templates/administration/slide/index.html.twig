@@ -7,7 +7,6 @@
     <table class="table table-bordered table-responsive-sm">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Slug</th>
                 <th>Image</th>
@@ -17,22 +16,21 @@
         <tbody>
         {% for slide in slides %}
             <tr>
-                <td>{{ slide.id }}</td>
                 <td>{{ slide.name }}</td>
                 <td>{{ slide.slug }}</td>
                 <td>{{ slide.image }}</td>
                 <td>
-                    <a href="{{ path('slide_show', {'id': slide.id}) }}">show</a>
-                    <a href="{{ path('slide_edit', {'id': slide.id}) }}">edit</a>
+                    <a href="{{ path('slide_show', {'id': slide.id}) }}" class="btn btn-outline-info"><i class="fa fa-eye"></i></a>
+                    <a href="{{ path('slide_edit', {'id': slide.id}) }}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('slide_new') }}">Create new</a>
+    <a href="{{ path('slide_new') }}" class="btn btn-outline-primary">Ajouter une image au slider</a>
 {% endblock %}

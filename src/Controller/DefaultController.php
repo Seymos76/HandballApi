@@ -31,10 +31,7 @@ class DefaultController extends AbstractController
         $slides = $slideRepository->findAll();
         $last_meeting = $meetingRepository->findLastMeeting($prev_saturday);
         $next_meeting = $meetingRepository->findNextMeeting($saturday);
-        dump($prev_saturday);
-        dump($saturday);
-        dump($last_meeting);
-        dump($next_meeting);
+
         return $this->render(
             'default/index.html.twig', [
                 'slides' => $slides,

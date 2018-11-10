@@ -4,10 +4,12 @@
 {% block header %}Liste des joueurs{% endblock %}
 
 {% block body %}
+    <a href="{{ path('player_new') }}" class="btn btn-outline-primary">Ajouter un joueur</a>
+    <br>
+    <br>
     <table class="table table-bordered table-responsive-sm">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Fullname</th>
@@ -19,24 +21,25 @@
         <tbody>
         {% for player in players %}
             <tr>
-                <td>{{ player.id }}</td>
                 <td>{{ player.firstname }}</td>
                 <td>{{ player.lastname }}</td>
                 <td>{{ player.fullname }}</td>
                 <td>{{ player.position }}</td>
                 <td>{{ player.team.name }}</td>
                 <td>
-                    <a href="{{ path('player_show', {'id': player.id}) }}">show</a>
-                    <a href="{{ path('player_edit', {'id': player.id}) }}">edit</a>
+                    <div class="btn-group btn-group-lg" role="group" aria-label="">
+                        <a href="{{ path('player_show', {'id': player.id}) }}" class="btn btn-outline-info"><i class="fa fa-eye"></i></a>
+                        <a href="{{ path('player_edit', {'id': player.id}) }}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
+                    </div>
+
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Aucun enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('player_new') }}">Create new</a>
 {% endblock %}

@@ -1,16 +1,11 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Gestion des utilisateurs{% endblock %}
+{% block header %}Mon profil{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
-
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
             <tr>
                 <th>Firstname</th>
                 <td>{{ user.firstname }}</td>
@@ -22,10 +17,6 @@
             <tr>
                 <th>Email</th>
                 <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
             </tr>
             <tr>
                 <th>Active</th>
@@ -43,20 +34,17 @@
                 <th>Last_connexion</th>
                 <td>{{ user.lastConnexion ? user.lastConnexion|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
-            <tr>
-                <th>Token</th>
-                <td>{{ user.token }}</td>
-            </tr>
-            <tr>
-                <th>Activation_code</th>
-                <td>{{ user.activationCode }}</td>
-            </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('user_index') }}">back to list</a>
-
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-
+    <a href="{{ path('upgrade_user', {'email': user.email, 'role': "ROLE_ADMIN"}) }}">Upgrade to admin</a>
+	{% if app.user.email == user.email %}
+        <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <a href="{{ path('user_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
+            <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-outline-primary">Modifier mon profil</a>
+            <a href="{{ path('password_change') }}" class="btn btn-outline-primary">Changer mon mot de passe</a>
+        </div>
+	{% endif %}
+    <br><br>
     {{ include('administration/user/_delete_form.html.twig') }}
 {% endblock %}

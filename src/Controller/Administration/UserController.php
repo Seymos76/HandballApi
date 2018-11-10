@@ -3,8 +3,11 @@
 namespace App\Controller\Administration;
 
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\UserType;
+use App\Manager\UserManager;
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,6 +88,41 @@ class UserController extends AbstractController
             $em->flush();
         }
 
+        return $this->redirectToRoute('user_index');
+    }
+
+    /**
+     * @Route(path="change-password", name="password_change")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changePassword(Request $request, UserManager $manager)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePasswordType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->update($user);
+            $this->addFlash('success',"Mot de passe modifié !");
+            return $this->redirectToRoute('user_index');
+        }
+        return $this->render(
+            'administration/user/change_password.html.twig', [
+                'form' => $form->createView()
+            ]
+        );
+    }
+
+    /**
+     * @Route(path="/upgrade-user/{email}/{role}", name="upgrade_user")
+     * @ParamConverter("user", class="App\Entity\User")
+     * @param User $user
+     * @param string $role
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function upgradeUser(User $user, string $role, UserManager $manager)
+    {
+        $manager->upgradeUser($user->getEmail(), $role);
         return $this->redirectToRoute('user_index');
     }
 }

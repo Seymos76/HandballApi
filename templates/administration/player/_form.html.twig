@@ -7,5 +7,5 @@
 		<img src="{{ asset('uploads/players/' ~ player.image) }}" alt="">
 	{% endif %}
 	{{ form_row(form.image) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-outline-primary">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

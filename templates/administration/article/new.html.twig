@@ -6,7 +6,7 @@
 {% block body %}
     {{ include('administration/article/_form.html.twig') }}
 
-    <a href="{{ path('article_index') }}">back to list</a>
+    <a href="{{ path('article_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('ckeditor_standard/adapters/jquery.js') }}" type="text/javascript"></script>

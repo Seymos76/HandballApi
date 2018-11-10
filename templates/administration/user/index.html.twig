@@ -4,16 +4,16 @@
 {% block header %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
-	{% if is_granted('ROLE_USER') and app.user is not null %}
+	{% if not is_granted('ROLE_ADMIN') %}
         <a href="{{ path('upgrade_user', {'email': app.user.email, 'role': "ROLE_ADMIN"}) }}">Upgrade to admin</a>
 	{% else %}
-        Not granted
+        FULLY GRANTED
 	{% endif %}
+    <a href="{{ path('upgrade_user', {'email': app.user.email, 'role': "ROLE_SUPER_ADMIN"}) }}">Upgrade to admin</a>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Email</th>
@@ -27,7 +27,6 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
                 <td>{{ user.firstname }}</td>
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.email }}</td>
@@ -36,17 +35,19 @@
                 <td>{{ user.dateRegister ? user.dateRegister|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user.lastConnexion ? user.lastConnexion|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-outline-info">Afficher</a>
+					{% if app.user.email == user.email %}
+                        <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-outline-primary">Modifier</a>
+					{% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="12">no records found</td>
+                <td colspan="12">Aucun utilisateur</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Create new</a>
+    <a href="{{ path('user_new') }}" class="btn btn-outline-primary">Ajouter un utilisateur</a>
 {% endblock %}

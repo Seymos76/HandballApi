@@ -23,12 +23,12 @@ class MessageController extends AbstractController
      */
     public function index(MessageRepository $messageRepository): Response
     {
-        $allMessages = $messageRepository->findAll();
-        $parents = $messageRepository->findParentMessages();
-        dump($allMessages);
-        dump($parents);
-        die;
-        return $this->render('administration/message/index.html.twig', ['messages' => $messageRepository->findAll()]);
+        $messages = $messageRepository->findBy(
+            array(
+                'parent' => null
+            )
+        );
+        return $this->render('administration/message/index.html.twig', ['messages' => $messages]);
     }
 
     /**
@@ -73,7 +73,6 @@ class MessageController extends AbstractController
     {
         $answer = new Message();
         $user = $this->getUser();
-        dump($user);
         $answer->setName($user->getFirstname()." ".$user->getLastname());
         $answer->setEmail($user->getEmail());
         $form = $this->createForm(MessageType::class, $answer);
@@ -85,7 +84,7 @@ class MessageController extends AbstractController
             $messageManager->update($answer);
             $mailer->sendResponse($answer, $message);
             $this->addFlash('success',"Votre réponse a bien été envoyée à son destinataire.");
-            return $this->redirectToRoute('meeting_show', ['id' => $message->getId()]);
+            return $this->redirectToRoute('message_show', ['id' => $message->getId()]);
         }
         return $this->render(
             'administration/message/answer.html.twig', [

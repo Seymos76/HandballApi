@@ -42,9 +42,9 @@ class UserType extends AbstractType
                 RepeatedType::class,
                 array(
                     'type' => PasswordType::class,
-                    'first_options' => "Entrez votre mot de passe",
-                    'second_options' => "Confirmez votre mot de passe",
-                    'invalid_message' => "Les deux mots de passe doivent correspondre"
+                    'first_options' => ['label' => "Nouveau mot de passe"],
+                    'second_options' => ['label' => "Répétez le nouveau mot de passe"],
+                    'invalid_message' => "Les deux mots de passe ne correspondent pas"
                 )
             )
         ;

@@ -7,19 +7,15 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ message.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
+                <th>Nom du destinataire</th>
                 <td>{{ message.name }}</td>
             </tr>
             <tr>
-                <th>Email</th>
+                <th>E-mail</th>
                 <td>{{ message.email }}</td>
             </tr>
             <tr>
-                <th>Subject</th>
+                <th>Sujet</th>
                 <td>{{ message.subject }}</td>
             </tr>
             <tr>
@@ -27,15 +23,39 @@
                 <td>{{ message.message }}</td>
             </tr>
             <tr>
-                <th>Date_sent</th>
+                <th>Date d'envoi</th>
                 <td>{{ message.dateSent ? message.dateSent|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('message_index') }}">back to list</a>
+    <h2>Réponses</h2>
 
-    <a href="{{ path('message_answer', {'id': message.id}) }}">Répondre</a>
+	{% for m in message.answers %}
+        <div id="accordion_{{ m.id }}">
+            <div class="card">
+                <div class="card-header" id="heading_{{ m.id }}">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_{{ m.id }}" aria-expanded="true" aria-controls="collapse_{{ m.id }}">
+                            {{ m.name|upper }} - le {{ m.dateSent|date('d/m/Y H:i') }}
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapse_{{ m.id }}" class="collapse show" aria-labelledby="heading_{{ m.id }}" data-parent="#accordion_{{ m.id }}">
+                    <div class="card-body">
+                        {{ m.message }}
+                    </div>
+                </div>
+            </div>
+        </div>
+	{% endfor %}
+
+    <a href="{{ path('message_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
+
+    <a href="{{ path('message_answer', {'id': message.id}) }}" class="btn btn-outline-primary">Répondre</a>
+    <br>
+    <br>
 
     {{ include('administration/message/_delete_form.html.twig') }}
 {% endblock %}

@@ -7,31 +7,27 @@
     <table class="table table-bordered table-responsive-sm">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Date_creation</th>
+                <th>NOM</th>
+                <th>Date de création</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for gallery in galleries %}
             <tr>
-                <td>{{ gallery.id }}</td>
                 <td>{{ gallery.name }}</td>
-                <td>{{ gallery.slug }}</td>
                 <td>{{ gallery.dateCreation ? gallery.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('gallery_show', {'id': gallery.id}) }}">show</a>
+                    <a href="{{ path('gallery_show', {'id': gallery.id}) }}" class="btn btn-outline-info"><i class="fa fa-eye"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('gallery_new') }}">Create new</a>
+    <a href="{{ path('gallery_new') }}" class="btn btn-outline-primary">Ajouter une galerie</a>
 {% endblock %}

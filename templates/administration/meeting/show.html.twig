@@ -7,7 +7,6 @@
     <table class="table table-striped table-responsive-sm">
         <thead>
         <tr>
-            <th>Match</th>
             <th>Équipe</th>
             <th>Adversaire</th>
             <th>Lieu de rencontre</th>
@@ -23,7 +22,6 @@
         <tbody>
 		{% for g in meeting.games %}
             <tr>
-                <td>{{ g.id }}</td>
                 <td>{{ g.team.name }}</td>
                 <td>{{ g.opponent }}</td>
                 <td>{{ g.appointmentLocation }}</td>
@@ -84,14 +82,15 @@
                 </div>
             </div>
 		{% endfor %}
-        <button type="submit" class="btn btn-outline-primary">Valider les résultats</button>
+        <div class="btn-group btn-group-lg" role="group" aria-label="">
+            <button type="submit" class="btn btn-outline-primary">Valider les résultats</button>
+            <a href="{{ path('meeting_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
+            <a href="{{ path('meeting_edit', {'id': meeting.id}) }}" class="btn btn-outline-primary">Modifier</a>
+        </div>
+
 		{{ form_end(form) }}
 	{% endif %}
-
-    <a href="{{ path('meeting_index') }}">back to list</a>
-
-    <a href="{{ path('meeting_edit', {'id': meeting.id}) }}">edit</a>
-
+    <br>
     {{ include('administration/meeting/_delete_form.html.twig') }}
 {% endblock %}
 

@@ -1,13 +1,12 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Gestion des utilisateurs{% endblock %}
+{% block header %}Modifier un profil{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    {{ include('administration/user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    {{ include('administration/user/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('user_index') }}">back to list</a>
+    <a href="{{ path('user_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
 
     {{ include('administration/user/_delete_form.html.twig') }}
 {% endblock %}

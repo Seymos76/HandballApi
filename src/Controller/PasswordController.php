@@ -18,28 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class PasswordController extends AbstractController
 {
     /**
-     * @Route(path="change", name="password_change")
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function changePassword(Request $request, UserManager $manager)
-    {
-        $user = $this->getUser();
-        $form = $this->createForm(ChangePasswordType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager->update($user);
-            $this->addFlash('success',"Mot de passe modifié !");
-            return $this->redirectToRoute('user_index');
-        }
-        return $this->render(
-            'password/change_password.html.twig', [
-                'form' => $form->createView()
-            ]
-        );
-    }
-
-    /**
      * @Route(path="reinitialisation/get-your-email", name="ask_for_password_reinitialisation")
      * @param Request $request
      * @param UserManager $userManager

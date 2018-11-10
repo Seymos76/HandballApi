@@ -4,9 +4,9 @@
 {% block header %}modification de l'article {{ article.id }} - {{ article.title }}{% endblock %}
 
 {% block body %}
-    {{ include('administration/article/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('administration/article/_form.html.twig', {'button_label': 'Mettre jour'}) }}
 
-    <a href="{{ path('article_index') }}">back to list</a>
+    <a href="{{ path('article_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
 
     {{ include('administration/article/_delete_form.html.twig') }}
 {% endblock %}

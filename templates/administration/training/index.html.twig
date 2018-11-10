@@ -7,31 +7,30 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Équipe concernée</th>
                 <th>Début</th>
                 <th>Fin</th>
-                <th>Training team</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for training in trainings %}
             <tr>
-                <td>{{ training.id }}</td>
-                <td>{{ training.timeStart|date('H:i') }}</td>
                 <td>{{ training.team.name }}</td>
+                <td>{{ training.timeStart|date('H:i') }}</td>
+                <td>{{ training.timeEnd|date('H:i') }}</td>
                 <td>
-                    <a href="{{ path('training_show', {'id': training.id}) }}">show</a>
-                    <a href="{{ path('training_edit', {'id': training.id}) }}">edit</a>
+                    <a href="{{ path('training_show', {'id': training.id}) }}" class="btn btn-outline-info"><i class="fa fa-eye"></i></a>
+                    <a href="{{ path('training_edit', {'id': training.id}) }}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('training_new') }}">Create new</a>
+    <a href="{{ path('training_new') }}" class="btn btn-outline-primary">Ajouter un entraînement</a>
 {% endblock %}

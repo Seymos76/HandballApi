@@ -77,19 +77,6 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route(path="/upgrade-user/{email}/{role}", name="upgrade_user")
-     * @ParamConverter("user", class="App\Entity\User")
-     * @param User $user
-     * @param string $role
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function upgradeUser(User $user, string $role, UserManager $manager)
-    {
-        $manager->upgradeUser($user->getEmail(), $role);
-        return $this->redirectToRoute('user_index');
-    }
-
-    /**
      * @Route(path="/logout", name="logout")
      */
     public function logout() {}

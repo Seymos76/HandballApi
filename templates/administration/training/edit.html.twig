@@ -4,9 +4,9 @@
 {% block header %}Modification entrainement {{ training.team.name }}{% endblock %}
 
 {% block body %}
-    {{ include('administration/training/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('administration/training/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('training_index') }}">back to list</a>
+    <a href="{{ path('training_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
 
     {{ include('administration/training/_delete_form.html.twig') }}
 {% endblock %}

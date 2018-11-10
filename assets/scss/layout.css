@@ -54,21 +54,26 @@ header {
   right: 0;
   top: 0;
   height: 100px;
-  width: 200px;
+  width: 100px;
   z-index: 999;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid #12BEDB;
-  background-color: #ffffff;
-  border-left: 1px solid #12BEDB;
+  /*border-bottom: 1px solid #12BEDB;
+  border-left: 1px solid #12BEDB;*/
   transition: all .3s ease; }
   header.responsive {
     width: 100%;
+    background-color: #ffffff;
     transition: all .3s ease; }
+    header.responsive .header__logo {
+      display: block; }
   header.active {
     width: 100%;
+    background-color: #ffffff;
     transition: all .3s ease; }
+  header.active .header__logo {
+    display: block; }
   header.scrolled {
     transition: all .3s ease;
     background-color: #ffffff;
@@ -77,14 +82,16 @@ header {
     text-align: center;
     width: 108px;
     height: 80px;
-    margin: auto auto auto 10px; }
+    margin: auto auto auto 10px;
+    display: none; }
     header div.header__logo img {
       height: 100%; }
   header div.header__menu_button {
     text-align: center;
     width: 80px;
     height: 80px;
-    margin: auto 10px auto; }
+    margin: auto 10px auto;
+    display: flex; }
     header div.header__menu_button button {
       display: inline-block;
       text-decoration: none;
@@ -92,7 +99,7 @@ header {
       height: 100%;
       background-color: transparent;
       border: none; }
-      header div.header__menu_button button a:focus {
+      header div.header__menu_button button:focus {
         border: none; }
       header div.header__menu_button button i.fa {
         font-size: 2.5em;
@@ -108,7 +115,7 @@ header {
   bottom: 0;
   left: 0;
   background-color: antiquewhite;
-  z-index: 9;
+  z-index: 99;
   transition: all .3s ease; }
 
 /* Enter and leave animations can use different */
@@ -126,7 +133,7 @@ header {
   opacity: 0; }
 
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s; }
+  transition: opacity .3s; }
 
 .fade-enter, .fade-leave-to {
   opacity: 0; }
@@ -180,16 +187,16 @@ section.main {
   width: 100%;
   height: auto;
   margin-top: 100px;
-  padding-bottom: 30px; }
+  padding-bottom: 30px;
+  background-color: #fefefe; }
 
 @media screen and (max-width: 420px) {
   section.main {
     margin-top: 100px; } }
 div.page__header {
   width: 100%;
-  margin: auto;
-  height: 100px;
-  margin-bottom: 25px; }
+  margin: 80px auto 25px auto;
+  height: 100px; }
   div.page__header h1 {
     width: 60%;
     line-height: 80px;

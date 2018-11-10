@@ -1,5 +1,6 @@
+import Swiper from 'swiper';
 $(function () {
-    let slider = $("#jssor_1");
+    //let slider = $("#jssor_1");
     function detectmob() {
         return ( navigator.userAgent.match(/Android/i)
             || navigator.userAgent.match(/webOS/i)
@@ -10,11 +11,35 @@ $(function () {
             || navigator.userAgent.match(/Windows Phone/i)
         );
     }
-    if (detectmob()) {
+    /*if (detectmob()) {
         slider.height((16/9)*window.innerHeight);
     } else {
         slider.height(window.innerHeight);
-    }
+    }*/
+    var mySwiper = new Swiper ('.swiper-container', {
+        // Optional parameters
+        direction: 'vertical',
+        loop: true,
+        speed: 400,
+        autoPlay: true,
+
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // And if we need scrollbar
+        scrollbar: {
+            el: '.swiper-scrollbar',
+        },
+    });
+
     $(window).scroll(function (e) {
         let scroll = $(window).scrollTop();
         if (scroll >= 700) {

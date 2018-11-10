@@ -4,24 +4,32 @@ header {
   right: 0;
   top: 0;
   height: 100px;
-  width: 200px;
+  width: 100px;
   z-index: 999;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid #12BEDB;
-  background-color: #ffffff;
-  border-left: 1px solid #12BEDB;
+  /*border-bottom: 1px solid #12BEDB;
+  border-left: 1px solid #12BEDB;*/
   transition: all .3s ease;
 
   &.responsive {
     width: 100%;
+    background-color: #ffffff;
     transition: all .3s ease;
+
+    .header__logo {
+      display: block;
+    }
   }
 
   &.active {
     width: 100%;
+    background-color: #ffffff;
     transition: all .3s ease;
+  }
+  &.active .header__logo {
+    display: block;
   }
 
   &.scrolled {
@@ -35,6 +43,7 @@ header {
     width: 108px;
     height: 80px;
     margin: auto auto auto 10px;
+    display: none;
     img {
       height: 100%;
     }
@@ -44,6 +53,7 @@ header {
     width: 80px;
     height: 80px;
     margin: auto 10px auto;
+    display: flex;
 
     button {
       display: inline-block;
@@ -52,7 +62,7 @@ header {
       height: 100%;
       background-color: transparent;
       border: none;
-      a:focus {
+      &:focus {
         border: none;
       }
 
@@ -77,6 +87,7 @@ section.main {
   height: auto;
   margin-top: 100px;
   padding-bottom: 30px;
+  background-color: #fefefe;
 }
 @media screen and (max-width: 420px) {
   section.main {
@@ -86,9 +97,8 @@ section.main {
 
 div.page__header {
   width: 100%;
-  margin: auto;
+  margin: 80px auto 25px auto;
   height: 100px;
-  margin-bottom: 25px;
   h1 {
     width: 60%;
     line-height: 80px;

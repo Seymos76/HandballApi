@@ -1,17 +1,10 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}New User{% endblock %}
+{% block title %}Gestion des utilisateurs{% endblock %}
+{% block header %}Ajout d'un utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
-
-	{% if is_granted('ROLE_USER') and app.user is not null %}
-        <a href="{{ path('upgrade_user', {'email': app.user.email, 'role': "ROLE_ADMIN"}) }}">Upgrade to admin</a>
-	{% else %}
-        Not granted
-	{% endif %}
-
     {{ include('administration/user/_form.html.twig') }}
 
-    <a href="{{ path('user_index') }}">back to list</a>
+    <a href="{{ path('user_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
 {% endblock %}

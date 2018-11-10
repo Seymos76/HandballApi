@@ -4,9 +4,10 @@
 {% block header %}Modification du joueur {{ player.fullname }}{% endblock %}
 
 {% block body %}
-    {{ include('administration/player/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('player_index') }}">back to list</a>
-
+    {{ include('administration/player/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    <br>
+    <a href="{{ path('player_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
+    <br>
+    <br>
     {{ include('administration/player/_delete_form.html.twig') }}
 {% endblock %}

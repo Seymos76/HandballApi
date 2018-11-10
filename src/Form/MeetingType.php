@@ -22,6 +22,7 @@ class MeetingType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
+                    'prototype_name' => "ajouter-une-rencontre",
                     'required' => false,
                     'attr' => array(
                         'class' => "game_collection_entry"

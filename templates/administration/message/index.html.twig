@@ -4,41 +4,36 @@
 {% block header %}Gérer les messages{% endblock %}
 
 {% block body %}
-    {{ dump(messages) }}
     <table class="table table-bordered table-responsive-sm">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Subject</th>
+                <th>NOM</th>
+                <th>E-mail</th>
+                <th>Sujet</th>
                 <th>Message</th>
-                <th>Date_sent</th>
-                <th>Parent</th>
+                <th>Date d'envoi</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for message in messages %}
             <tr>
-                <td>{{ message.id }}</td>
                 <td>{{ message.name }}</td>
                 <td>{{ message.email }}</td>
                 <td>{{ message.subject }}</td>
                 <td>{{ message.message }}</td>
                 <td>{{ message.dateSent ? message.dateSent|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ dump(message.parent) }}</td>
                 <td>
                     <a href="{{ path('message_show', {'id': message.id}) }}">show</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucun message</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('message_new') }}">Create new</a>
+    <a href="{{ path('message_new') }}" class="btn btn-outline-primary">Nouveau message</a>
 {% endblock %}

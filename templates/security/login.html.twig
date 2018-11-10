@@ -1,20 +1,32 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/login.css') }}">
+{% endblock %}
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-	{% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-	{% endif %}
+    <div class="page__header">
+        <h1>Connexion</h1>
+    </div>
+	<section class="container">
+		{% if error %}
+            <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
 
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
-        <input type="hidden" name="_target_path" value="/administration"/>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        <button type="submit">login</button>
-    </form>
-    <a href="{{ path('register') }}" class="btn btn-outline-primary">Inscription</a>
+        <form action="{{ path('login') }}" method="post">
+            <fieldset class="form-group">
+                <label for="username">E-mail:</label>
+                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="password">Mot de passe:</label>
+                <input type="password" class="form-control" id="password" name="_password" />
+            </fieldset>
+            <input type="hidden" name="_target_path" value="/administration"/>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <fieldset class="form-group">
+                <button type="submit" class="btn btn-outline-primary">Connexion</button>
+            </fieldset>
+        </form>
+    </section>
 {% endblock %}

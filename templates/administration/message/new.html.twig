@@ -1,11 +1,10 @@
 {% extends 'administration/admin.html.twig' %}
 
-{% block title %}New Message{% endblock %}
+{% block title %}Gestion des messages{% endblock %}
+{% block header %}Nouveau message{% endblock %}
 
 {% block body %}
-    <h1>Create new Message</h1>
-
     {{ include('administration/message/_form.html.twig') }}
 
-    <a href="{{ path('message_index') }}">back to list</a>
+    <a href="{{ path('message_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
 {% endblock %}

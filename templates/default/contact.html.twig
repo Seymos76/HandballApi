@@ -7,6 +7,22 @@
 	<div class="page__header">
 		<h1>Nous contacter</h1>
 	</div>
+	{% for message in app.session.flashbag.get('error') %}
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			<strong>Holy guacamole!</strong> {{ message }}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	{% endfor %}
+	{% for message in app.session.flashbag.get('success') %}
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			<strong>Holy guacamole!</strong> {{ message }}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	{% endfor %}
 	<section class="contact__container flex_column">
 		<nav id="contact_tab" role="tablist">
 			<div class="nav nav-tabs" id="nav-tab" role="tablist">

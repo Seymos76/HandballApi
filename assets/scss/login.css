@@ -1,0 +1,17 @@
+form {
+  width: 80%;
+  margin: 0 auto;
+  height: auto; }
+  form fieldset {
+    width: 80%;
+    margin: auto; }
+
+.register__container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex; }
+  .register__container a {
+    display: inline-block;
+    margin: auto; }
+
+/*# sourceMappingURL=login.css.map */

@@ -98,7 +98,6 @@ class MeetingController extends AbstractController
     {
         $form = $this->createForm(MeetingType::class, $meeting);
         $nb_matchs = $meeting->getGames()->count();
-        dump((int)$nb_matchs);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -8,7 +8,8 @@
 		'administration/collection/jquery.collection.html.twig'
 	%}
     {{ include('administration/gallery/_form.html.twig') }}
-    <a href="{{ path('gallery_index') }}">back to list</a>
+	<br>
+    <a href="{{ path('gallery_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
 {% endblock %}
 
 {% block javascripts %}
