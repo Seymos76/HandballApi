@@ -30,10 +30,12 @@
                 <td>{{ user.firstname }}</td>
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.active ? 'Yes' : 'No' }}</td>
+                <td>{{ user.active ? 'Actif' : 'Non actif' }}</td>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                 <td>{{ user.dateRegister ? user.dateRegister|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ user.lastConnexion ? user.lastConnexion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+					{{ user.lastConnexion ? user.lastConnexion|date('Y-m-d H:i:s') : '' }}
+                </td>
                 <td>
                     <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-outline-info">Afficher</a>
 					{% if app.user.email == user.email %}

@@ -4,9 +4,11 @@ namespace App\Controller\Administration;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\RegisterType;
 use App\Form\UserType;
 use App\Manager\UserManager;
 use App\Repository\UserRepository;
+use App\Service\Mail\Mailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,17 +31,17 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserManager $manager, Mailer $mailer): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
+            $user->setUsername($user->getEmail());
+            $manager->update($user);
+            $mailer->sendAccountActivationCode($user);
+            $this->addFlash('success',"Nouvel administrateur créé ! Un e-mail lui sera envoyé afin de confirmer son accès !");
             return $this->redirectToRoute('user_index');
         }
 
@@ -92,7 +94,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route(path="change-password", name="password_change")
+     * @Route(path="/change-password", name="password_change")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */

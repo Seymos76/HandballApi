@@ -29,12 +29,6 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/inscription", name="register")
-     * @param Request $request
-     * @param EntityManager $manager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
     public function register(Request $request, EntityManager $manager, Mailer $mailer)
     {
         $user = new User();
@@ -43,7 +37,6 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUsername($user->getEmail());
             $manager->update($user);
-            $mailer->sendAccountActivationCode($user);
             $this->addFlash('success',"Inscription réussie !");
             return $this->redirectToRoute('login');
         }
@@ -63,12 +56,17 @@ class SecurityController extends AbstractController
     public function activateAccount(string $code, UserManager $userManager)
     {
         if (!is_string($code)) {
-            return $this->redirectToRoute('register');
+            $this->addFlash('error',"Vous n'avez pas l'autorisation d'accéder à cette page.");
+            return $this->redirectToRoute('index');
         }
         $user = $userManager->getUserByActivationCode($code);
+        if (!$user) {
+            $this->addFlash('error',"Vous n'avez pas l'autorisation d'accéder à cette page.");
+            return $this->redirectToRoute('index');
+        }
         $activated = $userManager->activateUser($user);
         if ($activated === true) {
-            $this->addFlash('success',"Votre compte a été activé, vous pouvez désormais vous connecter !");
+            $this->addFlash('success',"Votre compte administrateur a été activé, vous pouvez désormais vous connecter !");
             return $this->redirectToRoute('login');
         } else {
             $this->addFlash('error',"Erreur lors de l'activation de votre compte");

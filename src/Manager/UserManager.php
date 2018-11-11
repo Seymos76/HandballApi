@@ -77,6 +77,7 @@ class UserManager extends EntityManager
             return;
         }
         $user->setActive(true);
+        $user->addRole('ROLE_ADMIN');
         $user->setActivationCode(null);
         $this->update($user);
         return true;
